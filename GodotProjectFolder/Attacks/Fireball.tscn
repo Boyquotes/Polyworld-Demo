@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://obia6nlotq6o"]
+
+[ext_resource type="Script" path="res://Attacks/Fireball.gd" id="1_hlqfe"]
+[ext_resource type="PackedScene" uid="uid://cqta3h2r0tx1d" path="res://Hitboxes and Hurtboxes/Hitbox.tscn" id="1_hwuj7"]
+[ext_resource type="AudioStream" uid="uid://duygphefbyx8h" path="res://Sounds/singe0.wav" id="3_dsccw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ddv3l"]
+shading_mode = 0
+albedo_color = Color(1, 0.384314, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_cm847"]
+material = SubResource("StandardMaterial3D_ddv3l")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mriuh"]
+radius = 0.25
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gjba8"]
+radius = 0.476251
+
+[node name="Fireball" type="StaticBody3D"]
+collision_layer = 2
+script = ExtResource("1_hlqfe")
+speed = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_cm847")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_mriuh")
+
+[node name="Hitbox" parent="." instance=ExtResource("1_hwuj7")]
+lag_caster = false
+damage = 5.0
+push_force_horizontal = 3.039
+push_force_vertical = 5.135
+can_burn = true
+
+[node name="CollisionShape3d" parent="Hitbox" index="0"]
+shape = SubResource("SphereShape3D_gjba8")
+
+[node name="AudioStreamPlayer3D" parent="Hitbox" index="1"]
+stream = ExtResource("3_dsccw")
+volume_db = 6.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+
+[editable path="Hitbox"]

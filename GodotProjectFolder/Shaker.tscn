@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b52ck3oif41g"]
+
+[ext_resource type="Script" path="res://Shaker.gd" id="1_wp57v"]
+
+[node name="Shaker" type="Timer"]
+autostart = true
+script = ExtResource("1_wp57v")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]

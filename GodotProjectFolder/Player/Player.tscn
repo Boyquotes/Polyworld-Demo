@@ -1,0 +1,97 @@
+[gd_scene load_steps=17 format=3 uid="uid://2xo541bybgl4"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_cvs5f"]
+[ext_resource type="Script" path="res://StateMachine.gd" id="2_avgf8"]
+[ext_resource type="Script" path="res://Player/Player States/PlayerStateIdle.gd" id="3_6ojjg"]
+[ext_resource type="Script" path="res://Player/Player States/PlayerStateRun.gd" id="4_h0npr"]
+[ext_resource type="Script" path="res://Player/Player States/PlayerStateInAir.gd" id="5_brxl4"]
+[ext_resource type="Script" path="res://Player/Player States/PlayerStateAttack1.gd" id="6_50c6j"]
+[ext_resource type="PackedScene" uid="uid://bn1i1cib0m8su" path="res://CharacterModel.tscn" id="6_k6o4e"]
+[ext_resource type="PackedScene" uid="uid://cn4f04q2g55a3" path="res://Inventory.tscn" id="7_8u26r"]
+[ext_resource type="Script" path="res://Player/Player States/PlayerStateAttack2.gd" id="8_2pffb"]
+[ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="8_dt1gd"]
+[ext_resource type="Script" path="res://Player/Player States/PlayerStateAttack3.gd" id="9_35sib"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_um22k"]
+radial_segments = 8
+rings = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_clkfk"]
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yk3vu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_btql4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5kqb7"]
+size = Vector3(2.24814, 1.518, 2.46)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_cvs5f")
+
+[node name="Model" parent="." instance=ExtResource("6_k6o4e")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("2_avgf8")
+current_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_6ojjg")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_h0npr")
+
+[node name="InAir" type="Node" parent="StateMachine"]
+script = ExtResource("5_brxl4")
+
+[node name="Attack1" type="Node" parent="StateMachine"]
+script = ExtResource("6_50c6j")
+
+[node name="Attack2" type="Node" parent="StateMachine"]
+script = ExtResource("8_2pffb")
+
+[node name="Attack3" type="Node" parent="StateMachine"]
+script = ExtResource("9_35sib")
+
+[node name="Model2" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3d" type="MeshInstance3D" parent="Model2"]
+mesh = SubResource("CapsuleMesh_um22k")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3d2" type="MeshInstance3D" parent="Model2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_clkfk")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_yk3vu")
+
+[node name="Inventory" parent="." instance=ExtResource("7_8u26r")]
+iv = ["burning fist", "fireball", "bomb"]
+
+[node name="Hurtbox" parent="." instance=ExtResource("8_dt1gd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15227, 0)
+visible = false
+
+[node name="CollisionShape3d" parent="Hurtbox" index="0"]
+shape = SubResource("BoxShape3D_btql4")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.909923, 0)
+max_polyphony = 5
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="Timer" type="Timer" parent="AudioStreamPlayer3D"]
+
+[node name="InteractBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.67119)
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractBox"]
+shape = SubResource("BoxShape3D_5kqb7")
+
+[editable path="Hurtbox"]

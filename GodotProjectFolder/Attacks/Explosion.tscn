@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://2323xpihsor2"]
+
+[ext_resource type="Script" path="res://Attacks/Explosion.gd" id="1_bm8pk"]
+[ext_resource type="PackedScene" uid="uid://cqta3h2r0tx1d" path="res://Hitboxes and Hurtboxes/Hitbox.tscn" id="2_c2nc6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ks0ig"]
+radius = 1.0
+
+[node name="Explosion" type="Node3D"]
+script = ExtResource("1_bm8pk")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_c2nc6")]
+lag_caster = false
+damage = 10.0
+push_force_horizontal = 10.0
+push_force_vertical = 10.0
+can_burn = true
+
+[node name="CollisionShape3d" parent="Hitbox" index="0"]
+shape = SubResource("SphereShape3D_ks0ig")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+
+[editable path="Hitbox"]

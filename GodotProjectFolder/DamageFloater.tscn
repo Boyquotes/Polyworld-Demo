@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqjrpj8td8h47"]
+
+[ext_resource type="FontFile" uid="uid://baqfhf4mhve20" path="res://verysmall.ttf" id="1_35tva"]
+[ext_resource type="Script" path="res://DamageFloater.gd" id="1_mht7i"]
+
+[node name="DamageFloater" type="Label3D"]
+pixel_size = 0.0008
+billboard = 1
+no_depth_test = true
+fixed_size = true
+texture_filter = 0
+text = "42"
+font = ExtResource("1_35tva")
+outline_size = 0
+script = ExtResource("1_mht7i")
