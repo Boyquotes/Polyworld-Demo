@@ -61,13 +61,20 @@ func _process(delta):
 		emit_signal("finished")
 		queue_free()
 	
-	position = get_viewport().get_camera_3d().unproject_position(speaker.global_position)
+	var speaker_unprojected = get_viewport().get_camera_3d().unproject_position(speaker.global_position)
+	position = speaker_unprojected
 	position.y -= 30
 	
 	var res = get_viewport_rect().size
 	var marg = 8
 	var final_marg = Vector2(marg + textbox.size.x/2, marg + textbox.size.y)
 	position = position.clamp(final_marg, Vector2(res.x, res.y) - Vector2(final_marg.x, marg))
+	
+	$Tail.position.x = speaker_unprojected.x - position.x - $Tail.size.x / 2
+	$Tail.position.y = speaker_unprojected.y - position.y - $Tail.size.y / 2 - 16
+	
+	$Tail.position = $Tail.position.clamp($Panel.position, $Panel.position + $Panel.size - Vector2($Tail.size.x,7))
+	
 	
 	if is_typing:
 		can_continue = false

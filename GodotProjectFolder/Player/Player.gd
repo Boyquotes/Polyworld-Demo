@@ -2,9 +2,9 @@ class_name Player
 extends CharacterBody3D
 
 
-const RUN_SPEED := 12.0
-const RUN_ACCEL := 60.0
-const RUN_DECEL := 50.0
+const RUN_SPEED := 12.0 #12
+const RUN_ACCEL := 60.0 # 60
+const RUN_DECEL := 50.0 # 50
 const AIR_ACCEL := 30.0
 const TURN_SPEED := 15.0
 const JUMP_VELOCITY := 15.0
@@ -20,7 +20,7 @@ var target_facing_dir := Vector2.DOWN
 
 var can_hold_jump = false
 
-@onready var cam = get_viewport().get_camera_3d()
+@onready var cam = get_viewport().get_camera_3d() 
 @onready var anim = $Model/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 

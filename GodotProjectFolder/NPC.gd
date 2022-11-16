@@ -49,7 +49,9 @@ func interact():
 		
 		tb = load("res://Dialog.tscn").instantiate()
 		tb.speaker = self
-		tb.text = "What are cards,_ you may ask?
+		tb.text = "Huh?_ What are cards?
+		...
+		Oh you're not kidding.__ You really don't know anything about this place.
 		Here._ Take these."
 		get_parent().get_node("Interface").add_child(tb)
 		await tb.finished

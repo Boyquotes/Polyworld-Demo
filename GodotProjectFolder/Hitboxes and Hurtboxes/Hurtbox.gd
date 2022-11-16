@@ -46,14 +46,16 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 
 
 func hitlag(hitbox:Hitbox, duration:float):
+	var hitbox_parent = hitbox.get_parent()
+	print(hitbox_parent)
 	
-	disable(hitbox.get_parent())
+	disable(hitbox_parent)
 	if hitbox.lag_caster:
 		disable(hitbox.caster)
 	await get_tree().create_timer(duration).timeout
-	enable(hitbox.get_parent())
-	if hitbox.get_parent().has_method("contact"):
-		hitbox.get_parent().contact()
+	enable(hitbox_parent)
+	if hitbox_parent.has_method("contact"):
+		hitbox_parent.contact()
 	enable(hitbox.caster)
 
 
