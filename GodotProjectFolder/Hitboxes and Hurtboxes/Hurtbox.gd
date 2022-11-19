@@ -4,6 +4,7 @@ extends Area3D
 
 @export var mass := 1.0
 
+var is_stunned = false
 var superguarding = false
 
 
@@ -46,23 +47,24 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 
 
 func hitlag(hitbox:Hitbox, duration:float):
+	
 	var hitbox_parent = hitbox.get_parent()
-	print(hitbox_parent)
 	
 	disable(hitbox_parent)
 	if hitbox.lag_caster:
 		disable(hitbox.caster)
 	await get_tree().create_timer(duration).timeout
-	enable(hitbox_parent)
-	if hitbox_parent.has_method("contact"):
-		hitbox_parent.contact()
-	enable(hitbox.caster)
+	if hitbox != null:
+		enable(hitbox_parent)
+		if hitbox_parent.has_method("contact"):
+			hitbox_parent.contact()
+		enable(hitbox.caster)
 
 
 func hurtlag(duration:float):
 	
-	var lag_target = get_parent()
-	var shake_target = get_parent().find_child("Model")
+	var lag_target = get_parent() # the hurtbox owner that is being lagged
+	var shake_target = get_parent().find_child("Model") # the node being shaken
 	
 	var hurtshaker = load("res://Shaker.tscn").instantiate() as Shaker
 	hurtshaker.initialize(1, 0.025)
@@ -70,9 +72,10 @@ func hurtlag(duration:float):
 	
 	disable(lag_target)
 	await get_tree().create_timer(duration).timeout
-	enable(lag_target)
-	
-	hurtshaker.end_shake()
+	if lag_target != null:
+		enable(lag_target)
+	if hurtshaker != null:
+		hurtshaker.end_shake()
 
 
 # Recursively disable all children
@@ -100,6 +103,10 @@ func enable(entity):
 	entity.set_process_internal(true)
 	entity.set_physics_process_internal(true)
 	for child in entity.get_children():
+		if child is Shaker:
+			break
+		if child is AudioStreamPlayer3D:
+			break
 		enable(child)
 
 
@@ -109,5 +116,6 @@ func screenshake(duration:float):
 	screenshaker.initialize(0.75, 0.025)
 	shake_target.add_child(screenshaker)
 	await get_tree().create_timer(duration).timeout
-	screenshaker.end_shake()
+	if screenshaker != null:
+		screenshaker.end_shake()
 

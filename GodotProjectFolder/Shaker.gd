@@ -14,6 +14,7 @@ func _ready():
 	for child in target.get_children():
 		if child != self && child is Shaker:
 			center_position = child.center_position
+			child.queue_free()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,7 +33,8 @@ func initialize(amp : float, rate : float):
 func end_shake():
 	target.position = center_position
 	active = false
-	queue_free()
+	if not is_queued_for_deletion():
+		queue_free()
 	
 
 
