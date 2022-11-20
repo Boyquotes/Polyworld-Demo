@@ -1,10 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://2323xpihsor2"]
+[gd_scene load_steps=6 format=3 uid="uid://2323xpihsor2"]
 
 [ext_resource type="Script" path="res://Attacks/Explosion.gd" id="1_bm8pk"]
 [ext_resource type="PackedScene" uid="uid://cqta3h2r0tx1d" path="res://Hitboxes and Hurtboxes/Hitbox.tscn" id="2_c2nc6"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ks0ig"]
 radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lfxww"]
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 0.411765, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_8khvq"]
+material = SubResource("StandardMaterial3D_lfxww")
+radius = 1.0
+height = 2.0
+radial_segments = 19
+rings = 8
 
 [node name="Explosion" type="Node3D"]
 script = ExtResource("1_bm8pk")
@@ -22,6 +34,9 @@ shape = SubResource("SphereShape3D_ks0ig")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_8khvq")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 

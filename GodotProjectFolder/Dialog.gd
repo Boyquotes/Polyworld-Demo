@@ -11,6 +11,7 @@ var text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890
 
 var speaker : Node3D
 var split_text = []
+var queue_typing = false
 var is_typing = false
 var can_continue = false
 var pause_array = []
@@ -29,19 +30,16 @@ signal finished
 
 func _ready():
 	
-	# ACTUAL TEXT
 	#text = "ABCDEFG_HIJKLMNOP_QRSTUV_WX_Y_Z[color=#ffff00][wavy amp=2.0 freq=10.0 rate=10.0]abcdefg__hijklmnop__qrstuv__wxyz[/wavy][/color]!!!__Lorem ipsum,_ the quick brown fox jumps over the lazy dog."
-	#text = "This,_ is a test for pauses in the game.__ You can see them being used right here._._.__ Well?__ Don't you see it?__ You can see [wavy]this[/wavy] too,_ can't you?__ [wavy]What about all of._._._ this?[/wavy]__ Is this working right?!"
 	
 	textbox.size.y = 0
 	textbox.position.y = 0
 	
 	text_to_pages(text)
-	
 	init_text(split_text[page_index])
 	
-	is_typing = true
-	#anim.play("Open")
+	is_typing = false
+	queue_typing = true
 	
 	Input.action_release("interact")
 
@@ -54,12 +52,14 @@ func _process(delta):
 		border_width = 0.0
 		text_height = 0.0
 	
-	textbox.size.y = move_toward(textbox.size.y, text_height + border_width, 2)
-	textbox.position.y = move_toward(textbox.position.y, -text_height - border_width, 2)
+	textbox.size.y = move_toward(textbox.size.y, text_height + border_width + 2, 2)
+	textbox.position.y = move_toward(textbox.position.y, -text_height - border_width - 2, 2)
 	
-	if closing and textbox.size.y <= 0.001:
-		emit_signal("finished")
-		queue_free()
+	if textbox.size.y == text_height + border_width + 2:
+		if closing:
+			queue_free()
+		elif queue_typing:
+			is_typing = true
 	
 	var speaker_unprojected = get_viewport().get_camera_3d().unproject_position(speaker.global_position)
 	position = speaker_unprojected
@@ -70,13 +70,19 @@ func _process(delta):
 	var final_marg = Vector2(marg + textbox.size.x/2, marg + textbox.size.y)
 	position = position.clamp(final_marg, Vector2(res.x, res.y) - Vector2(final_marg.x, marg))
 	
-	$Tail.position.x = speaker_unprojected.x - position.x - $Tail.size.x / 2
-	$Tail.position.y = speaker_unprojected.y - position.y - $Tail.size.y / 2 - 16
-	
+	var tail_target = Vector2(speaker_unprojected.x - position.x - $Tail.size.x / 2,
+		speaker_unprojected.y - position.y - $Tail.size.y / 2 - 16).round()
+	$Tail.position.x = tail_target.x
+	$Tail.position.y = tail_target.y
 	$Tail.position = $Tail.position.clamp($Panel.position, $Panel.position + $Panel.size - Vector2($Tail.size.x,7))
+	if $Tail.position.x != tail_target.x:
+		$Tail.visible = false
+	else:
+		$Tail.visible = true
 	
 	
 	if is_typing:
+		queue_typing = false
 		can_continue = false
 		
 		# Turn on skipping
@@ -113,22 +119,16 @@ func _process(delta):
 			page_index += 1
 			if page_index < split_text.size():
 				init_text(split_text[page_index])
-				is_typing = true
+				queue_typing = true
 			else:
 				closing = true
+				emit_signal("finished")
 				
 	else:
 		arrow.visible = false
 		arrow_anim.stop()
 	
 	textlabel.visible_characters = int(visible_chars)
-
-
-func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "Open":
-		is_typing = true
-	elif anim_name == "Close":
-		queue_free()
 
 
 func text_to_pages(t):
@@ -138,6 +138,7 @@ func text_to_pages(t):
 		#i = i.replace("\t", "")
 		#print(i)
 	print(split_text)
+
 
 # Initializes strings before they can be displayed in the textbox
 func init_text(t):
@@ -165,8 +166,4 @@ func init_text(t):
 	# Reset visible characters
 	visible_chars = 0
 	textlabel.visible_characters = 0
-
-
-func progress():
-	pass
 

@@ -80,4 +80,5 @@ func _on_timer_timeout():
 func contact():
 	caster.velocity = direction.normalized() * 15
 	contacted = true
-	$Hitbox.queue_free()
+	$Hitbox.monitoring = false
+	$Hitbox.monitorable = false

@@ -11,6 +11,7 @@ const GRAVITY = 1.0
 
 var direction = Vector3.ZERO
 var velocity = Vector3.ZERO
+var contacted = false
 
 
 func _ready():
@@ -25,7 +26,6 @@ func _ready():
 	direction = best_targ
 	#velocity = Vector3(direction.x, 0, direction.y) * speed
 	velocity = direction * speed
-
 
 func _physics_process(delta):
 	
@@ -115,6 +115,7 @@ func best_target(aim_ahead = 0):
 
 func contact():
 	
+	contacted = true
 	var explosion = load("res://Attacks/Explosion.tscn").instantiate()
 	explosion.global_position = global_position
 	explosion.caster = caster

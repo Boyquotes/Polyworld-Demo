@@ -8,7 +8,6 @@ var health = 100
 
 
 var alerted = false
-var stunned = false
 
 @onready var anim = $Model/AnimationPlayer as AnimationPlayer
 
@@ -72,3 +71,6 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 #	await get_tree().create_timer(2.0).timeout
 #	stunned = false
 	
+
+func hurt():
+	anim.play("hurt", 0)

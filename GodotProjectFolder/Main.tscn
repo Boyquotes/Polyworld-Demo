@@ -1,8 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://dhpjwwsmokk1"]
+[gd_scene load_steps=17 format=3 uid="uid://dhpjwwsmokk1"]
 
 [ext_resource type="PackedScene" uid="uid://c00tgqll4e7td" path="res://FirstWorld.tscn" id="1_bvn13"]
 [ext_resource type="Script" path="res://Main.gd" id="1_ohqny"]
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="2_774ge"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_msvjc"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m3yjn"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3syqg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ty0ol"]
 shader = ExtResource("2_774ge")
@@ -61,26 +67,157 @@ _data = {
 "RESET": SubResource("Animation_vw2r7")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8r5fy"]
+shader = ExtResource("2_774ge")
+shader_parameter/color = null
+shader_parameter/scale = 0.8
+
+[sub_resource type="Animation" id="Animation_4xoqs"]
+resource_name = "Open"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.3]
+}
+
+[sub_resource type="Animation" id="Animation_ocdxc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+
+[sub_resource type="Animation" id="Animation_p0c8c"]
+resource_name = "Close"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.3, 0.8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mhnld"]
+_data = {
+"Close": SubResource("Animation_p0c8c"),
+"Open": SubResource("Animation_4xoqs"),
+"RESET": SubResource("Animation_ocdxc")
+}
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ohqny")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
+[node name="HealthBar" type="ColorRect" parent="UILayer"]
+top_level = true
+material = SubResource("CanvasItemMaterial_msvjc")
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 155.0
+offset_bottom = 25.0
+color = Color(0, 0.729412, 0.45098, 0.784314)
+
+[node name="CardHolder" type="ColorRect" parent="UILayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -60.0
+offset_right = -15.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0, 0, 0, 0.172549)
+
+[node name="CardR" type="ColorRect" parent="UILayer/CardHolder"]
+top_level = true
+material = SubResource("CanvasItemMaterial_m3yjn")
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -54.0
+offset_top = -53.0
+offset_right = -26.0
+offset_bottom = -11.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Cooldown" type="Timer" parent="UILayer/CardHolder/CardR"]
+one_shot = true
+
+[node name="CardL" type="ColorRect" parent="UILayer/CardHolder"]
+top_level = true
+material = SubResource("CanvasItemMaterial_3syqg")
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -53.0
+offset_right = -70.0
+offset_bottom = -11.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Cooldown" type="Timer" parent="UILayer/CardHolder/CardL"]
+one_shot = true
+
 [node name="Vignette" type="ColorRect" parent="UILayer"]
+top_level = true
 material = SubResource("ShaderMaterial_ty0ol")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -284.004
-offset_top = -175.0
-offset_right = -4.004
-offset_bottom = 185.0
+offset_right = 470.0
+offset_bottom = 680.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/Vignette"]
 libraries = {
 "": SubResource("AnimationLibrary_njwq4")
+}
+
+[node name="Binoculars" type="ColorRect" parent="UILayer"]
+top_level = true
+material = SubResource("ShaderMaterial_8r5fy")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/Binoculars"]
+libraries = {
+"": SubResource("AnimationLibrary_mhnld")
 }
 
 [node name="FirstWorld" parent="." instance=ExtResource("1_bvn13")]

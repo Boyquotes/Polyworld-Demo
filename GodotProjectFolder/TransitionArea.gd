@@ -16,4 +16,4 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body is Player:
-		get_parent().get_parent().get_parent().get_parent().change_scene(file)
+		get_tree().root.get_node("Main").change_scene(file)

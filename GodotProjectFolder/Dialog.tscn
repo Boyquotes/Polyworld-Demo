@@ -58,7 +58,6 @@ script = ExtResource("1_ah8iq")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -73,13 +72,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_fakv3")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
 texture_filter = 1
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
+offset_left = 7.0
 offset_top = 4.0
-offset_right = -11.0
+offset_right = -5.0
 offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -91,7 +89,7 @@ custom_effects = [SubResource("RichTextEffect_5mku6")]
 visible_characters_behavior = 1
 
 [node name="ArrowPivot" type="Control" parent="Panel"]
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -106,7 +104,6 @@ grow_vertical = 0
 
 [node name="ArrowIcon" type="TextureRect" parent="Panel/ArrowPivot"]
 texture_filter = 1
-layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = -9.0
@@ -125,7 +122,6 @@ libraries = {
 [node name="Tail" type="TextureRect" parent="."]
 show_behind_parent = true
 texture_filter = 1
-layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

@@ -24,6 +24,12 @@ var can_hold_jump = false
 @onready var anim = $Model/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 
+var right_cooldown = 0.5
+var left_cooldown = 1
+
+var is_right_cooling = false
+var is_left_cooling = false
+
 func _ready():
 	pass
 

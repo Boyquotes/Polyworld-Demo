@@ -54,9 +54,6 @@ func physics_update(delta):
 		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.RUN_SPEED, player.AIR_ACCEL * delta)
 		player.velocity.x = hor_velocity.x
 		player.velocity.z = hor_velocity.y
-		
-		#player.velocity.x = move_toward(player.velocity.x, player.relative_input_dir.x * player.RUN_SPEED, player.AIR_ACCEL * delta)
-		#player.velocity.z = move_toward(player.velocity.z, player.relative_input_dir.y * player.RUN_SPEED, player.AIR_ACCEL * delta)
 	
 	
 	player.move_and_slide()
@@ -85,9 +82,15 @@ func physics_update(delta):
 				state_machine.transition_to("Idle")
 	
 	if Input.is_action_just_pressed("left_hand"):
-		state_machine.transition_to("Attack1")
+		if not player.is_left_cooling:
+			player.is_left_cooling = true
+			player.get_parent().get_parent().card_left_cooldown.start(player.left_cooldown)
+			state_machine.transition_to("Attack1")
 	if Input.is_action_just_pressed("right_hand"):
-		state_machine.transition_to("Attack2")
+		if not player.is_right_cooling:
+			player.is_right_cooling = true
+			player.get_parent().get_parent().card_right_cooldown.start(player.right_cooldown)
+			state_machine.transition_to("Attack2")
 	if Input.is_action_just_pressed("special"):
 		state_machine.transition_to("Attack3")
 

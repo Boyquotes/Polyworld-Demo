@@ -1,6 +1,13 @@
 extends Node3D
 
 
+@onready var card_left = $UILayer/CardHolder/CardL as ColorRect
+@onready var card_right = $UILayer/CardHolder/CardR as ColorRect
+@onready var health_bar = $UILayer/HealthBar as ColorRect
+
+@onready var card_left_cooldown = card_left.get_node("Cooldown")
+@onready var card_right_cooldown = card_right.get_node("Cooldown")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -8,7 +15,29 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	
+	var player = get_child(1).get_node("Player") as Player
+	
+	card_left.size.y = (1 - card_left_cooldown.time_left / card_left_cooldown.wait_time) * 42
+	card_left.position.y = 258 - card_left.size.y
+	
+	card_right.size.y = (1 - card_right_cooldown.time_left / card_right_cooldown.wait_time) * 42
+	card_right.position.y = 258 - card_right.size.y
+	
+	if card_left_cooldown.time_left == 0:
+		player.is_left_cooling = false
+		card_left.color.a = 0.9
+	else:
+		player.is_left_cooling = true
+		card_left.color.a = 0.25
+		
+	if card_right_cooldown.time_left == 0:
+		player.is_right_cooling = false
+		card_right.color.a = 0.9
+	else:
+		player.is_right_cooling = true
+		card_right.color.a = 0.25
+
 
 
 func change_scene(scene_name : String):

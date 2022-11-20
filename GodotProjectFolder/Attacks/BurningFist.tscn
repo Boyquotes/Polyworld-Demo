@@ -129,7 +129,7 @@ libraries = {
 
 [node name="Hitbox" parent="." instance=ExtResource("2_dhj4c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0806884)
-damage = 10.0
+damage = 12.0
 push_force_horizontal = 10.0
 push_force_vertical = 10.0
 can_burn = true

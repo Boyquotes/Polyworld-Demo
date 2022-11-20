@@ -11,4 +11,8 @@ script = ExtResource("1_62j8l")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 
+[node name="LagTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="." to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="LagTimer" to="." method="_on_lag_timer_timeout"]

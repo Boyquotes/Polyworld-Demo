@@ -15,8 +15,6 @@
 background_mode = 1
 background_color = Color(0.521569, 0.521569, 0.521569, 1)
 background_canvas_max_layer = 1
-tonemap_mode = 2
-glow_enabled = true
 fog_light_energy = 2.28
 fog_sun_scatter = 3.71
 fog_density = 0.007

@@ -30,20 +30,24 @@ func physics_update(delta):
 	player.anim.play("thrust")
 	
 	# Add the gravity
-	#player.velocity.y -= player.GRAVITY * delta
+	#player.velocity.y -= player.GRAVITY / 2 * delta
 	
-#	var hor_velocity = Vector2(player.velocity.x, player.velocity.z).normalized()
-#	hor_velocity *= attack_length
-#	player.velocity.x = hor_velocity.x
-#	player.velocity.z = hor_velocity.y
 	player.velocity = player.velocity.normalized() * attack_length
 	
 	player.move_and_slide()
 	
 	if player.is_on_floor():
 		attack_length -= 60 * delta
+#		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
+#		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * delta)
+#		player.velocity.x = hor_velocity.x
+#		player.velocity.z = hor_velocity.y
 	else:
 		attack_length -= 40 * delta
+#		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
+#		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * delta)
+#		player.velocity.x = hor_velocity.x
+#		player.velocity.z = hor_velocity.y
 	
 	if attack_length <= 5:
 		state_machine.transition_to("Idle")
