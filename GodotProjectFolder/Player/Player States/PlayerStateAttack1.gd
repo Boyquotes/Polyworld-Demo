@@ -49,7 +49,7 @@ func physics_update(delta):
 #		player.velocity.x = hor_velocity.x
 #		player.velocity.z = hor_velocity.y
 	
-	if attack_length <= 5:
+	if attack_length <= 10:
 		state_machine.transition_to("Idle")
 
 
@@ -83,7 +83,7 @@ func best_target(aim_ahead = 0):
 		if result:
 			# collision at ray point
 			pass
-		elif abs(ppos2d.direction_to(npos2d).angle_to(player.target_facing_dir.normalized())) < PI/3: # change to else to just target nearest enemy
+		elif abs(ppos2d.direction_to(npos2d).angle_to(player.target_facing_dir.normalized())) < PI/4: # change to else to just target nearest enemy
 		#else:
 			var current_dist = ppos.distance_to(npos)
 			if current_dist < dist:

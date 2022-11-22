@@ -102,7 +102,7 @@ func best_target(aim_ahead = 0):
 		if result:
 			# collision at ray point
 			pass
-		elif abs(ppos2d.direction_to(npos2d).angle_to(Vector2(direction.x, direction.z).normalized())) < PI/3: # change to else to just target nearest enemy
+		elif abs(ppos2d.direction_to(npos2d).angle_to(Vector2(direction.x, direction.z).normalized())) < PI/4: # change to else to just target nearest enemy
 		#else:
 			var current_dist = ppos.distance_to(npos)
 			if current_dist < dist:

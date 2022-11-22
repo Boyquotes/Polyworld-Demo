@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2sqmde2h8gfg"]
+
+[ext_resource type="Script" path="res://PathfindingEnemy.gd" id="1_7i3iw"]
+[ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="2_bwnuo"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_v5sbh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kh7gn"]
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ltiw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulo86"]
+
+[node name="PathfindingEnemy" type="CharacterBody3D" groups=["enemies"]]
+collision_layer = 2
+script = ExtResource("1_7i3iw")
+health = 100.0
+move_speed = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_v5sbh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_kh7gn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_0ltiw")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+radius = 0.8
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("shake_target") instance=ExtResource("2_bwnuo")]
+shake_target = NodePath("../MeshInstance3D")
+
+[node name="CollisionShape3d" parent="Hurtbox" index="0"]
+shape = SubResource("CapsuleShape3D_ulo86")
+
+[editable path="Hurtbox"]

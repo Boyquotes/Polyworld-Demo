@@ -1,5 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://dqtnobcixcsi3"]
+[gd_scene load_steps=23 format=3 uid="uid://dqtnobcixcsi3"]
 
+[ext_resource type="Texture2D" uid="uid://dy0skpcu04uct" path="res://200px-SonicAdventure2_E350Texture2.png" id="1_1liwv"]
 [ext_resource type="PackedScene" uid="uid://c0xoksmdrs715" path="res://TransitionArea.tscn" id="1_o15wo"]
 [ext_resource type="Texture2D" uid="uid://d1a0s0wr54d1a" path="res://Textures/background2.png" id="3_xd8oi"]
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_7y4x8"]
@@ -10,16 +11,26 @@
 [ext_resource type="PackedScene" uid="uid://bn1i1cib0m8su" path="res://CharacterModel.tscn" id="10_j3vkr"]
 [ext_resource type="Material" uid="uid://dwd4v66xj57wb" path="res://Materials/ShirtMat3.tres" id="11_4xgqk"]
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_bv5wk"]
+panorama = ExtResource("1_1liwv")
+
+[sub_resource type="Sky" id="Sky_eu6c2"]
+sky_material = SubResource("PanoramaSkyMaterial_bv5wk")
+
 [sub_resource type="Environment" id="Environment_3n2rb"]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.521569, 0.521569, 0.521569, 1)
 background_canvas_max_layer = 1
+sky = SubResource("Sky_eu6c2")
+ambient_light_source = 2
+ambient_light_color = Color(0.521569, 0.521569, 0.521569, 1)
 fog_light_energy = 2.28
 fog_sun_scatter = 3.71
 fog_density = 0.007
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqdx7"]
 shading_mode = 2
+diffuse_mode = 1
 albedo_texture = ExtResource("3_xd8oi")
 uv1_scale = Vector3(3, 3, 3)
 texture_filter = 0
@@ -92,6 +103,7 @@ size = Vector3(10.9747, 3.44124, 4.63689)
 
 [node name="TransitionArea" parent="Environment/House" instance=ExtResource("1_o15wo")]
 transform = Transform3D(0.999992, 0, 0.00401479, 0, 1, 0, -0.00401479, 0, 0.999992, -3.4185, -0.49547, -0.484013)
+file = "res://Worlds/SecondWorld.tscn"
 
 [node name="Ground" type="CSGBox3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.85856, 0)

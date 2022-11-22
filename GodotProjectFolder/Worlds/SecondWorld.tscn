@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://cy6avb87a0xk"]
+[gd_scene load_steps=25 format=3 uid="uid://cy6avb87a0xk"]
 
 [ext_resource type="Script" path="res://TransitionArea.gd" id="1_3f51b"]
+[ext_resource type="Texture2D" uid="uid://cvq3x52ao4e4a" path="res://sonic_skyPAN2.png" id="1_kavbf"]
 [ext_resource type="Texture2D" uid="uid://d1a0s0wr54d1a" path="res://Textures/background2.png" id="3_xd8oi"]
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_7y4x8"]
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_p7en2"]
@@ -11,10 +12,18 @@
 [ext_resource type="PackedScene" uid="uid://bn1i1cib0m8su" path="res://CharacterModel.tscn" id="10_j3vkr"]
 [ext_resource type="Material" uid="uid://dwd4v66xj57wb" path="res://Materials/ShirtMat3.tres" id="11_4xgqk"]
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6rs0"]
+panorama = ExtResource("1_kavbf")
+
+[sub_resource type="Sky" id="Sky_mblu3"]
+sky_material = SubResource("PanoramaSkyMaterial_k6rs0")
+
 [sub_resource type="Environment" id="Environment_3n2rb"]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.521569, 0.521569, 0.521569, 1)
 background_canvas_max_layer = 1
+sky = SubResource("Sky_mblu3")
+sky_custom_fov = 65.5
 fog_light_energy = 2.28
 fog_sun_scatter = 3.71
 fog_density = 0.007
@@ -98,7 +107,7 @@ size = Vector3(5.73805, 3.44124, 3.9174)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.208187, 0)
 collision_mask = 2
 script = ExtResource("1_3f51b")
-file = "res://FirstWorld.tscn"
+file = "res://Worlds/FirstWorld.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/House/TransitionArea"]
 shape = SubResource("BoxShape3D_45lns")
