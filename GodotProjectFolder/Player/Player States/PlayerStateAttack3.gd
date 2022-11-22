@@ -25,8 +25,6 @@ func enter():
 	
 	player.set_target_facing(Vector2(best_targ.x, best_targ.z))
 	
-	print(best_targ)
-	
 	player.velocity.y = 15
 	
 

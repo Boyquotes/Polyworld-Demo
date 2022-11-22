@@ -4,3 +4,4 @@
 cull_mode = 2
 shading_mode = 0
 albedo_color = Color(0.882353, 0.713726, 0.623529, 1)
+disable_receive_shadows = true

@@ -1,8 +1,7 @@
-class_name Enemy
+class_name Partner
 extends PathfindingEntity
 
 
-@export var health = 0.0
 @export var weight = 2.0
 
 var player : Player
@@ -15,17 +14,19 @@ func _ready():
 
 
 func _process(delta):
-	if health <= 0:
-		queue_free()
-	attacking(player)
+	#attacking(player)
+	pass
 
 
 func _physics_process(delta):
 	
-	ai_move(delta, player.global_position, 2.0)
+	ai_move(delta, player.global_position, 3.0, true)
 	look_at(global_position + velocity)
 	rotation.x = 0
 	rotation.z = 0
+	
+	if global_position.distance_to(player.global_position) > 15:
+		global_position = player.global_position + Vector3.UP * 5
 
 
 func attacking(target):

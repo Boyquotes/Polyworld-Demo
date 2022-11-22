@@ -47,11 +47,14 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 	get_tree().root.add_child(floater)
 	
 	# Set knockback
-	var dir = hitbox.global_position.direction_to(global_position)
-	var knockback = Vector3(dir.x * hitbox.push_force_horizontal, 
-							hitbox.push_force_vertical,
-							dir.z * hitbox.push_force_horizontal)
-	get_parent().velocity = knockback
+	if "velocity" in get_parent():
+		var dir = hitbox.global_position.direction_to(global_position).normalized()
+		print(dir)
+		var knockback = Vector3(dir.x * hitbox.push_force_horizontal, 
+								hitbox.push_force_vertical,
+								dir.z * hitbox.push_force_horizontal)
+		print(knockback)
+		get_parent().velocity = knockback
 	
 	# Shake the screen
 	screenshake(0.15)
@@ -120,7 +123,6 @@ func hurtlag():
 	for child in shake_target.get_children():
 		if child is Shaker:
 			child.end_shake()
-
 
 
 func screenshake(duration:float):

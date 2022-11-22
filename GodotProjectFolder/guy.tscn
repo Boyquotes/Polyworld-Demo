@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dlr01di7bjmcr"]
+[gd_scene load_steps=11 format=3 uid="uid://dlr01di7bjmcr"]
 
 [ext_resource type="Script" path="res://Guy.gd" id="1_wfbon"]
+[ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="2_dsvx4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_scu7w"]
 shading_mode = 2
@@ -252,7 +253,12 @@ _data = {
 "run": SubResource("Animation_yg5rl")
 }
 
-[node name="Guy" type="Node3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mc82u"]
+radius = 0.571885
+height = 6.45776
+
+[node name="Guy" type="Node3D" groups=["enemies"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.059374, 0)
 script = ExtResource("1_wfbon")
 
 [node name="Light" type="Node3D" parent="."]
@@ -352,3 +358,13 @@ skin = SubResource("Skin_4v3bt")
 libraries = {
 "": SubResource("AnimationLibrary_upkg3")
 }
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("shake_target") instance=ExtResource("2_dsvx4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0757351, 3.28881, 0)
+shake_target = NodePath("../Armature")
+
+[node name="CollisionShape3d" parent="Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0151472, 0)
+shape = SubResource("CapsuleShape3D_mc82u")
+
+[editable path="Hurtbox"]

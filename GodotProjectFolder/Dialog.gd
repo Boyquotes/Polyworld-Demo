@@ -88,7 +88,6 @@ func _process(delta):
 		# Turn on skipping
 		if Input.is_action_just_pressed("interact"):
 			skipping = true
-			print("skipped")
 		
 		if skipping:
 			visible_chars += 4
@@ -134,10 +133,6 @@ func _process(delta):
 func text_to_pages(t):
 	text = text.replace("\t", "")
 	split_text = text.split("\n")
-	#for i in split_text:
-		#i = i.replace("\t", "")
-		#print(i)
-	print(split_text)
 
 
 # Initializes strings before they can be displayed in the textbox

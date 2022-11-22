@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cps3br5v0dfcj"]
+
+[ext_resource type="Script" path="res://Partner.gd" id="1_xfgan"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yl31i"]
+shading_mode = 2
+diffuse_mode = 2
+albedo_color = Color(0, 0.886275, 0.352941, 1)
+disable_receive_shadows = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ddqbe"]
+material = SubResource("StandardMaterial3D_yl31i")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5bdni"]
+
+[node name="Partner" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_xfgan")
+move_speed = 10.0
+should_avoid = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ddqbe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_5bdni")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
