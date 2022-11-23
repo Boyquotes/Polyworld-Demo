@@ -4,6 +4,7 @@ extends PathfindingEntity
 
 @export var health = 0.0
 @export var weight = 2.0
+@export var can_jump = false
 
 var player : Player
 var rng = RandomNumberGenerator.new()
@@ -22,7 +23,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	
-	ai_move(delta, player.global_position, 2.0, false, false)
+	ai_move(delta, player.global_position, 2.0, false, can_jump)
 	if velocity != Vector3.ZERO:
 		look_at(global_position + velocity)
 		rotation.x = 0

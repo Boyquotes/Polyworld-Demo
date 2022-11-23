@@ -5,6 +5,7 @@ extends CharacterBody3D
 @export var move_speed := 12.0
 @export var move_accel := 60.0
 @export var move_decel := 50.0
+@export var air_accel := 30.0
 @export var jump_velocity := 25.0
 @export var gravity := 70.0
 @export var should_avoid = true
@@ -69,13 +70,16 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 		if accel_by_distance:
 			hor_velocity = hor_velocity.move_toward(direction * (move_speed + (agent.distance_to_target() - min_range) * 2), move_accel * delta)
 		else:
-			hor_velocity = hor_velocity.move_toward(direction * move_speed, move_accel * delta)
+			if is_on_floor():
+				hor_velocity = hor_velocity.move_toward(direction * move_speed, move_accel * delta)
+			else:
+				hor_velocity = hor_velocity.move_toward(direction * move_speed, air_accel * delta)
 	else:
 		# Decelerate towards zero
 		if is_on_floor():
 			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, move_decel * delta)
 		else:
-			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, move_decel * delta)
+			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, air_accel * delta)
 			
 	# Set new velocity and move
 	if agent.avoidance_enabled:
