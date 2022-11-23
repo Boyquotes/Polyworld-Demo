@@ -2,14 +2,12 @@
 
 [ext_resource type="Script" path="res://Partner.gd" id="1_xfgan"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yl31i"]
-shading_mode = 2
-diffuse_mode = 2
-albedo_color = Color(0, 0.886275, 0.352941, 1)
-disable_receive_shadows = true
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytivq"]
+diffuse_mode = 1
+albedo_color = Color(0.807843, 0.803922, 0, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ddqbe"]
-material = SubResource("StandardMaterial3D_yl31i")
+[sub_resource type="BoxMesh" id="BoxMesh_78isx"]
+material = SubResource("StandardMaterial3D_ytivq")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5bdni"]
 
@@ -20,7 +18,11 @@ move_speed = 10.0
 should_avoid = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_ddqbe")
+mesh = SubResource("BoxMesh_78isx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, -0.5)
+mesh = SubResource("BoxMesh_78isx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_5bdni")

@@ -80,5 +80,6 @@ func _on_timer_timeout():
 func contact():
 	caster.velocity = direction.normalized() * 15
 	contacted = true
+	# FIX THIS
 	$Hitbox.monitoring = false
 	$Hitbox.monitorable = false

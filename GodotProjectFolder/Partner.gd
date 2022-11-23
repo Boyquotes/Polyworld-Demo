@@ -21,9 +21,10 @@ func _process(delta):
 func _physics_process(delta):
 	
 	ai_move(delta, player.global_position, 3.0, true)
-	look_at(global_position + velocity)
-	rotation.x = 0
-	rotation.z = 0
+	if velocity != Vector3.ZERO:
+		look_at(global_position + velocity)
+		rotation.x = 0
+		rotation.z = 0
 	
 	if global_position.distance_to(player.global_position) > 15:
 		global_position = player.global_position + Vector3.UP * 5

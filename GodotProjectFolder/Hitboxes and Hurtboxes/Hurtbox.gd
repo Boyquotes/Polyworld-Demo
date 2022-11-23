@@ -43,8 +43,8 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 	# Instantiate damage floater
 	var floater = load("res://DamageFloater.tscn").instantiate()
 	floater.text = str(hitbox.damage)
-	floater.global_position = global_position
-	get_tree().root.add_child(floater)
+	floater.hit_position = global_position
+	get_tree().root.get_child(0).add_child(floater)
 	
 	# Set knockback
 	if "velocity" in get_parent():

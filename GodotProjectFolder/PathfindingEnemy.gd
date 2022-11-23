@@ -22,10 +22,11 @@ func _process(delta):
 
 func _physics_process(delta):
 	
-	ai_move(delta, player.global_position, 2.0)
-	look_at(global_position + velocity)
-	rotation.x = 0
-	rotation.z = 0
+	ai_move(delta, player.global_position, 2.0, false, false)
+	if velocity != Vector3.ZERO:
+		look_at(global_position + velocity)
+		rotation.x = 0
+		rotation.z = 0
 
 
 func attacking(target):
