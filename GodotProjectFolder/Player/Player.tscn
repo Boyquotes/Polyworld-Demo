@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://2xo541bybgl4"]
+[gd_scene load_steps=16 format=3 uid="uid://braenof5sfums"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_cvs5f"]
 [ext_resource type="Script" path="res://StateMachine.gd" id="2_avgf8"]
@@ -11,13 +11,7 @@
 [ext_resource type="Script" path="res://Player/Player States/PlayerStateAttack2.gd" id="8_2pffb"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="8_dt1gd"]
 [ext_resource type="Script" path="res://Player/Player States/PlayerStateAttack3.gd" id="9_35sib"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_um22k"]
-radial_segments = 8
-rings = 2
-
-[sub_resource type="BoxMesh" id="BoxMesh_clkfk"]
-size = Vector3(0.25, 0.25, 1)
+[ext_resource type="Script" path="res://Player/Player States/PlayerStateAttack4.gd" id="10_nnitf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yk3vu"]
 
@@ -29,9 +23,6 @@ size = Vector3(2.24814, 1.518, 2.46)
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1_cvs5f")
-
-[node name="Model" parent="." instance=ExtResource("6_k6o4e")]
-transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("2_avgf8")
@@ -55,17 +46,11 @@ script = ExtResource("8_2pffb")
 [node name="Attack3" type="Node" parent="StateMachine"]
 script = ExtResource("9_35sib")
 
-[node name="Model2" type="Node3D" parent="."]
-visible = false
+[node name="Attack4" type="Node" parent="StateMachine"]
+script = ExtResource("10_nnitf")
 
-[node name="MeshInstance3d" type="MeshInstance3D" parent="Model2"]
-mesh = SubResource("CapsuleMesh_um22k")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3d2" type="MeshInstance3D" parent="Model2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
-mesh = SubResource("BoxMesh_clkfk")
-skeleton = NodePath("../..")
+[node name="Model" parent="." instance=ExtResource("6_k6o4e")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)
 
 [node name="CollisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_yk3vu")

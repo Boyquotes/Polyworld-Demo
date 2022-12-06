@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bn1i1cib0m8su" path="res://CharacterModel.tscn" id="10_j3vkr"]
 [ext_resource type="Material" uid="uid://dwd4v66xj57wb" path="res://Materials/ShirtMat3.tres" id="11_4xgqk"]
 [ext_resource type="PackedScene" uid="uid://cps3br5v0dfcj" path="res://Partner.tscn" id="11_kdk1p"]
-[ext_resource type="PackedScene" uid="uid://b2sqmde2h8gfg" path="res://PathfindingEnemy.tscn" id="12_uf55u"]
+[ext_resource type="PackedScene" uid="uid://37s7ednup61r" path="res://Enemy.tscn" id="12_nqlpq"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6rs0"]
 panorama = ExtResource("1_3pjb6")
@@ -79,7 +79,7 @@ albedo_color = Color(1, 1, 0, 1)
 material = SubResource("StandardMaterial3D_n7aei")
 size = Vector3(0.25, 0.25, 1)
 
-[node name="Second World" type="Node3D"]
+[node name="SecondWorld" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3n2rb")
@@ -326,7 +326,7 @@ skeleton = NodePath("../../../..")
 transform = Transform3D(0.670569, 0, 0.741847, 0, 1, 0, -0.741847, 0, 0.670569, -2.79877, -0.751638, -2.46062)
 
 [node name="NPC" type="CharacterBody3D" parent="."]
-transform = Transform3D(0.379101, 0, -0.925355, 0, 1, 0, 0.925355, 0, 0.379101, 11.7471, -0.343931, -0.229118)
+transform = Transform3D(0.379101, 0, -0.925355, 0, 1, 0, 0.925355, 0, 0.379101, 11.2946, -0.9774, -0.229118)
 collision_layer = 2
 script = ExtResource("9_ppddr")
 
@@ -358,46 +358,13 @@ material_override = ExtResource("11_4xgqk")
 [node name="Partner" parent="." instance=ExtResource("11_kdk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88796, 0)
 
-[node name="PathfindingEnemy" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.54075, -9.53674e-07, -4.42698)
-can_jump = true
-move_speed = 8.0
+[node name="Enemy" parent="." instance=ExtResource("12_nqlpq")]
 
-[node name="PathfindingEnemy2" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2951, -9.53674e-07, -0.20871)
-can_jump = true
-move_speed = 8.0
+[node name="Enemy2" parent="." instance=ExtResource("12_nqlpq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43292, -0.264593, 4.23859)
 
-[node name="PathfindingEnemy3" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.90872, -9.53674e-07, 3.6284)
-can_jump = true
-move_speed = 8.0
-
-[node name="PathfindingEnemy4" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8983, -9.53674e-07, 8.86031)
-can_jump = true
-move_speed = 8.0
-
-[node name="PathfindingEnemy5" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.9844, -9.53674e-07, 8.31211)
-can_jump = true
-move_speed = 8.0
-
-[node name="PathfindingEnemy6" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.4311, 1.30769, 0.0706367)
-move_speed = 8.0
-
-[node name="PathfindingEnemy7" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.135475, -9.53674e-07, 6.84041)
-move_speed = 8.0
-
-[node name="PathfindingEnemy8" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0148, -9.53674e-07, 13.3281)
-move_speed = 8.0
-
-[node name="PathfindingEnemy9" parent="." instance=ExtResource("12_uf55u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.1599, -9.53674e-07, 2.95774)
-move_speed = 8.0
+[node name="Enemy3" parent="." instance=ExtResource("12_nqlpq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.99435, -0.264594, 3.93099)
 
 [connection signal="body_entered" from="Environment/NavigationRegion3D/House/TransitionArea" to="Environment/NavigationRegion3D/House/TransitionArea" method="_on_body_entered"]
 [connection signal="body_entered" from="KillPlane" to="KillPlane" method="_on_kill_plane_body_entered"]

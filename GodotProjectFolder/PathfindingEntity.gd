@@ -25,6 +25,7 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 	
 	# Store horizontal velocity
 	var hor_velocity = Vector2(velocity.x, velocity.z)
+	
 	# Store vertical velocity
 	var vert_velocity = velocity.y
 	
@@ -38,13 +39,14 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 	var distance = current_pos.distance_to(destination)
 	var distance_2d = current_pos_2d.distance_to(destination_2d)
 	var direction = current_pos_2d.direction_to(destination_2d)
-		
+	
+	if is_on_floor() and should_avoid:
+		agent.avoidance_enabled = true
+	else:
+		agent.avoidance_enabled = false
+	
 	if distance_2d > min_range:
 		if is_on_floor():
-			if should_avoid:
-				agent.avoidance_enabled = true
-			else:
-				agent.avoidance_enabled = false
 			var next_location = agent.get_next_location()
 			var next_location_2d = Vector2(next_location.x, next_location.z)
 			var final_location = agent.get_final_location()
@@ -63,9 +65,6 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 				if can_hop: #maybe move this out of the outer if statement to help if entity is stuck while pathfinding ?
 					if (path_length <= 1 && destination.y > current_pos.y + jump_thresh) || always_hop || is_on_wall():
 						vert_velocity = jump_velocity
-		else:
-			if should_avoid:
-				agent.avoidance_enabled = false
 			
 		if accel_by_distance:
 			hor_velocity = hor_velocity.move_toward(direction * (move_speed + (agent.distance_to_target() - min_range) * 2), move_accel * delta)
@@ -80,7 +79,7 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, move_decel * delta)
 		else:
 			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, air_accel * delta)
-			
+		
 	# Set new velocity and move
 	if agent.avoidance_enabled:
 		agent.max_speed = move_speed

@@ -18,7 +18,6 @@ func _ready():
 	$Hitbox.caster = self.caster
 	global_position = caster.global_position
 	velocity = Vector3(direction.x, 0, direction.y) * speed
-	#screenshake(0.1)
 	
 	var best_targ = best_target(0.0)
 	#best_targ = caster.target_facing_dir
@@ -73,15 +72,6 @@ func _on_hitbox_area_entered(area):
 	pass
 
 
-func screenshake(duration:float):
-	var shake_target = get_viewport().get_camera_3d()
-	var screenshaker = load("res://Shaker.tscn").instantiate() as Shaker
-	screenshaker.initialize(0.75, 0.025)
-	shake_target.add_child(screenshaker)
-	await get_tree().create_timer(duration).timeout
-	screenshaker.end_shake()
-
-
 func best_target(aim_ahead = 0):
 	var dist = 20
 	var target_node = null
@@ -100,7 +90,6 @@ func best_target(aim_ahead = 0):
 		var result := space_state.intersect_ray(param)
 		if result:
 			# collision at ray point
-			print("collided")
 			pass
 		elif abs(ppos2d.direction_to(npos2d).angle_to(Vector2(direction.x, direction.z).normalized())) < PI/3: # change to else to just target nearest enemy
 		#else:

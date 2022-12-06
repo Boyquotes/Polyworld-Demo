@@ -6,7 +6,7 @@ const GRAVITY := 40.0
 
 var health = 100
 
-
+var stunned = false
 var alerted = false
 
 @onready var anim = $Model/AnimationPlayer as AnimationPlayer
@@ -65,11 +65,10 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 		return
 	
 	health -= hitbox.damage
-#	stunned = true
-#	anim.play("hurt")
-#	print("yes")
-#	await get_tree().create_timer(2.0).timeout
-#	stunned = false
+	stunned = true
+	anim.play("hurt")
+	await get_tree().create_timer(2.0).timeout
+	stunned = false
 	
 
 func hurt():

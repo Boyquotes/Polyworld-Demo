@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://8nhtfbq1viuh"]
+
+[ext_resource type="Script" path="res://Attacks/EnergyBall.gd" id="1_30ex4"]
+[ext_resource type="PackedScene" uid="uid://cqta3h2r0tx1d" path="res://Hitboxes and Hurtboxes/Hitbox.tscn" id="2_q8fgt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_d60vk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wqsxo"]
+shading_mode = 0
+albedo_color = Color(0.854902, 0, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_cjgqc"]
+material = SubResource("StandardMaterial3D_wqsxo")
+radius = 0.25
+height = 0.5
+radial_segments = 16
+rings = 8
+
+[node name="EnergyBall" type="Node3D"]
+script = ExtResource("1_30ex4")
+speed = 0.1
+
+[node name="Hitbox" parent="." instance=ExtResource("2_q8fgt")]
+lag_caster = false
+damage = 20.0
+push_force_horizontal = 20.0
+push_force_vertical = 12.0
+
+[node name="CollisionShape3d" parent="Hitbox" index="0"]
+shape = SubResource("SphereShape3D_d60vk")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_cjgqc")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+
+[editable path="Hitbox"]

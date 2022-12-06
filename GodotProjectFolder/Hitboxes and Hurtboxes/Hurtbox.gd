@@ -49,12 +49,14 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 	# Set knockback
 	if "velocity" in get_parent():
 		var dir = hitbox.global_position.direction_to(global_position).normalized()
-		print(dir)
 		var knockback = Vector3(dir.x * hitbox.push_force_horizontal, 
 								hitbox.push_force_vertical,
 								dir.z * hitbox.push_force_horizontal)
-		print(knockback)
 		get_parent().velocity = knockback
+	
+	# Set stun
+	if get_parent().has_method("stun"):
+		get_parent().stun(0.5)
 	
 	# Shake the screen
 	screenshake(0.15)
@@ -63,12 +65,9 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 	var lag_dur = hitbox.damage * 0.025
 	lag_timer.stop()
 	lag_timer.start(lag_dur)
-	#hitbox.lag_timer.start(lag_dur)
-	#print(hitbox.lag_timer)
 	
-	# Hitlag
+	# Hitlag and hurtlag
 	hitlag(hitbox)
-	
 	hurtlag()
 
 

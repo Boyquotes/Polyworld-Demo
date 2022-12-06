@@ -9,6 +9,9 @@ extends PathfindingEntity
 var player : Player
 var rng = RandomNumberGenerator.new()
 
+var stunned = false
+@onready var stun_timer = $StunTimer as Timer
+
 
 func _ready():
 	super()
@@ -23,11 +26,26 @@ func _process(delta):
 
 func _physics_process(delta):
 	
-	ai_move(delta, player.global_position, 2.0, false, can_jump)
-	if velocity != Vector3.ZERO:
-		look_at(global_position + velocity)
-		rotation.x = 0
-		rotation.z = 0
+	if not stunned:
+		$MeshInstance3D2.visible = false
+		ai_move(delta, player.global_position, 6.0, false, can_jump)
+		if velocity != Vector3.ZERO:
+			look_at(global_position + velocity)
+			rotation.x = 0
+			rotation.z = 0
+		else:
+			look_at(player.global_position)
+			rotation.x = 0
+			rotation.z = 0
+	else:
+		$MeshInstance3D2.visible = true
+		velocity.y -= gravity * delta
+		if is_on_floor():
+			var hor_velocity = Vector2(velocity.x, velocity.z)
+			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, move_decel * delta)
+			velocity.x = hor_velocity.x
+			velocity.z = hor_velocity.y
+		move_and_slide()
 
 
 func attacking(target):
@@ -71,3 +89,11 @@ func shoot(target_angle):
 #
 #	get_tree().get_root().add_child(missile)
 #	missile.get_node("Hitbox").caster = self
+
+
+func stun(dur = 2):
+	stunned = true
+	stun_timer.start(dur)
+	await stun_timer.timeout
+	stunned = false
+	

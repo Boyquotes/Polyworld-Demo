@@ -87,9 +87,9 @@ func state_idle(delta):
 		current_state = States.AIR
 		set_coyote_time()
 	
-	if Input.is_action_just_pressed("left_hand"):
+	if Input.is_action_just_pressed("primary"):
 		activate_slot(0)
-	if Input.is_action_just_pressed("right_hand"):
+	if Input.is_action_just_pressed("secondary"):
 		activate_slot(1)
 
 
@@ -121,9 +121,9 @@ func state_run(delta):
 		current_state = States.AIR
 		set_coyote_time()
 	
-	if Input.is_action_just_pressed("left_hand"):
+	if Input.is_action_just_pressed("primary"):
 		activate_slot(0)
-	if Input.is_action_just_pressed("right_hand"):
+	if Input.is_action_just_pressed("secondary"):
 		activate_slot(1)
 
 
@@ -176,9 +176,9 @@ func state_air(delta):
 			else:
 				current_state = States.IDLE
 	
-	if Input.is_action_just_pressed("left_hand"):
+	if Input.is_action_just_pressed("primary"):
 		activate_slot(0)
-	if Input.is_action_just_pressed("right_hand"):
+	if Input.is_action_just_pressed("secondary"):
 		activate_slot(1)
 	
 

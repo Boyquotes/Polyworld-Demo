@@ -8,17 +8,15 @@ var interacting = false
 
 
 func _process(delta):
-	look_at(get_viewport().get_camera_3d().global_position)
-	rotation.x = 0
-	rotation.z = 0
-	rotation.y += PI
+#	look_at(get_viewport().get_camera_3d().global_position)
+#	rotation.x = 0
+#	rotation.z = 0
+#	rotation.y += PI
 	
 	
 	if interacting:
-		#get_viewport().get_camera_3d().get_parent().target_offset = (get_parent().get_node("Player").global_position - global_position) / 2
 		get_viewport().get_camera_3d().get_parent().target_offset = (global_position - get_parent().get_node("Player").global_position) / 2
 		
-		#get_viewport().get_camera_3d().get_parent().target_offset.y = 3
 		if tb != null:
 			get_viewport().get_camera_3d().get_parent().target_offset.y = tb.textbox.size.y / 50
 

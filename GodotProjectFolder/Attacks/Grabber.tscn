@@ -20,7 +20,7 @@ script = ExtResource("1_4c3bl")
 [node name="Hitbox" parent="." instance=ExtResource("2_wlpt2")]
 damage = 3.0
 push_force_horizontal = -15.0
-push_force_vertical = 9.0
+push_force_vertical = 12.0
 
 [node name="CollisionShape3d" parent="Hitbox" index="0"]
 shape = SubResource("SphereShape3D_d60vk")

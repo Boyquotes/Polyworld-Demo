@@ -13,12 +13,18 @@ func _ready():
 
 
 func enter():
-	attack_length = 30
-	var burst = load("res://Attacks/BurningFist.tscn").instantiate()
-	burst.caster = player
-	get_tree().root.add_child(burst)
-	player.velocity = best_target()
-	player.set_target_facing(Vector2(player.velocity.x, player.velocity.z))
+	attack_length = 10
+	var best_targ = best_target()
+	
+	var ball = load("res://Attacks/EnergyBall.tscn").instantiate()
+	ball.caster = player
+	ball.direction = Vector3(best_targ.x, 0, best_targ.z)
+	get_tree().root.add_child(ball)
+	ball.global_position = player.global_position
+	
+	player.set_target_facing(Vector2(best_targ.x, best_targ.z))
+	
+	player.velocity.y = 15
 
 
 func update(delta):
@@ -30,37 +36,30 @@ func physics_update(delta):
 	player.anim.play("thrust")
 	
 	# Add the gravity
-	#player.velocity.y -= player.GRAVITY / 2 * delta
+	#player.velocity.y -= player.GRAVITY * delta
 	
-	player.velocity = player.velocity.normalized() * attack_length
+	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
+	#hor_velocity = hor_velocity.normalized() * attack_length
+	player.velocity.x = hor_velocity.x
+	player.velocity.z = hor_velocity.y
 	
 	player.move_and_slide()
 	
 	if player.is_on_floor():
 		attack_length -= 60 * delta
-#		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-#		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * delta)
-#		player.velocity.x = hor_velocity.x
-#		player.velocity.z = hor_velocity.y
 	else:
 		attack_length -= 40 * delta
-#		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-#		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * delta)
-#		player.velocity.x = hor_velocity.x
-#		player.velocity.z = hor_velocity.y
 	
-	if attack_length <= 10:
-		state_machine.transition_to("Idle")
+	if attack_length <= 5:
+		if player.is_on_floor():
+			state_machine.transition_to("Idle")
+		else:
+			state_machine.transition_to("InAir")
+			state_machine.get_node("InAir").flipping = true
 
 
 func exit():
 	pass
-
-
-func jump():
-	player.velocity.y = player.JUMP_VELOCITY
-	player.can_hold_jump = true
-	state_machine.transition_to("InAir")
 
 
 func best_target(aim_ahead = 0):
@@ -68,6 +67,7 @@ func best_target(aim_ahead = 0):
 	var target_node = null
 	var target_angle = Vector3(player.target_facing_dir.x, 0, player.target_facing_dir.y).normalized()
 	for n in get_tree().get_nodes_in_group("enemies"): #change this to hurtbox
+		
 		var ppos = player.global_position
 		var ppos2d = Vector2(ppos.x, ppos.z)
 		var npos = n.global_position
@@ -82,15 +82,12 @@ func best_target(aim_ahead = 0):
 		if result:
 			# collision at ray point
 			pass
-		elif abs(ppos2d.direction_to(npos2d).angle_to(player.target_facing_dir.normalized())) < PI/3: # change to else to just target nearest enemy
+		elif abs(ppos2d.direction_to(npos2d).angle_to(player.target_facing_dir.normalized())) < PI/4: # change to else to just target nearest enemy
 		#else:
 			var current_dist = ppos.distance_to(npos)
 			if current_dist < dist:
 				dist = current_dist
 				target_node = n
-				var nvel = Vector3.ZERO
-				if "velocity" in n:
-					nvel = n.velocity
-				target_angle = ppos.direction_to(npos + nvel * aim_ahead)
+				target_angle = ppos.direction_to(npos + n.velocity * aim_ahead)
 	
 	return target_angle
