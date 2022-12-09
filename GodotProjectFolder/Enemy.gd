@@ -22,7 +22,7 @@ func _physics_process(delta):
 	velocity.y -= GRAVITY * delta
 	
 	var hor_velocity = Vector2(velocity.x, velocity.z)
-		
+	
 	if health > 0:
 		look_at(Vector3(get_parent().get_node("Player").global_position.x, global_position.y, get_parent().get_node("Player").global_position.z))
 		rotation.y += PI
@@ -54,22 +54,6 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
-
-func _on_hurtbox_area_entered(hitbox : Hitbox):
-	
-	if hitbox == null:
-		print("ERROR: NOT A HITBOX")
-		return
-	
-	if hitbox.caster == get_parent():
-		return
-	
-	health -= hitbox.damage
-	stunned = true
-	anim.play("hurt")
-	await get_tree().create_timer(2.0).timeout
-	stunned = false
-	
 
 func hurt():
 	anim.play("hurt", 0)

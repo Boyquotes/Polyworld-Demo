@@ -34,10 +34,6 @@ func physics_update(delta):
 		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * delta)
 		player.velocity.x = hor_velocity.x
 		player.velocity.z = hor_velocity.y
-		
-		#player.velocity.x = move_toward(player.velocity.x, 0, player.RUN_DECEL * delta)
-		#player.velocity.z = move_toward(player.velocity.z, 0, player.RUN_DECEL * delta)
-		
 	
 	player.move_and_slide()
 	

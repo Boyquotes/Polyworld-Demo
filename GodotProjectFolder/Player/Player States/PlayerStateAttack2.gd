@@ -3,7 +3,6 @@ extends State
 
 var player : Player
 
-var attack_length = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -13,12 +12,24 @@ func _ready():
 
 
 func enter():
-	attack_length = 5
+	player.target_facing_dir = Vector2(player.aim_direction.x, player.aim_direction.z)
+	player.velocity.y += 2
+
+	await get_tree().create_timer(0.1).timeout
+	
 	var ball = load("res://Attacks/Fireball.tscn").instantiate()
 	ball.caster = player
-	ball.direction = Vector3(player.target_facing_dir.x, 0, player.target_facing_dir.y)
+	ball.direction = player.aim_direction
 	get_tree().root.add_child(ball)
 	ball.global_position = player.global_position
+	
+	
+	await get_tree().create_timer(0.1).timeout
+	
+	if player.is_on_floor():
+		state_machine.transition_to("Idle")
+	else:
+		state_machine.transition_to("InAir")
 	
 
 
@@ -27,37 +38,23 @@ func update(delta):
 
 
 func physics_update(delta):
+	player.anim.play("inair_up")
 	
-	player.anim.play("thrust")
+	#player.target_facing_dir = Vector2(player.aim_direction.x, player.aim_direction.z)
 	
 	# Add the gravity
 	#player.velocity.y -= player.GRAVITY * delta
 	
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-	hor_velocity *= 0.95
+	if player.is_on_floor():
+		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * 0.5 * delta)
 	player.velocity.x = hor_velocity.x
 	player.velocity.z = hor_velocity.y
 	
 	player.move_and_slide()
-	
-	if player.is_on_floor():
-		attack_length -= 60 * delta
-	else:
-		attack_length -= 40 * delta
-	
-	if attack_length <= 1:
-		if player.is_on_floor():
-			state_machine.transition_to("Idle")
-		else:
-			state_machine.transition_to("InAir")
 
 
 func exit():
 	pass
+	#player.velocity = Vector3.ZERO
 
-
-func jump():
-	player.velocity.y = player.JUMP_VELOCITY
-	player.can_hold_jump = true
-	state_machine.transition_to("InAir")
-	

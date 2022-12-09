@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hvp1i1a7eemo"
-path.s3tc="res://.godot/imported/TextArrowIcon.png-6e1882b46fdbe56dccf666ae71150699.s3tc.ctex"
-path.etc2="res://.godot/imported/TextArrowIcon.png-6e1882b46fdbe56dccf666ae71150699.etc2.ctex"
+uid="uid://v14ra8jtaskk"
+path.s3tc="res://.godot/imported/face-sheet.png-4bd1d109ada638e77e36ac0e28b1304b.s3tc.ctex"
+path.etc2="res://.godot/imported/face-sheet.png-4bd1d109ada638e77e36ac0e28b1304b.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc", "etc2"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://TextArrowIcon.png"
-dest_files=["res://.godot/imported/TextArrowIcon.png-6e1882b46fdbe56dccf666ae71150699.s3tc.ctex", "res://.godot/imported/TextArrowIcon.png-6e1882b46fdbe56dccf666ae71150699.etc2.ctex"]
+source_file="res://face-sheet.png"
+dest_files=["res://.godot/imported/face-sheet.png-4bd1d109ada638e77e36ac0e28b1304b.s3tc.ctex", "res://.godot/imported/face-sheet.png-4bd1d109ada638e77e36ac0e28b1304b.etc2.ctex"]
 
 [params]
 

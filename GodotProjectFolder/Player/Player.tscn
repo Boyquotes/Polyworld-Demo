@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Player/Player States/PlayerStateRun.gd" id="4_h0npr"]
 [ext_resource type="Script" path="res://Player/Player States/PlayerStateInAir.gd" id="5_brxl4"]
 [ext_resource type="Script" path="res://Player/Player States/PlayerStateAttack1.gd" id="6_50c6j"]
-[ext_resource type="PackedScene" uid="uid://bn1i1cib0m8su" path="res://CharacterModel.tscn" id="6_k6o4e"]
+[ext_resource type="PackedScene" uid="uid://dyblx62wxe2ac" path="res://CharacterModel.tscn" id="6_k6o4e"]
 [ext_resource type="PackedScene" uid="uid://cn4f04q2g55a3" path="res://Inventory.tscn" id="7_8u26r"]
 [ext_resource type="Script" path="res://Player/Player States/PlayerStateAttack2.gd" id="8_2pffb"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="8_dt1gd"]

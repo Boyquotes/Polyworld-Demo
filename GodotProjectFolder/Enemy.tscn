@@ -65,7 +65,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15227, 0)
 [node name="CollisionShape3d" parent="Hurtbox" index="0"]
 shape = SubResource("BoxShape3D_btql4")
 
-[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
-
 [editable path="Model"]
 [editable path="Hurtbox"]
