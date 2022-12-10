@@ -71,6 +71,12 @@ func _physics_process(delta):
 				break
 			if body.has_method("interact"):
 				body.interact()
+	
+	for i in get_slide_collision_count():
+		var col = get_slide_collision(i)
+		print(col.get_collider())	
+		if col.get_collider() is RigidBody3D:
+			col.get_collider().apply_central_impulse(-col.get_normal() * 3)
 
 
 func set_target_facing(dir:Vector2):

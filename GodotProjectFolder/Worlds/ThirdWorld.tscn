@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dqtnobcixcsi3"]
+[gd_scene load_steps=37 format=3 uid="uid://dqtnobcixcsi3"]
 
 [ext_resource type="Texture2D" uid="uid://dy0skpcu04uct" path="res://200px-SonicAdventure2_E350Texture2.png" id="1_1liwv"]
 [ext_resource type="PackedScene" uid="uid://c0xoksmdrs715" path="res://TransitionArea.tscn" id="1_o15wo"]
@@ -6,10 +6,21 @@
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_7y4x8"]
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_p7en2"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_070li"]
-[ext_resource type="PackedScene" uid="uid://2xo541bybgl4" path="res://Player/Player.tscn" id="7_tnk0w"]
+[ext_resource type="PackedScene" uid="uid://braenof5sfums" path="res://Player/Player.tscn" id="7_tnk0w"]
 [ext_resource type="Script" path="res://NPC.gd" id="9_ppddr"]
-[ext_resource type="PackedScene" uid="uid://bn1i1cib0m8su" path="res://CharacterModel.tscn" id="10_j3vkr"]
+[ext_resource type="PackedScene" uid="uid://dyblx62wxe2ac" path="res://CharacterModel.tscn" id="10_j3vkr"]
 [ext_resource type="Material" uid="uid://dwd4v66xj57wb" path="res://Materials/ShirtMat3.tres" id="11_4xgqk"]
+[ext_resource type="Texture2D" uid="uid://bw8nhytu5avd" path="res://Face Textures/head1.png" id="11_8y7sk"]
+[ext_resource type="Texture2D" uid="uid://dyp8o3aieogx8" path="res://Face Textures/head2.png" id="12_cy082"]
+[ext_resource type="Texture2D" uid="uid://c6f1urtqksw7s" path="res://Face Textures/head3.png" id="13_d4wpl"]
+[ext_resource type="Texture2D" uid="uid://c6jae17f1d73e" path="res://Face Textures/head4.png" id="14_0jme8"]
+[ext_resource type="Texture2D" uid="uid://demos1o33m0bc" path="res://Face Textures/head5.png" id="15_fjju5"]
+[ext_resource type="Texture2D" uid="uid://od8owedc74l1" path="res://Face Textures/head6.png" id="16_gjuhk"]
+[ext_resource type="Texture2D" uid="uid://j4vx1ny5xwpq" path="res://Face Textures/head7.png" id="17_y2bbk"]
+[ext_resource type="Texture2D" uid="uid://dn6d8oy4hlspk" path="res://Face Textures/head8.png" id="18_20cdu"]
+[ext_resource type="Texture2D" uid="uid://c26ak17vulcu8" path="res://Face Textures/head9.png" id="19_4wwde"]
+[ext_resource type="Texture2D" uid="uid://bko0tvfpiyn4a" path="res://Face Textures/head10.png" id="20_f55io"]
+[ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://TextArrowIcon.png" id="21_qc1qt"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_bv5wk"]
 panorama = ExtResource("1_1liwv")
@@ -44,6 +55,8 @@ shader_parameter/depth_addend = 0.0
 shader_parameter/depth_multiplier = 2.0
 shader_parameter/is_inverted = false
 shader_parameter/outline_color = Quaternion(0, 0, 0, 1)
+shader_parameter/size_x = null
+shader_parameter/size_y = null
 shader_parameter/transparency = 0.85
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
@@ -64,6 +77,45 @@ albedo_color = Color(1, 1, 0, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_a7kpg"]
 material = SubResource("StandardMaterial3D_n7aei")
 size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_3ro33"]
+resource_local_to_scene = true
+frames = 10
+pause = true
+frame_0/texture = ExtResource("11_8y7sk")
+frame_1/texture = ExtResource("12_cy082")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("13_d4wpl")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("14_0jme8")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("15_fjju5")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("16_gjuhk")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("17_y2bbk")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("18_20cdu")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("19_4wwde")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("20_f55io")
+frame_9/duration = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gvkl"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("AnimatedTexture_3ro33")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+use_point_size = true
+point_size = 32.0
+
+[sub_resource type="PointMesh" id="PointMesh_605rr"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_2gvkl")
 
 [node name="ThirdWorld" type="Node3D"]
 
@@ -255,6 +307,18 @@ material_override = ExtResource("11_4xgqk")
 
 [node name="shoulder" parent="NPC/Model/Armature/Skeleton3D" index="7"]
 material_override = ExtResource("11_4xgqk")
+
+[node name="Head" parent="NPC/Model/Armature/Skeleton3D/HeadAttachment" index="3"]
+mesh = SubResource("PointMesh_605rr")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+billboard = 1
+no_depth_test = true
+fixed_size = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_qc1qt")
 
 [connection signal="body_entered" from="KillPlane" to="KillPlane" method="_on_kill_plane_body_entered"]
 

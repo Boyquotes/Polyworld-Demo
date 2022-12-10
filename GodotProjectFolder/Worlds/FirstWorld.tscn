@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://brachnu4xklgs"]
+[gd_scene load_steps=43 format=3 uid="uid://brachnu4xklgs"]
 
 [ext_resource type="Texture2D" uid="uid://cvq3x52ao4e4a" path="res://sonic_skyPAN2.png" id="1_rejek"]
 [ext_resource type="PackedScene" uid="uid://c0xoksmdrs715" path="res://TransitionArea.tscn" id="1_ssdno"]
@@ -6,12 +6,23 @@
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_7y4x8"]
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_p7en2"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_070li"]
-[ext_resource type="PackedScene" uid="uid://2xo541bybgl4" path="res://Player/Player.tscn" id="7_tnk0w"]
+[ext_resource type="PackedScene" uid="uid://braenof5sfums" path="res://Player/Player.tscn" id="7_tnk0w"]
 [ext_resource type="Script" path="res://NPC.gd" id="9_ppddr"]
-[ext_resource type="PackedScene" uid="uid://bn1i1cib0m8su" path="res://CharacterModel.tscn" id="10_j3vkr"]
+[ext_resource type="PackedScene" uid="uid://dyblx62wxe2ac" path="res://CharacterModel.tscn" id="10_j3vkr"]
 [ext_resource type="Material" uid="uid://dwd4v66xj57wb" path="res://Materials/ShirtMat3.tres" id="11_4xgqk"]
+[ext_resource type="Texture2D" uid="uid://bw8nhytu5avd" path="res://Face Textures/head1.png" id="11_joi3x"]
+[ext_resource type="Texture2D" uid="uid://dyp8o3aieogx8" path="res://Face Textures/head2.png" id="12_7bbwv"]
 [ext_resource type="PackedScene" uid="uid://b2sqmde2h8gfg" path="res://PathfindingEnemy.tscn" id="12_ipidw"]
 [ext_resource type="PackedScene" uid="uid://cps3br5v0dfcj" path="res://Partner.tscn" id="12_p57gm"]
+[ext_resource type="Texture2D" uid="uid://c6f1urtqksw7s" path="res://Face Textures/head3.png" id="13_3fn2r"]
+[ext_resource type="Texture2D" uid="uid://c6jae17f1d73e" path="res://Face Textures/head4.png" id="14_por6q"]
+[ext_resource type="Texture2D" uid="uid://demos1o33m0bc" path="res://Face Textures/head5.png" id="15_bhw6g"]
+[ext_resource type="Texture2D" uid="uid://od8owedc74l1" path="res://Face Textures/head6.png" id="16_17ovs"]
+[ext_resource type="Texture2D" uid="uid://j4vx1ny5xwpq" path="res://Face Textures/head7.png" id="17_ssgd1"]
+[ext_resource type="Texture2D" uid="uid://dn6d8oy4hlspk" path="res://Face Textures/head8.png" id="18_lhmux"]
+[ext_resource type="Texture2D" uid="uid://c26ak17vulcu8" path="res://Face Textures/head9.png" id="19_k6wnj"]
+[ext_resource type="Texture2D" uid="uid://bko0tvfpiyn4a" path="res://Face Textures/head10.png" id="20_wk7yn"]
+[ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://TextArrowIcon.png" id="23_xd7uh"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_imf7r"]
 panorama = ExtResource("1_rejek")
@@ -53,6 +64,8 @@ shader_parameter/depth_addend = 0.0
 shader_parameter/depth_multiplier = 2.0
 shader_parameter/is_inverted = false
 shader_parameter/outline_color = Quaternion(0, 0, 0, 1)
+shader_parameter/size_x = null
+shader_parameter/size_y = null
 shader_parameter/transparency = 0.85
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
@@ -73,6 +86,84 @@ albedo_color = Color(1, 1, 0, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_a7kpg"]
 material = SubResource("StandardMaterial3D_n7aei")
 size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_w01lf"]
+resource_local_to_scene = true
+frames = 10
+pause = true
+frame_0/texture = ExtResource("11_joi3x")
+frame_1/texture = ExtResource("12_7bbwv")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("13_3fn2r")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("14_por6q")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("15_bhw6g")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("16_17ovs")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("17_ssgd1")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("18_lhmux")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("19_k6wnj")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("20_wk7yn")
+frame_9/duration = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqlos"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("AnimatedTexture_w01lf")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+use_point_size = true
+point_size = 32.0
+
+[sub_resource type="PointMesh" id="PointMesh_7oupb"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_tqlos")
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_0ub0p"]
+resource_local_to_scene = true
+frames = 10
+pause = true
+frame_0/texture = ExtResource("11_joi3x")
+frame_1/texture = ExtResource("12_7bbwv")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("13_3fn2r")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("14_por6q")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("15_bhw6g")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("16_17ovs")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("17_ssgd1")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("18_lhmux")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("19_k6wnj")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("20_wk7yn")
+frame_9/duration = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yslhe"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("AnimatedTexture_0ub0p")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+use_point_size = true
+point_size = 32.0
+
+[sub_resource type="PointMesh" id="PointMesh_syckf"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_yslhe")
 
 [node name="FirstWorld" type="Node3D"]
 
@@ -246,6 +337,9 @@ material_override = ExtResource("11_4xgqk")
 [node name="shoulder" parent="NPC/Model/Armature/Skeleton3D" index="7"]
 material_override = ExtResource("11_4xgqk")
 
+[node name="Head" parent="NPC/Model/Armature/Skeleton3D/BoneAttachment3D" index="2"]
+mesh = SubResource("PointMesh_7oupb")
+
 [node name="NPC2" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3705, 0.619288, 4.82239)
 collision_layer = 2
@@ -277,6 +371,9 @@ material_override = ExtResource("11_4xgqk")
 [node name="shoulder" parent="NPC2/Model/Armature/Skeleton3D" index="7"]
 material_override = ExtResource("11_4xgqk")
 
+[node name="Head" parent="NPC2/Model/Armature/Skeleton3D/BoneAttachment3D" index="2"]
+mesh = SubResource("PointMesh_syckf")
+
 [node name="PathfindingEnemy" parent="." instance=ExtResource("12_ipidw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.458995, 0, -5.59228)
 move_speed = 8.0
@@ -298,6 +395,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.9027, 0, 7.14682)
 move_speed = 8.0
 
 [node name="Partner" parent="." instance=ExtResource("12_p57gm")]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+billboard = 1
+no_depth_test = true
+fixed_size = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_xd7uh")
 
 [connection signal="body_entered" from="KillPlane" to="KillPlane" method="_on_kill_plane_body_entered"]
 

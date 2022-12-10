@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cy6avb87a0xk"]
+[gd_scene load_steps=57 format=3 uid="uid://cy6avb87a0xk"]
 
 [ext_resource type="Script" path="res://TransitionArea.gd" id="1_3f51b"]
 [ext_resource type="Texture2D" uid="uid://dxe6w32mi1min" path="res://sonic_sky.png" id="1_3pjb6"]
@@ -6,12 +6,32 @@
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_7y4x8"]
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_p7en2"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_070li"]
-[ext_resource type="PackedScene" uid="uid://2xo541bybgl4" path="res://Player/Player.tscn" id="7_tnk0w"]
+[ext_resource type="PackedScene" uid="uid://braenof5sfums" path="res://Player/Player.tscn" id="7_tnk0w"]
 [ext_resource type="Script" path="res://NPC.gd" id="9_ppddr"]
-[ext_resource type="PackedScene" uid="uid://bn1i1cib0m8su" path="res://CharacterModel.tscn" id="10_j3vkr"]
+[ext_resource type="PackedScene" uid="uid://dyblx62wxe2ac" path="res://CharacterModel.tscn" id="10_j3vkr"]
 [ext_resource type="Material" uid="uid://dwd4v66xj57wb" path="res://Materials/ShirtMat3.tres" id="11_4xgqk"]
 [ext_resource type="PackedScene" uid="uid://cps3br5v0dfcj" path="res://Partner.tscn" id="11_kdk1p"]
+[ext_resource type="Texture2D" uid="uid://bw8nhytu5avd" path="res://Face Textures/head1.png" id="11_kxvy2"]
+[ext_resource type="Texture2D" uid="uid://dyp8o3aieogx8" path="res://Face Textures/head2.png" id="12_0opjw"]
 [ext_resource type="PackedScene" uid="uid://37s7ednup61r" path="res://Enemy.tscn" id="12_nqlpq"]
+[ext_resource type="Texture2D" uid="uid://c6f1urtqksw7s" path="res://Face Textures/head3.png" id="13_vmh3l"]
+[ext_resource type="Texture2D" uid="uid://c6jae17f1d73e" path="res://Face Textures/head4.png" id="14_eeqcq"]
+[ext_resource type="Texture2D" uid="uid://demos1o33m0bc" path="res://Face Textures/head5.png" id="15_55kmw"]
+[ext_resource type="Texture2D" uid="uid://od8owedc74l1" path="res://Face Textures/head6.png" id="16_4jt0y"]
+[ext_resource type="Texture2D" uid="uid://j4vx1ny5xwpq" path="res://Face Textures/head7.png" id="17_swyh5"]
+[ext_resource type="Texture2D" uid="uid://dn6d8oy4hlspk" path="res://Face Textures/head8.png" id="18_ysikh"]
+[ext_resource type="Texture2D" uid="uid://c26ak17vulcu8" path="res://Face Textures/head9.png" id="19_4tr70"]
+[ext_resource type="Texture2D" uid="uid://bko0tvfpiyn4a" path="res://Face Textures/head10.png" id="20_iujds"]
+[ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://TextArrowIcon.png" id="23_xguir"]
+[ext_resource type="Texture2D" uid="uid://b6vnfctluyu4y" path="res://Face Textures/goathead1.png" id="24_u3hru"]
+[ext_resource type="Texture2D" uid="uid://bpqcxvthf6ppq" path="res://Face Textures/goathead2.png" id="25_2jjgx"]
+[ext_resource type="Texture2D" uid="uid://cvw358j6weok4" path="res://Face Textures/goathead3.png" id="26_3plup"]
+[ext_resource type="Texture2D" uid="uid://btvjkeqp06f0" path="res://Face Textures/goathead4.png" id="27_m238b"]
+[ext_resource type="Texture2D" uid="uid://bk5gw0g37dhh5" path="res://Face Textures/goathead5.png" id="28_ewb1r"]
+[ext_resource type="Texture2D" uid="uid://cbcob4gn8xams" path="res://Face Textures/goathead6.png" id="29_u6cnb"]
+[ext_resource type="Texture2D" uid="uid://bfapjj0hwws2j" path="res://Face Textures/goathead7.png" id="30_o3eci"]
+[ext_resource type="Texture2D" uid="uid://cjo28ngm1oxe" path="res://Face Textures/goathead8.png" id="31_jv8j8"]
+[ext_resource type="Script" path="res://Head.gd" id="32_ohip0"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6rs0"]
 panorama = ExtResource("1_3pjb6")
@@ -55,10 +75,12 @@ texture_filter = 0
 render_priority = -128
 shader = ExtResource("6_070li")
 shader_parameter/depth_addend = 0.0
-shader_parameter/depth_multiplier = 2.0
+shader_parameter/depth_multiplier = 1.0
 shader_parameter/is_inverted = false
-shader_parameter/outline_color = Quaternion(0, 0, 0, 1)
-shader_parameter/transparency = 0.85
+shader_parameter/outline_color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+shader_parameter/size_x = null
+shader_parameter/size_y = null
+shader_parameter/transparency = 3.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
 material = SubResource("ShaderMaterial_dt056")
@@ -78,6 +100,93 @@ albedo_color = Color(1, 1, 0, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_a7kpg"]
 material = SubResource("StandardMaterial3D_n7aei")
 size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_ag4kf"]
+resource_local_to_scene = true
+frames = 10
+pause = true
+frame_0/texture = ExtResource("11_kxvy2")
+frame_1/texture = ExtResource("12_0opjw")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("13_vmh3l")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("14_eeqcq")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("15_55kmw")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("16_4jt0y")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("17_swyh5")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("18_ysikh")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("19_4tr70")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("20_iujds")
+frame_9/duration = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lqw4h"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("AnimatedTexture_ag4kf")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+use_point_size = true
+point_size = 32.0
+
+[sub_resource type="PointMesh" id="PointMesh_sy6kf"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_lqw4h")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hdxp6"]
+bounce = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ei885"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yts5c"]
+shading_mode = 0
+albedo_color = Color(0.764706, 0.764706, 0.811765, 1)
+texture_filter = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_btrw4"]
+material = SubResource("StandardMaterial3D_yts5c")
+radius = 0.75
+height = 1.5
+radial_segments = 24
+rings = 9
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_tolvp"]
+frames = 8
+pause = true
+frame_0/texture = ExtResource("24_u3hru")
+frame_1/texture = ExtResource("25_2jjgx")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("26_3plup")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("27_m238b")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("28_ewb1r")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("29_u6cnb")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("30_o3eci")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("31_jv8j8")
+frame_7/duration = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkhkv"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("AnimatedTexture_tolvp")
+texture_filter = 0
+texture_repeat = false
+use_point_size = true
+point_size = 64.0
+
+[sub_resource type="PointMesh" id="PointMesh_j6hyb"]
+material = SubResource("StandardMaterial3D_tkhkv")
 
 [node name="SecondWorld" type="Node3D"]
 
@@ -324,9 +433,11 @@ skeleton = NodePath("../../../..")
 
 [node name="Player" parent="." instance=ExtResource("7_tnk0w")]
 transform = Transform3D(0.670569, 0, 0.741847, 0, 1, 0, -0.741847, 0, 0.670569, -2.79877, -0.751638, -2.46062)
+collision_mask = 5
 
 [node name="NPC" type="CharacterBody3D" parent="."]
 transform = Transform3D(0.379101, 0, -0.925355, 0, 1, 0, 0.925355, 0, 0.379101, 11.2946, -0.9774, -0.229118)
+visible = false
 collision_layer = 2
 script = ExtResource("9_ppddr")
 
@@ -355,16 +466,189 @@ material_override = ExtResource("11_4xgqk")
 [node name="shoulder" parent="NPC/Model/Armature/Skeleton3D" index="7"]
 material_override = ExtResource("11_4xgqk")
 
+[node name="Head" parent="NPC/Model/Armature/Skeleton3D/HeadAttachment" index="3"]
+mesh = SubResource("PointMesh_sy6kf")
+
 [node name="Partner" parent="." instance=ExtResource("11_kdk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88796, 0)
 
 [node name="Enemy" parent="." instance=ExtResource("12_nqlpq")]
+visible = false
 
 [node name="Enemy2" parent="." instance=ExtResource("12_nqlpq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43292, -0.264593, 4.23859)
+visible = false
 
 [node name="Enemy3" parent="." instance=ExtResource("12_nqlpq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.99435, -0.264594, 3.93099)
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+billboard = 1
+no_depth_test = true
+fixed_size = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_xguir")
+
+[node name="Serpent" type="Node3D" parent="."]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Serpent"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.136782, 0, 0)
+collision_layer = 4
+collision_mask = 3
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+mass = 0.3
+physics_material_override = SubResource("PhysicsMaterial_hdxp6")
+gravity_scale = 0.0
+continuous_cd = true
+linear_damp = 0.25
+angular_damp = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D"]
+shape = SubResource("SphereShape3D_ei885")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D"]
+visible = false
+mesh = SubResource("SphereMesh_btrw4")
+
+[node name="Head" type="MeshInstance3D" parent="Serpent/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.218155, 0.423142, 0)
+mesh = SubResource("PointMesh_j6hyb")
+skeleton = NodePath("../..")
+script = ExtResource("32_ohip0")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="Serpent"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.7359, 0, 0)
+collision_layer = 4
+collision_mask = 3
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+mass = 0.3
+physics_material_override = SubResource("PhysicsMaterial_hdxp6")
+gravity_scale = 0.0
+continuous_cd = true
+linear_damp = 0.25
+angular_damp = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D2"]
+shape = SubResource("SphereShape3D_ei885")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D2"]
+mesh = SubResource("SphereMesh_btrw4")
+
+[node name="RigidBody3D3" type="RigidBody3D" parent="Serpent"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.69814, 0, 0)
+collision_layer = 4
+collision_mask = 3
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+mass = 0.3
+physics_material_override = SubResource("PhysicsMaterial_hdxp6")
+gravity_scale = 0.0
+continuous_cd = true
+linear_damp = 0.25
+angular_damp = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D3"]
+shape = SubResource("SphereShape3D_ei885")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D3"]
+mesh = SubResource("SphereMesh_btrw4")
+
+[node name="RigidBody3D4" type="RigidBody3D" parent="Serpent"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.66501, 0, 0)
+collision_layer = 4
+collision_mask = 3
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+mass = 0.3
+physics_material_override = SubResource("PhysicsMaterial_hdxp6")
+gravity_scale = 0.0
+continuous_cd = true
+linear_damp = 0.25
+angular_damp = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D4"]
+shape = SubResource("SphereShape3D_ei885")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D4"]
+mesh = SubResource("SphereMesh_btrw4")
+
+[node name="RigidBody3D5" type="RigidBody3D" parent="Serpent"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.60894, 0, 0)
+collision_layer = 4
+collision_mask = 3
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+mass = 0.3
+physics_material_override = SubResource("PhysicsMaterial_hdxp6")
+gravity_scale = 0.0
+continuous_cd = true
+linear_damp = 0.25
+angular_damp = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D5"]
+shape = SubResource("SphereShape3D_ei885")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D5"]
+mesh = SubResource("SphereMesh_btrw4")
+
+[node name="RigidBody3D6" type="RigidBody3D" parent="Serpent"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.48777, 0, 0)
+collision_layer = 4
+collision_mask = 3
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+mass = 0.3
+physics_material_override = SubResource("PhysicsMaterial_hdxp6")
+gravity_scale = 0.0
+continuous_cd = true
+linear_damp = 0.25
+angular_damp = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D6"]
+shape = SubResource("SphereShape3D_ei885")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D6"]
+mesh = SubResource("SphereMesh_btrw4")
+
+[node name="ConeTwistJoint3D" type="ConeTwistJoint3D" parent="Serpent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.273659, 0, 0)
+node_a = NodePath("../RigidBody3D")
+node_b = NodePath("../RigidBody3D2")
+bias = 0.01
+softness = 5.0
+
+[node name="ConeTwistJoint3D2" type="ConeTwistJoint3D" parent="Serpent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707567, 0, 0)
+node_a = NodePath("../RigidBody3D2")
+node_b = NodePath("../RigidBody3D3")
+bias = 0.01
+softness = 5.0
+
+[node name="ConeTwistJoint3D3" type="ConeTwistJoint3D" parent="Serpent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.69052, 0, 0)
+node_a = NodePath("../RigidBody3D3")
+node_b = NodePath("../RigidBody3D4")
+bias = 0.01
+softness = 5.0
+
+[node name="ConeTwistJoint3D4" type="ConeTwistJoint3D" parent="Serpent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.65642, 0, 0)
+node_a = NodePath("../RigidBody3D4")
+node_b = NodePath("../RigidBody3D5")
+bias = 0.01
+softness = 5.0
+
+[node name="ConeTwistJoint3D5" type="ConeTwistJoint3D" parent="Serpent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61139, 0, 0)
+node_a = NodePath("../RigidBody3D5")
+node_b = NodePath("../RigidBody3D6")
+bias = 0.01
+softness = 5.0
 
 [connection signal="body_entered" from="Environment/NavigationRegion3D/House/TransitionArea" to="Environment/NavigationRegion3D/House/TransitionArea" method="_on_body_entered"]
 [connection signal="body_entered" from="KillPlane" to="KillPlane" method="_on_kill_plane_body_entered"]

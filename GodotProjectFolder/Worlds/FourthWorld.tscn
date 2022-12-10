@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dctj4hq7wjib1"]
+[gd_scene load_steps=40 format=3 uid="uid://dctj4hq7wjib1"]
 
 [ext_resource type="Texture2D" uid="uid://dxe6w32mi1min" path="res://sonic_sky.png" id="1_eli8q"]
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="3_wbitg"]
@@ -6,9 +6,23 @@
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_egant"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_4xgu5"]
 [ext_resource type="PackedScene" uid="uid://braenof5sfums" path="res://Player/Player.tscn" id="7_cdyhq"]
+[ext_resource type="Script" path="res://NPC.gd" id="8_u8xgt"]
+[ext_resource type="PackedScene" uid="uid://dyblx62wxe2ac" path="res://CharacterModel.tscn" id="9_u8h4r"]
+[ext_resource type="Material" uid="uid://dwd4v66xj57wb" path="res://Materials/ShirtMat3.tres" id="10_lpt3g"]
 [ext_resource type="PackedScene" uid="uid://b2sqmde2h8gfg" path="res://PathfindingEnemy.tscn" id="11_dwh2e"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://TextArrowIcon.png" id="12_411re"]
 [ext_resource type="PackedScene" uid="uid://cmvlgwtqxqhl6" path="res://suitguy_with_nose.tscn" id="12_nh05a"]
+[ext_resource type="Texture2D" uid="uid://bw8nhytu5avd" path="res://Face Textures/head1.png" id="13_22f74"]
+[ext_resource type="Texture2D" uid="uid://dyp8o3aieogx8" path="res://Face Textures/head2.png" id="14_ndwxi"]
+[ext_resource type="Texture2D" uid="uid://c6f1urtqksw7s" path="res://Face Textures/head3.png" id="15_utc8b"]
+[ext_resource type="Texture2D" uid="uid://c6jae17f1d73e" path="res://Face Textures/head4.png" id="16_ffckx"]
+[ext_resource type="Texture2D" uid="uid://demos1o33m0bc" path="res://Face Textures/head5.png" id="17_f7fh5"]
+[ext_resource type="Texture2D" uid="uid://od8owedc74l1" path="res://Face Textures/head6.png" id="18_g7tcx"]
+[ext_resource type="Texture2D" uid="uid://j4vx1ny5xwpq" path="res://Face Textures/head7.png" id="19_bo7mv"]
+[ext_resource type="Texture2D" uid="uid://dn6d8oy4hlspk" path="res://Face Textures/head8.png" id="20_2i04p"]
+[ext_resource type="Texture2D" uid="uid://c26ak17vulcu8" path="res://Face Textures/head9.png" id="21_ifd6d"]
+[ext_resource type="Texture2D" uid="uid://bko0tvfpiyn4a" path="res://Face Textures/head10.png" id="22_5tg60"]
+[ext_resource type="PackedScene" uid="uid://cps3br5v0dfcj" path="res://Partner.tscn" id="23_4d5ub"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6rs0"]
 panorama = ExtResource("1_eli8q")
@@ -53,11 +67,67 @@ shader_parameter/depth_addend = 0.0
 shader_parameter/depth_multiplier = 3.0
 shader_parameter/is_inverted = false
 shader_parameter/outline_color = Color(0.0705882, 0.0705882, 0.105882, 1)
+shader_parameter/size_x = null
+shader_parameter/size_y = null
 shader_parameter/transparency = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
 material = SubResource("ShaderMaterial_dt056")
 size = Vector2(2, 2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o4rus"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6vjel"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7oidb"]
+material = SubResource("StandardMaterial3D_6vjel")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n7aei"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_anyi2"]
+material = SubResource("StandardMaterial3D_n7aei")
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_mvj0g"]
+resource_local_to_scene = true
+frames = 10
+pause = true
+frame_0/texture = ExtResource("13_22f74")
+frame_1/texture = ExtResource("14_ndwxi")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("15_utc8b")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("16_ffckx")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("17_f7fh5")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("18_g7tcx")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("19_bo7mv")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("20_2i04p")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("21_ifd6d")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("22_5tg60")
+frame_9/duration = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b56xd"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("AnimatedTexture_mvj0g")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+use_point_size = true
+point_size = 32.0
+
+[sub_resource type="PointMesh" id="PointMesh_mudks"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_b56xd")
 
 [node name="FourthWorld" type="Node3D"]
 
@@ -102,7 +172,7 @@ material = SubResource("StandardMaterial3D_oqdx7")
 
 [node name="KillPlane" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -37.5048, 8.23268)
-collision_mask = 2
+collision_mask = 3
 script = ExtResource("4_trc8x")
 
 [node name="CollisionShape3d" type="CollisionShape3D" parent="KillPlane"]
@@ -133,6 +203,42 @@ move_speed = 7.0
 move_accel = 40.0
 move_decel = 30.0
 
+[node name="suitguy with nose" parent="." instance=ExtResource("12_nh05a")]
+transform = Transform3D(0.432936, 0, 0.199431, 0, 0.530557, 0, -0.199431, 0, 0.432936, -11.146, -1.09851, -1.55051)
+
+[node name="NPC" type="CharacterBody3D" parent="."]
+transform = Transform3D(0.631542, 0, -0.775341, 0, 1, 0, 0.775341, 0, 0.631542, -2.13305, -0.991027, -3.52159)
+collision_layer = 2
+script = ExtResource("8_u8xgt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC"]
+shape = SubResource("CapsuleShape3D_o4rus")
+
+[node name="Model2" type="Node3D" parent="NPC"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC/Model2"]
+mesh = SubResource("CapsuleMesh_7oidb")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NPC/Model2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_anyi2")
+
+[node name="Model" parent="NPC" instance=ExtResource("9_u8h4r")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)
+
+[node name="arm" parent="NPC/Model/Armature/Skeleton3D" index="0"]
+material_override = ExtResource("10_lpt3g")
+
+[node name="chest" parent="NPC/Model/Armature/Skeleton3D" index="1"]
+material_override = ExtResource("10_lpt3g")
+
+[node name="shoulder" parent="NPC/Model/Armature/Skeleton3D" index="7"]
+material_override = ExtResource("10_lpt3g")
+
+[node name="Head" parent="NPC/Model/Armature/Skeleton3D/BoneAttachment3D" index="2"]
+mesh = SubResource("PointMesh_mudks")
+
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 billboard = 1
@@ -142,7 +248,8 @@ alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("12_411re")
 
-[node name="suitguy with nose" parent="." instance=ExtResource("12_nh05a")]
-transform = Transform3D(0.432936, 0, 0.199431, 0, 0.530557, 0, -0.199431, 0, 0.432936, -11.146, -1.09851, -1.55051)
+[node name="Partner" parent="." instance=ExtResource("23_4d5ub")]
 
 [connection signal="body_entered" from="KillPlane" to="KillPlane" method="_on_kill_plane_body_entered"]
+
+[editable path="NPC/Model"]

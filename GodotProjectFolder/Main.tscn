@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Main.gd" id="1_ohqny"]
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="2_774ge"]
-[ext_resource type="PackedScene" uid="uid://dctj4hq7wjib1" path="res://Worlds/FourthWorld.tscn" id="3_ivkmp"]
+[ext_resource type="PackedScene" uid="uid://cy6avb87a0xk" path="res://Worlds/SecondWorld.tscn" id="3_blwyn"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_msvjc"]
 
@@ -220,4 +220,4 @@ libraries = {
 "": SubResource("AnimationLibrary_mhnld")
 }
 
-[node name="FourthWorld" parent="." instance=ExtResource("3_ivkmp")]
+[node name="SecondWorld" parent="." instance=ExtResource("3_blwyn")]

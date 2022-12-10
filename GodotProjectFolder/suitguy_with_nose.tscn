@@ -324,6 +324,7 @@ load_path = "res://.godot/imported/head7.png-7efb30e92f4cebc6b740b9d8539bc734.ct
 load_path = "res://.godot/imported/head8.png-8eba3f30f685c8a883757ad9094d3ae4.ctex"
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_x6ii6"]
+resource_local_to_scene = true
 frames = 8
 pause = true
 frame_0/texture = SubResource("CompressedTexture2D_lgffa")
@@ -482,7 +483,6 @@ skin = SubResource("Skin_o66ta")
 
 [node name="face" type="MeshInstance3D" parent="Armature/Skeleton3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0134591)
-visible = false
 mesh = SubResource("ArrayMesh_22sjl")
 skin = SubResource("Skin_o66ta")
 
@@ -495,7 +495,6 @@ mesh = SubResource("ArrayMesh_q310m")
 skin = SubResource("Skin_o66ta")
 
 [node name="head" type="MeshInstance3D" parent="Armature/Skeleton3D"]
-visible = false
 mesh = SubResource("ArrayMesh_ar82w")
 skin = SubResource("Skin_o66ta")
 
@@ -517,17 +516,19 @@ skin = SubResource("Skin_o66ta")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
 transform = Transform3D(1, -9.23706e-14, 2.38418e-07, 6.32589e-08, 0.964159, -0.265327, -2.29873e-07, 0.265327, 0.964159, -4.52101e-14, 0.916438, -0.179338)
+visible = false
 bone_name = "head"
 bone_idx = 4
 
 [node name="Head" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D"]
-transform = Transform3D(0.996123, -0.0873309, 0.0103698, 0.0832871, 0.974652, 0.20762, -0.0282387, -0.205951, 0.978149, -0.0504684, 1.08471, 0.0360361)
+transform = Transform3D(0.996123, -0.0873309, 0.0103698, 0.0832871, 0.974652, 0.20762, -0.0282387, -0.205951, 0.978149, -0.0504684, 1.08471, 0.036036)
 mesh = SubResource("PointMesh_ynip3")
 skeleton = NodePath("../..")
 script = ExtResource("6_y5pg6")
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
 transform = Transform3D(1, -5.32907e-14, 4.76837e-07, 8.85879e-08, 0.982591, -0.185782, -4.68536e-07, 0.185782, 0.982591, -4.22703e-15, 0.160759, -0.322217)
+visible = false
 bone_name = "chest"
 bone_idx = 1
 
