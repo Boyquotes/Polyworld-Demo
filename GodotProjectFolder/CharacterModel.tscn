@@ -1748,7 +1748,7 @@ mesh = SubResource("ArrayMesh_avd7i")
 skin = SubResource("Skin_mggcp")
 
 [node name="chest" type="MeshInstance3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 0.993566, -0.113255, 0, 0.113255, 0.993566, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.993566, -0.100344, 0, 0.113255, 0.880299, 0, 0, 0)
 material_override = ExtResource("1_j5enh")
 mesh = SubResource("ArrayMesh_i0dq0")
 skin = SubResource("Skin_mggcp")
@@ -1808,7 +1808,7 @@ visible = false
 mesh = SubResource("PointMesh_td26v")
 
 [node name="Head" type="MeshInstance3D" parent="Armature/Skeleton3D/HeadAttachment"]
-transform = Transform3D(0.984581, -0.1746, 0.0106824, 0.162189, 0.934056, 0.318162, -0.0655292, -0.311522, 0.947975, 0.010419, 1.20401, 0.152179)
+transform = Transform3D(0.984581, -0.1746, 0.0106824, 0.162189, 0.934056, 0.318162, -0.0655292, -0.311522, 0.947975, 0.0145582, 1.16127, 0.172114)
 mesh = SubResource("PointMesh_fm5nm")
 skeleton = NodePath("../..")
 script = ExtResource("12_23u5w")
@@ -1819,15 +1819,15 @@ bone_name = "chest"
 bone_idx = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Armature/Skeleton3D/ChestAttachment"]
-transform = Transform3D(0.656949, -2.21798e-08, 3.49246e-10, -3.76895e-09, 0.609113, 0.246098, -7.84348e-09, -0.246098, 0.609113, 1.43843e-05, 0.442482, 0.399844)
+transform = Transform3D(0.656949, -3.33557e-08, 3.49246e-10, -6.19184e-09, 0.609113, 0.246098, -1.27038e-08, -0.246098, 0.609113, -0.00281371, 0.469762, 0.386263)
 mesh = SubResource("BoxMesh_6i05r")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Armature/Skeleton3D/ChestAttachment"]
-transform = Transform3D(0.158208, -0.0214629, -0.0112814, 0.00893049, 0.390334, 0.177654, 0.000507178, -0.178007, 0.390921, 0.0225334, 0.636621, 0.715418)
+transform = Transform3D(0.158208, -0.0214629, -0.0112814, 0.0089305, 0.390334, 0.177654, 0.000507175, -0.178007, 0.390921, 0.0197053, 0.663902, 0.701837)
 mesh = SubResource("QuadMesh_ppm7d")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Armature/Skeleton3D/ChestAttachment"]
-transform = Transform3D(0.158457, -0.00256127, -0.00134669, 0.00106579, 0.39093, 0.177968, 6.06665e-05, -0.177973, 0.390939, 0.0225334, 0.747462, 0.679917)
+transform = Transform3D(0.158457, -0.0025613, -0.00134669, 0.00106579, 0.39093, 0.177968, 6.06663e-05, -0.177973, 0.390939, 0.0197053, 0.774743, 0.666336)
 mesh = SubResource("QuadMesh_d6x5w")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="Armature/Skeleton3D/ChestAttachment"]
@@ -1886,7 +1886,11 @@ bone_name = "abdomen"
 bone_idx = 0
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D3"]
-transform = Transform3D(0.652655, -0.00261495, -0.0013484, 0.00439, 0.398971, 0.178525, 0.000246172, -0.182058, 0.391249, 0.022519, 0.191257, 0.687086)
+transform = Transform3D(0.652655, -0.00261495, -0.0013484, 0.00439, 0.398971, 0.178525, 0.000246172, -0.182058, 0.391249, 0.022519, 0.170433, 0.766166)
+mesh = SubResource("QuadMesh_d6x5w")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D3"]
+transform = Transform3D(0.652655, -0.00261499, -0.00134821, -0.00367884, -0.436548, 0.0410172, -0.0024079, -0.0418187, -0.428094, 0.0225193, 0.239538, -0.330451)
 mesh = SubResource("QuadMesh_d6x5w")
 
 [node name="MeshInstance3D7" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D3"]

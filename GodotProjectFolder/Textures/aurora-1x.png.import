@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6vfolucpeohl"
-path="res://.godot/imported/sonic_skyPAN.png-e172852dbad98ad073531008b1b9d397.ctex"
+uid="uid://h12huxecwg1v"
+path="res://.godot/imported/aurora-1x.png-f3fa87f0279e98848e9b88a58eb659d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sonic_skyPAN.png"
-dest_files=["res://.godot/imported/sonic_skyPAN.png-e172852dbad98ad073531008b1b9d397.ctex"]
+source_file="res://Textures/aurora-1x.png"
+dest_files=["res://.godot/imported/aurora-1x.png-f3fa87f0279e98848e9b88a58eb659d2.ctex"]
 
 [params]
 

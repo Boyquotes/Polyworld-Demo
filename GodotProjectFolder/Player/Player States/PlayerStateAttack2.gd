@@ -45,7 +45,7 @@ func update(delta):
 
 
 func physics_update(delta):
-	player.anim.play("cast2")
+	player.anim.play("cast1")
 	
 	#player.target_facing_dir = Vector2(player.aim_direction.x, player.aim_direction.z)
 	

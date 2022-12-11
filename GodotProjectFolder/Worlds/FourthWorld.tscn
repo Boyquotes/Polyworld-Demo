@@ -1,9 +1,10 @@
-[gd_scene load_steps=40 format=3 uid="uid://dctj4hq7wjib1"]
+[gd_scene load_steps=42 format=3 uid="uid://dctj4hq7wjib1"]
 
 [ext_resource type="Texture2D" uid="uid://dxe6w32mi1min" path="res://sonic_sky.png" id="1_eli8q"]
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="3_wbitg"]
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_trc8x"]
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_egant"]
+[ext_resource type="Texture2D" uid="uid://b2272uqayofwy" path="res://Textures/macintosh-8-bit-system-palette-1x.png" id="6_4t4nt"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_4xgu5"]
 [ext_resource type="PackedScene" uid="uid://braenof5sfums" path="res://Player/Player.tscn" id="7_cdyhq"]
 [ext_resource type="Script" path="res://NPC.gd" id="8_u8xgt"]
@@ -23,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://c26ak17vulcu8" path="res://Face Textures/head9.png" id="21_ifd6d"]
 [ext_resource type="Texture2D" uid="uid://bko0tvfpiyn4a" path="res://Face Textures/head10.png" id="22_5tg60"]
 [ext_resource type="PackedScene" uid="uid://cps3br5v0dfcj" path="res://Partner.tscn" id="23_4d5ub"]
+[ext_resource type="PackedScene" uid="uid://s50oblcaavj" path="res://tree_2.tscn" id="25_tdovx"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6rs0"]
 panorama = ExtResource("1_eli8q")
@@ -53,27 +55,13 @@ agent_radius = 1.0
 shading_mode = 2
 diffuse_mode = 1
 albedo_texture = ExtResource("3_wbitg")
+metallic_specular = 0.0
 uv1_scale = Vector3(0.125, 0.125, 0.125)
 uv1_triplanar = true
 uv1_world_triplanar = true
 texture_filter = 0
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qphd1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dt056"]
-render_priority = -128
-shader = ExtResource("6_4xgu5")
-shader_parameter/depth_addend = 0.0
-shader_parameter/depth_multiplier = 3.0
-shader_parameter/is_inverted = false
-shader_parameter/outline_color = Color(0.0705882, 0.0705882, 0.105882, 1)
-shader_parameter/size_x = null
-shader_parameter/size_y = null
-shader_parameter/transparency = 1.0
-
-[sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
-material = SubResource("ShaderMaterial_dt056")
-size = Vector2(2, 2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o4rus"]
 
@@ -90,7 +78,7 @@ albedo_color = Color(1, 1, 0, 1)
 material = SubResource("StandardMaterial3D_n7aei")
 size = Vector3(0.25, 0.25, 1)
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_mvj0g"]
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_olqbs"]
 resource_local_to_scene = true
 frames = 10
 pause = true
@@ -114,20 +102,35 @@ frame_8/duration = 1.0
 frame_9/texture = ExtResource("22_5tg60")
 frame_9/duration = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b56xd"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glwce"]
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
-albedo_texture = SubResource("AnimatedTexture_mvj0g")
+albedo_texture = SubResource("AnimatedTexture_olqbs")
 texture_filter = 0
 texture_repeat = false
 billboard_mode = 1
 use_point_size = true
 point_size = 32.0
 
-[sub_resource type="PointMesh" id="PointMesh_mudks"]
+[sub_resource type="PointMesh" id="PointMesh_jvk0f"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_b56xd")
+material = SubResource("StandardMaterial3D_glwce")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dt056"]
+render_priority = -128
+shader = ExtResource("6_4xgu5")
+shader_parameter/depth_addend = 0.0
+shader_parameter/depth_multiplier = 3.0
+shader_parameter/is_inverted = false
+shader_parameter/outline_color = Color(0.117647, 0.117647, 0.152941, 1)
+shader_parameter/palette = ExtResource("6_4t4nt")
+shader_parameter/palette_size = 256
+shader_parameter/transparency = 3.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
+material = SubResource("ShaderMaterial_dt056")
+size = Vector2(2, 2)
 
 [node name="FourthWorld" type="Node3D"]
 
@@ -188,11 +191,6 @@ target = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
 fov = 20.0
 
-[node name="Outline" type="MeshInstance3D" parent="CameraArm/Camera3d"]
-transform = Transform3D(1, 7.45058e-09, -1.49012e-07, 7.45058e-09, 1, 5.96046e-08, -1.19209e-07, -5.96046e-08, 1, 9.53674e-07, -2.86102e-06, -4.99999)
-mesh = SubResource("QuadMesh_x0ohu")
-skeleton = NodePath("../../../..")
-
 [node name="Player" parent="." instance=ExtResource("7_cdyhq")]
 transform = Transform3D(0.670569, 0, 0.741847, 0, 1, 0, -0.741847, 0, 0.670569, -8.03407, -0.494704, -1.65104)
 
@@ -204,10 +202,12 @@ move_accel = 40.0
 move_decel = 30.0
 
 [node name="suitguy with nose" parent="." instance=ExtResource("12_nh05a")]
-transform = Transform3D(0.432936, 0, 0.199431, 0, 0.530557, 0, -0.199431, 0, 0.432936, -11.146, -1.09851, -1.55051)
+transform = Transform3D(0.432936, 0, 0.199431, 0, 0.530557, 0, -0.199431, 0, 0.432936, -10.1419, -1.09851, 2.83375)
+visible = false
 
 [node name="NPC" type="CharacterBody3D" parent="."]
 transform = Transform3D(0.631542, 0, -0.775341, 0, 1, 0, 0.775341, 0, 0.631542, -2.13305, -0.991027, -3.52159)
+visible = false
 collision_layer = 2
 script = ExtResource("8_u8xgt")
 
@@ -236,8 +236,8 @@ material_override = ExtResource("10_lpt3g")
 [node name="shoulder" parent="NPC/Model/Armature/Skeleton3D" index="7"]
 material_override = ExtResource("10_lpt3g")
 
-[node name="Head" parent="NPC/Model/Armature/Skeleton3D/BoneAttachment3D" index="2"]
-mesh = SubResource("PointMesh_mudks")
+[node name="Head" parent="NPC/Model/Armature/Skeleton3D/HeadAttachment" index="3"]
+mesh = SubResource("PointMesh_jvk0f")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
@@ -249,6 +249,22 @@ texture_filter = 0
 texture = ExtResource("12_411re")
 
 [node name="Partner" parent="." instance=ExtResource("23_4d5ub")]
+
+[node name="tree2" parent="." instance=ExtResource("25_tdovx")]
+transform = Transform3D(0.963585, 0, 0, 0, 0.963585, 0, 0, 0, 0.963585, 9.55459, -2.05214, 5.89999)
+
+[node name="tree3" parent="." instance=ExtResource("25_tdovx")]
+transform = Transform3D(-0.177104, 0, 0.94717, 0, 0.963585, 0, -0.94717, 0, -0.177104, 8.05401, 1.91746, -3.4489)
+
+[node name="tree4" parent="." instance=ExtResource("25_tdovx")]
+transform = Transform3D(0.592739, 0, 0.759709, 0, 0.963585, 0, -0.759709, 0, 0.592739, -11.1523, -2.13436, -2.05766)
+
+[node name="Outline" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.94049, 0.116226, -0.319328, -2.67694e-08, 0.939693, 0.34202, 0.339821, -0.321666, 0.883771, -14.3698, 13.3909, 39.7697)
+extra_cull_margin = 10000.0
+ignore_occlusion_culling = true
+mesh = SubResource("QuadMesh_x0ohu")
+skeleton = NodePath("../..")
 
 [connection signal="body_entered" from="KillPlane" to="KillPlane" method="_on_kill_plane_body_entered"]
 

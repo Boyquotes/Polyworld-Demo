@@ -61,7 +61,7 @@ func _physics_process(delta):
 			get_node("Camera3d").position.z = 60 #50
 			rotation.y = 0
 			rotation.x = -0.3
-			get_node("Camera3d").fov = 15 #17
+			get_node("Camera3d").fov = 14 #17
 			get_tree().root.get_node("Main/UILayer/Binoculars/AnimationPlayer").play("Close")
 			
 		if Input.is_action_pressed("ui_right"):

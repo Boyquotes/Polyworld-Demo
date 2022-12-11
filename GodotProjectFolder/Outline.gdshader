@@ -9,12 +9,9 @@ uniform vec4 outline_color : source_color;
 
 
 //palette shader
-uniform float size_x = 0.006;
-uniform float size_y = 0.006;
+uniform sampler2D palette : hint_default_black; // Insert a palette from lospec for instance
+uniform int palette_size = 16;
 
-const float valuesPerComponent = 32.0;
-const float maxComponentValue = valuesPerComponent - 1.0;
-const float invMaxComponentValue = 1.0 / maxComponentValue;
 
 float get_linear_depth(vec2 screen_uv, mat4 inv_proj_matrix, float depth) {
 	vec3 ndc = vec3(screen_uv, depth) * 2.0 - 1.0;
@@ -54,9 +51,15 @@ void fragment() {
 	//ALBEDO = texelFetch(SCREEN_TEXTURE, ivec2(round(SCREEN_UV * vp))-1, 0).rgb;
 	
 	//palette shader
-	vec2 uv = SCREEN_UV;
-    uv -= mod(uv, vec2(size_x, size_y));
-    ALBEDO.rgb = invMaxComponentValue * round(maxComponentValue * ALBEDO.rgb);
+	vec4 new_color = vec4(.0);
+	
+	for (int i = 0; i < palette_size; i++) {
+		vec4 palette_color = texture(palette, vec2(1.0 / float(palette_size) * float(i), .0));
+		if (distance(palette_color, vec4(ALBEDO,1.)) < distance(new_color, vec4(ALBEDO,1.))) {
+			new_color = palette_color;
+		}
+	}
+	
+	//ALBEDO = new_color.rgb;
 
 }
-

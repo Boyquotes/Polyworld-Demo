@@ -55,8 +55,7 @@ shader_parameter/depth_addend = 0.0
 shader_parameter/depth_multiplier = 2.0
 shader_parameter/is_inverted = false
 shader_parameter/outline_color = Quaternion(0, 0, 0, 1)
-shader_parameter/size_x = null
-shader_parameter/size_y = null
+shader_parameter/palette_size = null
 shader_parameter/transparency = 0.85
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]

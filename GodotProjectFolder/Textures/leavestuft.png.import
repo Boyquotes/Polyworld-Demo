@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6vfolucpeohl"
-path="res://.godot/imported/sonic_skyPAN.png-e172852dbad98ad073531008b1b9d397.ctex"
+uid="uid://hreirubmxmtm"
+path="res://.godot/imported/leavestuft.png-993d17fe028010fb3fee98ebf02a4138.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sonic_skyPAN.png"
-dest_files=["res://.godot/imported/sonic_skyPAN.png-e172852dbad98ad073531008b1b9d397.ctex"]
+source_file="res://Textures/leavestuft.png"
+dest_files=["res://.godot/imported/leavestuft.png-993d17fe028010fb3fee98ebf02a4138.ctex"]
 
 [params]
 

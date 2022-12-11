@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6vfolucpeohl"
-path="res://.godot/imported/sonic_skyPAN.png-e172852dbad98ad073531008b1b9d397.ctex"
+uid="uid://bpasiupofl7ss"
+path="res://.godot/imported/resurrect-64-1x.png-db14cc95efd09ca6b3ab7c6d1b9024af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sonic_skyPAN.png"
-dest_files=["res://.godot/imported/sonic_skyPAN.png-e172852dbad98ad073531008b1b9d397.ctex"]
+source_file="res://Textures/resurrect-64-1x.png"
+dest_files=["res://.godot/imported/resurrect-64-1x.png-db14cc95efd09ca6b3ab7c6d1b9024af.ctex"]
 
 [params]
 

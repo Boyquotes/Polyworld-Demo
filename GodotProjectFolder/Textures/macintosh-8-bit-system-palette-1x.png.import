@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6vfolucpeohl"
-path="res://.godot/imported/sonic_skyPAN.png-e172852dbad98ad073531008b1b9d397.ctex"
+uid="uid://b2272uqayofwy"
+path="res://.godot/imported/macintosh-8-bit-system-palette-1x.png-8bb6cc89412ab8933e699fd56864ee84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sonic_skyPAN.png"
-dest_files=["res://.godot/imported/sonic_skyPAN.png-e172852dbad98ad073531008b1b9d397.ctex"]
+source_file="res://Textures/macintosh-8-bit-system-palette-1x.png"
+dest_files=["res://.godot/imported/macintosh-8-bit-system-palette-1x.png-8bb6cc89412ab8933e699fd56864ee84.ctex"]
 
 [params]
 

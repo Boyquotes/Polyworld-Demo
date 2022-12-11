@@ -31,8 +31,7 @@ func physics_update(delta):
 	else:
 		
 		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-		#hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * delta)
-		hor_velocity = hor_velocity * 50 * delta
+		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * delta)
 		player.velocity.x = hor_velocity.x
 		player.velocity.z = hor_velocity.y
 	

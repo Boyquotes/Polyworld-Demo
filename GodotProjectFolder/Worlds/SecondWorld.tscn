@@ -1,11 +1,13 @@
-[gd_scene load_steps=57 format=3 uid="uid://cy6avb87a0xk"]
+[gd_scene load_steps=61 format=3 uid="uid://cy6avb87a0xk"]
 
 [ext_resource type="Script" path="res://TransitionArea.gd" id="1_3f51b"]
-[ext_resource type="Texture2D" uid="uid://dxe6w32mi1min" path="res://sonic_sky.png" id="1_3pjb6"]
+[ext_resource type="Texture2D" uid="uid://c6vfolucpeohl" path="res://sonic_skyPAN.png" id="1_l22cf"]
+[ext_resource type="Script" path="res://Worlds/SecondWorldEnvironment.gd" id="2_q5nda"]
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="3_rkkke"]
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_7y4x8"]
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_p7en2"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_070li"]
+[ext_resource type="Texture2D" uid="uid://b2272uqayofwy" path="res://Textures/macintosh-8-bit-system-palette-1x.png" id="7_secfw"]
 [ext_resource type="PackedScene" uid="uid://braenof5sfums" path="res://Player/Player.tscn" id="7_tnk0w"]
 [ext_resource type="Script" path="res://NPC.gd" id="9_ppddr"]
 [ext_resource type="PackedScene" uid="uid://dyblx62wxe2ac" path="res://CharacterModel.tscn" id="10_j3vkr"]
@@ -32,9 +34,10 @@
 [ext_resource type="Texture2D" uid="uid://bfapjj0hwws2j" path="res://Face Textures/goathead7.png" id="30_o3eci"]
 [ext_resource type="Texture2D" uid="uid://cjo28ngm1oxe" path="res://Face Textures/goathead8.png" id="31_jv8j8"]
 [ext_resource type="Script" path="res://Head.gd" id="32_ohip0"]
+[ext_resource type="PackedScene" uid="uid://b2sqmde2h8gfg" path="res://PathfindingEnemy.tscn" id="35_rssv7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6rs0"]
-panorama = ExtResource("1_3pjb6")
+panorama = ExtResource("1_l22cf")
 
 [sub_resource type="Sky" id="Sky_mblu3"]
 sky_material = SubResource("PanoramaSkyMaterial_k6rs0")
@@ -43,9 +46,11 @@ sky_material = SubResource("PanoramaSkyMaterial_k6rs0")
 background_mode = 2
 background_canvas_max_layer = 1
 sky = SubResource("Sky_mblu3")
-sky_custom_fov = 65.5
+sky_custom_fov = 50.0
+sky_rotation = Vector3(0.785398, 0, 0)
 ambient_light_source = 2
 ambient_light_color = Color(0.666667, 0.666667, 0.666667, 1)
+fog_light_color = Color(0.85098, 0.909804, 1, 1)
 fog_light_energy = 2.28
 fog_sun_scatter = 3.71
 fog_density = 0.007
@@ -57,6 +62,12 @@ cell_height = 0.1
 agent_height = 2.0
 agent_radius = 1.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mg5q2"]
+shading_mode = 2
+diffuse_mode = 1
+albedo_color = Color(0.776471, 0.776471, 0.776471, 1)
+metallic_specular = 0.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_45lns"]
 size = Vector3(1, 2.83134, 3.4559)
 
@@ -64,6 +75,7 @@ size = Vector3(1, 2.83134, 3.4559)
 shading_mode = 2
 diffuse_mode = 1
 albedo_texture = ExtResource("3_rkkke")
+metallic_specular = 0.0
 uv1_scale = Vector3(0.125, 0.125, 0.125)
 uv1_triplanar = true
 uv1_world_triplanar = true
@@ -75,12 +87,12 @@ texture_filter = 0
 render_priority = -128
 shader = ExtResource("6_070li")
 shader_parameter/depth_addend = 0.0
-shader_parameter/depth_multiplier = 1.0
+shader_parameter/depth_multiplier = 1.5
 shader_parameter/is_inverted = false
-shader_parameter/outline_color = Color(0.0509804, 0.0509804, 0.0509804, 1)
-shader_parameter/size_x = null
-shader_parameter/size_y = null
-shader_parameter/transparency = 3.0
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/palette = ExtResource("7_secfw")
+shader_parameter/palette_size = 256
+shader_parameter/transparency = 5.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
 material = SubResource("ShaderMaterial_dt056")
@@ -192,10 +204,12 @@ material = SubResource("StandardMaterial3D_tkhkv")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3n2rb")
+script = ExtResource("2_q5nda")
 
 [node name="DirectionalLight3d" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.784582, -0.536957, 0.310012, -2.27666e-08, 0.5, 0.866025, -0.620025, -0.679468, 0.392291, 0, 0, 0)
 shadow_enabled = true
+directional_shadow_max_distance = 253.9
 
 [node name="Interface" type="Control" parent="."]
 layout_mode = 3
@@ -215,6 +229,7 @@ metadata/_edit_lock_ = true
 transform = Transform3D(0.697253, 0, 0.716825, 0, 1, 0, -0.716825, 0, 0.697253, -4.84106, -0.28364, -4.80815)
 use_collision = true
 size = Vector3(6.10331, 3.44124, 4.21737)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Doorway" type="CSGBox3D" parent="Environment/NavigationRegion3D/House"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.568173, 1.54139)
@@ -241,76 +256,91 @@ shape = SubResource("BoxShape3D_45lns")
 transform = Transform3D(0.992895, 0, 0.118993, 0, 1, 0, -0.118993, 0, 0.992895, 14.9643, -1.14486, 18.39)
 use_collision = true
 size = Vector3(4.63355, 1.91672, 4.98957)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform2" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.994388, 0, -0.105795, 0, 1, 0, 0.105795, 0, 0.994388, 22.0144, -0.231521, 16.1931)
 use_collision = true
 size = Vector3(4.63355, 4.12964, 4.98957)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform3" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.991504, 0, 0.130076, 0, 1, 0, -0.130076, 0, 0.991504, 22.4508, -0.771542, 24.4292)
 use_collision = true
 size = Vector3(4.63355, 2.81333, 4.98957)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform4" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.985756, 0, -0.16818, 0, 1, 0, 0.16818, 0, 0.985756, 41.4855, 1.3903, -3.38004)
 use_collision = true
 size = Vector3(7.67759, 7.15109, 4.98957)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform5" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.955412, 0, 0.295275, 0, 1, 0, -0.295275, 0, 0.955412, 32.1172, -0.217382, -3.03472)
 use_collision = true
 size = Vector3(5.82045, 3.98148, 4.98957)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform11" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.885569, -0.359593, 0.29404, 0.376224, 0.926529, 0, -0.272437, 0.110625, 0.955793, 25.339, -2.12882, -0.913293)
 use_collision = true
 size = Vector3(10.7708, 4.07906, 5.32996)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform6" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.970733, 0, -0.24016, 0, 1, 0, 0.24016, 0, 0.970733, 32.0563, -0.459387, 18.4035)
 use_collision = true
 size = Vector3(7.86551, 3.48288, 8.45872)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform7" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.998313, 0, 0.0580693, 0, 1, 0, -0.0580693, 0, 0.998313, 42.7161, 0.0626514, 21.4134)
 use_collision = true
 size = Vector3(7.86551, 4.58649, 8.45872)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform8" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.970114, 0, -0.24265, 0, 1, 0, 0.24265, 0, 0.970114, 37.8177, 1.35107, 15.1923)
 use_collision = true
 size = Vector3(7.86551, 7.36455, 8.45872)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform9" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.872633, 0, 0.488378, 0, 1, 0, -0.488378, 0, 0.872633, -26.975, -18.0843, -2.51888)
 use_collision = true
 size = Vector3(7.86551, 6.14939, 8.45872)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform12" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.995087, 0, 0.0990071, 0, 1, 0, -0.0990071, 0, 0.995087, -17.5023, -18.5309, -3.46186)
 use_collision = true
 size = Vector3(5.49336, 3.82687, 4.84826)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform10" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.999401, 0, 0.0346029, 0, 1, 0, -0.0346029, 0, 0.999401, -19.5013, -19.1633, 62.2628)
 use_collision = true
 size = Vector3(7.86551, 2, 6)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform13" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(0.002398, -0.329268, -0.944233, -0.0153953, 0.944112, -0.329265, 0.999879, 0.0153263, -0.00280521, 3.21586, -17.9205, 21.3643)
 use_collision = true
 size = Vector3(8.5247, 0.887648, 15.9975)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform15" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(-0.999118, -0.0366164, -0.0205832, -0.0398144, 0.981704, 0.186206, 0.0133885, 0.186861, -0.982295, 7.44966, -13.4339, 5.40098)
 use_collision = true
 size = Vector3(8.5247, 0.887648, 23.2823)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Platform14" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(-0.0467055, 0, -0.998909, 0, 1, 0, 0.998909, 0, -0.0467055, -6.50133, -19.023, 62.2628)
 use_collision = true
 size = Vector3(6.0912, 2.69749, 7.13286)
+material = SubResource("StandardMaterial3D_mg5q2")
 
 [node name="Ground" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, -12, 9)
@@ -493,6 +523,7 @@ texture_filter = 0
 texture = ExtResource("23_xguir")
 
 [node name="Serpent" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7056, 0, 3.15339)
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Serpent"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.136782, 0, 0)
@@ -649,6 +680,10 @@ node_a = NodePath("../RigidBody3D5")
 node_b = NodePath("../RigidBody3D6")
 bias = 0.01
 softness = 5.0
+
+[node name="PathfindingEnemy" parent="." instance=ExtResource("35_rssv7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.93447, -0.458248, -2.06911)
+can_jump = true
 
 [connection signal="body_entered" from="Environment/NavigationRegion3D/House/TransitionArea" to="Environment/NavigationRegion3D/House/TransitionArea" method="_on_body_entered"]
 [connection signal="body_entered" from="KillPlane" to="KillPlane" method="_on_kill_plane_body_entered"]

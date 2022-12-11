@@ -64,8 +64,7 @@ shader_parameter/depth_addend = 0.0
 shader_parameter/depth_multiplier = 2.0
 shader_parameter/is_inverted = false
 shader_parameter/outline_color = Quaternion(0, 0, 0, 1)
-shader_parameter/size_x = null
-shader_parameter/size_y = null
+shader_parameter/palette_size = null
 shader_parameter/transparency = 0.85
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
@@ -87,7 +86,7 @@ albedo_color = Color(1, 1, 0, 1)
 material = SubResource("StandardMaterial3D_n7aei")
 size = Vector3(0.25, 0.25, 1)
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_w01lf"]
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_7it3w"]
 resource_local_to_scene = true
 frames = 10
 pause = true
@@ -111,22 +110,22 @@ frame_8/duration = 1.0
 frame_9/texture = ExtResource("20_wk7yn")
 frame_9/duration = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqlos"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_657tu"]
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
-albedo_texture = SubResource("AnimatedTexture_w01lf")
+albedo_texture = SubResource("AnimatedTexture_7it3w")
 texture_filter = 0
 texture_repeat = false
 billboard_mode = 1
 use_point_size = true
 point_size = 32.0
 
-[sub_resource type="PointMesh" id="PointMesh_7oupb"]
+[sub_resource type="PointMesh" id="PointMesh_t0wq4"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_tqlos")
+material = SubResource("StandardMaterial3D_657tu")
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_0ub0p"]
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_agxmt"]
 resource_local_to_scene = true
 frames = 10
 pause = true
@@ -150,20 +149,20 @@ frame_8/duration = 1.0
 frame_9/texture = ExtResource("20_wk7yn")
 frame_9/duration = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yslhe"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3rpa"]
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
-albedo_texture = SubResource("AnimatedTexture_0ub0p")
+albedo_texture = SubResource("AnimatedTexture_agxmt")
 texture_filter = 0
 texture_repeat = false
 billboard_mode = 1
 use_point_size = true
 point_size = 32.0
 
-[sub_resource type="PointMesh" id="PointMesh_syckf"]
+[sub_resource type="PointMesh" id="PointMesh_yff5l"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_yslhe")
+material = SubResource("StandardMaterial3D_f3rpa")
 
 [node name="FirstWorld" type="Node3D"]
 
@@ -337,8 +336,8 @@ material_override = ExtResource("11_4xgqk")
 [node name="shoulder" parent="NPC/Model/Armature/Skeleton3D" index="7"]
 material_override = ExtResource("11_4xgqk")
 
-[node name="Head" parent="NPC/Model/Armature/Skeleton3D/BoneAttachment3D" index="2"]
-mesh = SubResource("PointMesh_7oupb")
+[node name="Head" parent="NPC/Model/Armature/Skeleton3D/HeadAttachment" index="3"]
+mesh = SubResource("PointMesh_t0wq4")
 
 [node name="NPC2" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3705, 0.619288, 4.82239)
@@ -371,8 +370,8 @@ material_override = ExtResource("11_4xgqk")
 [node name="shoulder" parent="NPC2/Model/Armature/Skeleton3D" index="7"]
 material_override = ExtResource("11_4xgqk")
 
-[node name="Head" parent="NPC2/Model/Armature/Skeleton3D/BoneAttachment3D" index="2"]
-mesh = SubResource("PointMesh_syckf")
+[node name="Head" parent="NPC2/Model/Armature/Skeleton3D/HeadAttachment" index="3"]
+mesh = SubResource("PointMesh_yff5l")
 
 [node name="PathfindingEnemy" parent="." instance=ExtResource("12_ipidw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.458995, 0, -5.59228)
