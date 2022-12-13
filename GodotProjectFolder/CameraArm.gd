@@ -16,7 +16,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	global_position = round(global_position*200)/200
 
 
 func _physics_process(delta):
@@ -58,10 +58,10 @@ func _physics_process(delta):
 		
 	else:
 		if Input.is_action_just_released("menu"):
-			get_node("Camera3d").position.z = 60 #50
+			get_node("Camera3d").position.z = 70 #50
 			rotation.y = 0
-			rotation.x = -0.3
-			get_node("Camera3d").fov = 14 #17
+			rotation.x = -0.35
+			get_node("Camera3d").fov = 13 #17
 			get_tree().root.get_node("Main/UILayer/Binoculars/AnimationPlayer").play("Close")
 			
 		if Input.is_action_pressed("ui_right"):

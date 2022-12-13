@@ -1,0 +1,90 @@
+[gd_scene load_steps=17 format=3 uid="uid://bautauxojp85q"]
+
+[ext_resource type="PackedScene" uid="uid://xpltqydap5h" path="res://dragonbody0.glb" id="1_ouhgp"]
+[ext_resource type="Shader" path="res://toonShader.gdshader" id="2_bcq6s"]
+[ext_resource type="Texture2D" uid="uid://b6vnfctluyu4y" path="res://Face Textures/goathead1.png" id="3_71l3m"]
+[ext_resource type="Texture2D" uid="uid://bpqcxvthf6ppq" path="res://Face Textures/goathead2.png" id="4_wjad6"]
+[ext_resource type="Texture2D" uid="uid://cvw358j6weok4" path="res://Face Textures/goathead3.png" id="5_g3kkn"]
+[ext_resource type="Texture2D" uid="uid://btvjkeqp06f0" path="res://Face Textures/goathead4.png" id="6_627jj"]
+[ext_resource type="Texture2D" uid="uid://bk5gw0g37dhh5" path="res://Face Textures/goathead5.png" id="7_u8shq"]
+[ext_resource type="Texture2D" uid="uid://cbcob4gn8xams" path="res://Face Textures/goathead6.png" id="8_c6dri"]
+[ext_resource type="Texture2D" uid="uid://bfapjj0hwws2j" path="res://Face Textures/goathead7.png" id="9_h421s"]
+[ext_resource type="Texture2D" uid="uid://cjo28ngm1oxe" path="res://Face Textures/goathead8.png" id="10_8nuej"]
+[ext_resource type="Script" path="res://Head.gd" id="11_glktf"]
+
+[sub_resource type="SkeletonModificationStack3D" id="SkeletonModificationStack3D_uhv04"]
+enabled = true
+modification_count = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ns0ty"]
+render_priority = 0
+shader = ExtResource("2_bcq6s")
+shader_parameter/base_color = Color(0.764706, 0.764706, 0.811765, 1)
+shader_parameter/rim_softness = 0.05
+shader_parameter/rim_spread = 0.5
+shader_parameter/rim_threshold = 0.25
+shader_parameter/rim_tint = Color(0.75, 0.75, 0.75, 0.75)
+shader_parameter/shade_color = Color(0.505882, 0.560784, 0.639216, 1)
+shader_parameter/shade_softness = 0.0
+shader_parameter/shade_threshold = 0.0
+shader_parameter/shadow_softness = 0.0
+shader_parameter/shadow_threshold = 0.7
+shader_parameter/specular_glossiness = 15.0
+shader_parameter/specular_softness = 0.1
+shader_parameter/specular_threshold = 0.5
+shader_parameter/specular_tint = Color(0.75, 0.75, 0.75, 0.75)
+shader_parameter/use_light = false
+shader_parameter/use_rim = false
+shader_parameter/use_shade = false
+shader_parameter/use_shadow = false
+shader_parameter/use_specular = false
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_o6crd"]
+frames = 8
+pause = true
+frame_0/texture = ExtResource("3_71l3m")
+frame_1/texture = ExtResource("4_wjad6")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("5_g3kkn")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("6_627jj")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("7_u8shq")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("8_c6dri")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("9_h421s")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("10_8nuej")
+frame_7/duration = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkhkv"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("AnimatedTexture_o6crd")
+texture_filter = 0
+texture_repeat = false
+use_point_size = true
+point_size = 64.0
+
+[sub_resource type="PointMesh" id="PointMesh_vu164"]
+material = SubResource("StandardMaterial3D_tkhkv")
+
+[node name="Dragon" instance=ExtResource("1_ouhgp")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+modification_stack = SubResource("SkeletonModificationStack3D_uhv04")
+
+[node name="Cylinder" parent="Armature/Skeleton3D" index="0"]
+material_override = SubResource("ShaderMaterial_ns0ty")
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, -1.02597e-16, 3.70924e-19, 3.70931e-19, 0.00723064, 0.999974, -1.02597e-16, -0.999974, 0.00723064, -3.26298e-18, -0.0146954, 6.75989)
+bone_name = "seg0"
+bone_idx = 0
+
+[node name="Head" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="0"]
+transform = Transform3D(1, -1.52201e-22, 7.75482e-25, 7.94093e-23, 1, -1.39698e-09, 3.10193e-25, 1.39698e-09, 1, -2.56335e-17, -0.248973, 0.241602)
+mesh = SubResource("PointMesh_vu164")
+skeleton = NodePath("../..")
+script = ExtResource("11_glktf")

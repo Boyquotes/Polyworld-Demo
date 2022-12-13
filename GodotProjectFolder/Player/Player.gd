@@ -50,13 +50,14 @@ func _process(delta):
 	rotation.y = -facing_dir.angle() + PI/2
 	
 	aim_target = auto_aim_target()
+	var aim_icon = get_parent().get_node("AimIcon")
 	if aim_target:
 		aim_direction = global_position.direction_to(aim_target.global_position)
-		get_parent().get_node("Sprite3D").global_position = lerp(get_parent().get_node("Sprite3D").global_position, aim_target.global_position, 0.2)
-		get_parent().get_node("Sprite3D").visible = true
+		aim_icon.global_position = lerp(aim_icon.global_position, aim_target.global_position, 0.2)
+		aim_icon.visible = true
 	else:
 		aim_direction = Vector3(target_facing_dir.x, 0, target_facing_dir.y)
-		get_parent().get_node("Sprite3D").visible = false
+		aim_icon.visible = false
 	
 
 
@@ -74,7 +75,6 @@ func _physics_process(delta):
 	
 	for i in get_slide_collision_count():
 		var col = get_slide_collision(i)
-		print(col.get_collider())	
 		if col.get_collider() is RigidBody3D:
 			col.get_collider().apply_central_impulse(-col.get_normal() * 3)
 

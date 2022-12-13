@@ -39,13 +39,13 @@
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6rs0"]
 panorama = ExtResource("1_l22cf")
 
-[sub_resource type="Sky" id="Sky_mblu3"]
+[sub_resource type="Sky" id="Sky_xwibp"]
 sky_material = SubResource("PanoramaSkyMaterial_k6rs0")
 
 [sub_resource type="Environment" id="Environment_3n2rb"]
 background_mode = 2
 background_canvas_max_layer = 1
-sky = SubResource("Sky_mblu3")
+sky = SubResource("Sky_xwibp")
 sky_custom_fov = 50.0
 sky_rotation = Vector3(0.785398, 0, 0)
 ambient_light_source = 2
@@ -188,7 +188,7 @@ frame_6/duration = 1.0
 frame_7/texture = ExtResource("31_jv8j8")
 frame_7/duration = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkhkv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5en8a"]
 transparency = 1
 shading_mode = 0
 albedo_texture = SubResource("AnimatedTexture_tolvp")
@@ -198,7 +198,7 @@ use_point_size = true
 point_size = 64.0
 
 [sub_resource type="PointMesh" id="PointMesh_j6hyb"]
-material = SubResource("StandardMaterial3D_tkhkv")
+material = SubResource("StandardMaterial3D_5en8a")
 
 [node name="SecondWorld" type="Node3D"]
 
@@ -496,8 +496,29 @@ material_override = ExtResource("11_4xgqk")
 [node name="shoulder" parent="NPC/Model/Armature/Skeleton3D" index="7"]
 material_override = ExtResource("11_4xgqk")
 
+[node name="HeadAttachment" parent="NPC/Model/Armature/Skeleton3D" index="9"]
+transform = Transform3D(0.996125, 0.0832876, -0.0282388, -0.0873311, 0.974658, -0.205952, 0.0103699, 0.20762, 0.978155, 0.0726121, 0.944382, 0.0695769)
+
 [node name="Head" parent="NPC/Model/Armature/Skeleton3D/HeadAttachment" index="3"]
 mesh = SubResource("PointMesh_sy6kf")
+
+[node name="ChestAttachment" parent="NPC/Model/Armature/Skeleton3D" index="10"]
+transform = Transform3D(0.995721, 0.082597, -0.0414326, -0.0924059, 0.891379, -0.443739, 0.000280583, 0.445669, 0.895198, -4.22703e-15, 0.160759, -0.322217)
+
+[node name="LeftHandAttachment" parent="NPC/Model/Armature/Skeleton3D" index="11"]
+transform = Transform3D(-0.921705, -0.377195, 0.0904593, 0.10454, -0.0169796, 0.994376, -0.373538, 0.925978, 0.0550823, 0.86822, 0.310434, 0.305137)
+
+[node name="RightHandAttachment" parent="NPC/Model/Armature/Skeleton3D" index="12"]
+transform = Transform3D(-0.973818, -0.225132, 0.0315253, 0.133512, -0.678644, -0.72223, 0.183992, -0.699112, 0.690934, -0.930584, 0.691131, -0.380683)
+
+[node name="BoneAttachment3D" parent="NPC/Model/Armature/Skeleton3D" index="13"]
+transform = Transform3D(-0.97729, 0.146095, -0.153494, -0.211833, -0.654561, 0.725725, 0.00555386, 0.741759, 0.670644, 0.805555, 0.591195, -0.0130261)
+
+[node name="BoneAttachment3D2" parent="NPC/Model/Armature/Skeleton3D" index="14"]
+transform = Transform3D(-0.860549, -0.507829, -0.0395737, 0.1019, -0.0955131, -0.990199, 0.499071, -0.856147, 0.133942, -0.712761, 0.7321, -0.0134546)
+
+[node name="BoneAttachment3D3" parent="NPC/Model/Armature/Skeleton3D" index="15"]
+transform = Transform3D(1, -1.5099e-14, 2.38418e-07, 8.70678e-09, 0.999333, -0.0365189, -2.38259e-07, 0.0365189, 0.999333, 1.13566e-18, -0.119158, -0.332446)
 
 [node name="Partner" parent="." instance=ExtResource("11_kdk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88796, 0)

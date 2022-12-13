@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://kfd53p86720d"]
+
+[ext_resource type="PackedScene" uid="uid://ba1vt1ye8j7jy" path="res://tree2.glb" id="1_wwdu1"]
+[ext_resource type="Shader" path="res://toonShader.gdshader" id="2_5raye"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mn6qf"]
+render_priority = 0
+shader = ExtResource("2_5raye")
+shader_parameter/base_color = Color(0.541176, 0.356863, 0.235294, 1)
+shader_parameter/rim_softness = 0.0
+shader_parameter/rim_spread = 0.0
+shader_parameter/rim_threshold = 0.0
+shader_parameter/rim_tint = Color(1, 1, 1, 1)
+shader_parameter/shade_color = Color(0.235294, 0.152941, 0.101961, 1)
+shader_parameter/shade_softness = 0.0
+shader_parameter/shade_threshold = 0.0
+shader_parameter/shadow_softness = 0.1
+shader_parameter/shadow_threshold = 0.7
+shader_parameter/specular_glossiness = 15.0
+shader_parameter/specular_softness = 0.1
+shader_parameter/specular_threshold = 0.5
+shader_parameter/specular_tint = Color(1, 1, 1, 1)
+shader_parameter/use_light = false
+shader_parameter/use_rim = false
+shader_parameter/use_shade = true
+shader_parameter/use_shadow = false
+shader_parameter/use_specular = false
+
+[node name="treemodel" instance=ExtResource("1_wwdu1")]
+
+[node name="Vert" parent="." index="2"]
+material_override = SubResource("ShaderMaterial_mn6qf")
+cast_shadow = 0

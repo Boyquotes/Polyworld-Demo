@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b18f65fl08rq7"]
+
+[ext_resource type="PackedScene" uid="uid://bm30sq7wmksx0" path="res://bigahhlab.glb" id="1_ycks8"]
+[ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="2_ltqoy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3n45"]
+cull_mode = 2
+shading_mode = 2
+diffuse_mode = 1
+albedo_texture = ExtResource("2_ltqoy")
+metallic_specular = 0.0
+uv1_scale = Vector3(0.125, 0.125, 0.125)
+uv1_offset = Vector3(0.125, 0.125, 0.125)
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rcu7u"]
+points = PackedVector3Array(-17.0887, -7.3239, -16.0236, 14.7617, 0.364136, 19.1217, 13.5821, -7.3239, 17.8201, 14.7617, 0.364136, -17.3252, -18.2683, 0.364136, 19.1217, -18.2683, 0.364136, -17.3252, 13.5821, -7.3239, -16.0236, -17.0887, -7.3239, 17.8201)
+
+[node name="bigahhlab" instance=ExtResource("1_ycks8")]
+
+[node name="Cube006" parent="." index="6"]
+material_override = SubResource("StandardMaterial3D_u3n45")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Cube006" index="0"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Cube006/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412438, 0)
+shape = SubResource("ConvexPolygonShape3D_rcu7u")

@@ -55,7 +55,7 @@ void fragment() {
 	
 	for (int i = 0; i < palette_size; i++) {
 		vec4 palette_color = texture(palette, vec2(1.0 / float(palette_size) * float(i), .0));
-		if (distance(palette_color, vec4(ALBEDO,1.)) < distance(new_color, vec4(ALBEDO,1.))) {
+		if (distance(		palette_color, vec4(ALBEDO,1.)) < distance(new_color, vec4(ALBEDO,1.))) {
 			new_color = palette_color;
 		}
 	}
