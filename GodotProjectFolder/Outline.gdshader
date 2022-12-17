@@ -40,7 +40,7 @@ void fragment() {
 	if (is_inverted) {
 		diff = -min(depth-depth_neighbor1 + depth-depth_neighbor2, depth-depth_neighbor3 + depth-depth_neighbor4);
 	} else {
-		diff = max(depth-depth_neighbor1 + depth-depth_neighbor2, depth-depth_neighbor3 + depth-depth_neighbor4);
+		diff = max(sqrt(depth)-sqrt(depth_neighbor1) + sqrt(depth)-sqrt(depth_neighbor2), sqrt(depth)-sqrt(depth_neighbor3) + sqrt(depth)-sqrt(depth_neighbor4));
 	}
 
 	float line_strength = round(clamp(diff * depth_multiplier + depth_addend, 0.0, 1.0) * 2.0) / 2.0 * transparency;
@@ -55,7 +55,7 @@ void fragment() {
 	
 	for (int i = 0; i < palette_size; i++) {
 		vec4 palette_color = texture(palette, vec2(1.0 / float(palette_size) * float(i), .0));
-		if (distance(		palette_color, vec4(ALBEDO,1.)) < distance(new_color, vec4(ALBEDO,1.))) {
+		if (distance(palette_color, vec4(ALBEDO,1.)) < distance(new_color, vec4(ALBEDO,1.))) {
 			new_color = palette_color;
 		}
 	}

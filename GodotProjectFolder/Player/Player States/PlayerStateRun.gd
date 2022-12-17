@@ -29,15 +29,12 @@ func physics_update(delta):
 	
 	if player.input_dir:
 		
-		player.set_target_facing(player.relative_input_dir)
+		player.set_facing_target(player.relative_input_dir)
 		
 		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.RUN_SPEED, player.RUN_ACCEL * delta)
+		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.move_accel * delta)
 		player.velocity.x = hor_velocity.x
 		player.velocity.z = hor_velocity.y
-		
-		#player.velocity.x = move_toward(player.velocity.x, player.relative_input_dir.x * player.RUN_SPEED, player.RUN_ACCEL * delta)
-		#player.velocity.z = move_toward(player.velocity.z, player.relative_input_dir.y * player.RUN_SPEED, player.RUN_ACCEL * delta)
 		
 	else:
 		state_machine.transition_to("Idle")
@@ -62,10 +59,8 @@ func physics_update(delta):
 			player.is_right_cooling = true
 			player.get_parent().get_parent().card_right_cooldown.start(player.right_cooldown)
 			state_machine.transition_to("Attack2")
-	if Input.is_action_just_pressed("special"):
-		state_machine.transition_to("Attack3")
 	if Input.is_action_just_pressed("tertiary"):
-		state_machine.transition_to("Attack4")
+		state_machine.transition_to("Attack3")
 
 
 func exit():
@@ -73,7 +68,7 @@ func exit():
 
 
 func jump():
-	player.velocity.y = player.JUMP_VELOCITY
+	player.velocity.y = player.jump_force
 	player.can_hold_jump = true
 	state_machine.transition_to("InAir")
 	

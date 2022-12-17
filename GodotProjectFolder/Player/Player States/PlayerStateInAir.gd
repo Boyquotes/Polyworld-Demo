@@ -6,8 +6,6 @@ var player : Player
 var in_jump_buffer = false
 var in_coyote_time = false
 
-var flipping = false
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,27 +46,24 @@ func physics_update(delta):
 	
 	if player.input_dir:
 		
-		player.set_target_facing(player.relative_input_dir)
+		player.set_facing_target(player.relative_input_dir)
 		
 		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.RUN_SPEED, player.AIR_ACCEL * delta)
+		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.air_accel * delta)
 		player.velocity.x = hor_velocity.x
 		player.velocity.z = hor_velocity.y
 	
 	
 	player.move_and_slide()
 	
-	if flipping:
-		var model = player.get_node("Model") as Node3D
-		#model.rotate_x(0.15)
-		model.rotation.x = move_toward(model.rotation.x, TAU - 0.1, 0.2)
-		if model.rotation.x < TAU - 0.2:
-			player.anim.play("frontflip")
-	
 	
 	# Handle landing
 	if player.is_on_floor():
 		player.can_hold_jump = false
+		
+		player.s_player.stream = load("res://Sounds/landing.wav")
+		player.s_player.pitch_scale = randf_range(0.8, 1.2)
+		player.s_player.play()
 		
 		if player.velocity.y <= -40.0:
 			print("fall damage")
@@ -91,33 +86,19 @@ func physics_update(delta):
 			player.is_right_cooling = true
 			player.get_parent().get_parent().card_right_cooldown.start(player.right_cooldown)
 			state_machine.transition_to("Attack2")
-	if Input.is_action_just_pressed("special"):
-		state_machine.transition_to("Attack3")
 	if Input.is_action_just_pressed("tertiary"):
-		state_machine.transition_to("Attack4")
+		state_machine.transition_to("Attack3")
 
 
 func exit():
-	player.s_player.stream = load("res://Sounds/landing.wav")
-	player.s_player.pitch_scale = randf_range(0.8, 1.2)
-	player.s_player.play()
 	
 	var model = player.get_node("Model") as Node3D
-	model.rotation.x = 0
-	flipping = false
 
 
 func jump():
 	
 	player.can_hold_jump = true
-	
-	var fl = flipping
-	state_machine.transition_to("InAir")
-	flipping = !fl
-	if flipping:
-		player.velocity.y = player.JUMP_VELOCITY * 1.2
-	else:
-		player.velocity.y = player.JUMP_VELOCITY
+	player.velocity.y = player.jump_force
 		
 
 

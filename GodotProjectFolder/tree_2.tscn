@@ -7,7 +7,7 @@
 code = "// NOTE: Shader automatically converted from Godot Engine 4.0.beta7's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx,vertex_lighting;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_lambert,specular_schlick_ggx,vertex_lighting,shadows_disabled;
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color,filter_nearest,repeat_disable;
 uniform float alpha_scissor_threshold;
@@ -30,6 +30,19 @@ void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
 	VERTEX.y += sin(TIME * 2. + VERTEX.x * 1.) * 0.1;
 	VERTEX.z += sin(TIME * 2. + VERTEX.x * 1.) * 0.1;
+	
+	// Perspective scale clamping (to reduce distortion from upscaling)
+	float s = -(MODELVIEW_MATRIX)[3].z / PROJECTION_MATRIX[0][0];
+	float w = (VIEWPORT_SIZE.x / 2.) * 0.05;//half the viewport width * max size (sprite pixel size)
+	float max_size_thresh = 8.;
+	float min_size_thresh = 3.;
+	if (s < w - min_size_thresh) {
+		float scale = s / (w - min_size_thresh);
+		POINT_SIZE = point_size / scale;
+	} if (s > w + max_size_thresh) {
+		float scale = s / (w + max_size_thresh);
+		POINT_SIZE = point_size / scale;
+	}
 }
 
 
@@ -114,12 +127,6 @@ _data = {
 }
 
 [node name="tree2" type="Node3D"]
-
-[node name="Light" type="Node3D" parent="."]
-transform = Transform3D(-0.290865, 0.566393, 0.771101, -0.0551891, 0.794672, -0.604525, -0.955171, -0.218391, -0.199883, 4.07625, 5.90386, -1.00545)
-
-[node name="Camera" type="Node3D" parent="."]
-transform = Transform3D(0.685921, 0.651558, 0.324014, 0, 0.445271, -0.895396, -0.727676, 0.61417, 0.305421, 7.35889, 4.95831, 6.92579)
 
 [node name="MeshInstance3D13" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0519244, 4.50928, 1.35432)

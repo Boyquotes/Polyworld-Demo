@@ -3,8 +3,10 @@
 [ext_resource type="Script" path="res://Partner.gd" id="1_xfgan"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytivq"]
+shading_mode = 2
 diffuse_mode = 1
 albedo_color = Color(0.807843, 0.803922, 0, 1)
+metallic_specular = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_78isx"]
 material = SubResource("StandardMaterial3D_ytivq")
@@ -14,14 +16,15 @@ material = SubResource("StandardMaterial3D_ytivq")
 [node name="Partner" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1_xfgan")
-move_speed = 10.0
 should_avoid = false
+move_speed = 10.0
+jump_force = 25.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_78isx")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, -0.5)
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0.5)
 mesh = SubResource("BoxMesh_78isx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

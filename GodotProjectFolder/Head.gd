@@ -7,7 +7,7 @@ var sprite_swap_angle
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	frame_count = mesh.material.albedo_texture.frames
+	frame_count = mesh.material.get_shader_parameter("texture_albedo").frames	
 	sprite_swap_angle = 360.0 / frame_count
 	
 	
@@ -26,5 +26,5 @@ func _physics_process(delta):
 	var deg_diff = rad_to_deg(diff) * 0.95
 	var deg_round_diff = round(deg_diff / sprite_swap_angle) * sprite_swap_angle
 	var frame_number = fposmod(round(deg_round_diff / sprite_swap_angle), frame_count)
-	mesh.material.albedo_texture.current_frame = frame_number
+	mesh.material.get_shader_parameter("texture_albedo").current_frame = frame_number
 

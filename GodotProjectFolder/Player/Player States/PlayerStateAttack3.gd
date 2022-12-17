@@ -23,7 +23,7 @@ func enter():
 	ball.global_position = player.global_position
 	
 	
-	player.set_target_facing(Vector2(best_targ.x, best_targ.z))
+	player.set_facing_target(Vector2(best_targ.x, best_targ.z))
 	
 	player.velocity.y = 15
 	
@@ -37,11 +37,7 @@ func physics_update(delta):
 	
 	player.anim.play("thrust")
 	
-	# Add the gravity
-	#player.velocity.y -= player.GRAVITY * delta
-	
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-	#hor_velocity = hor_velocity.normalized() * attack_length
 	player.velocity.x = hor_velocity.x
 	player.velocity.z = hor_velocity.y
 	
@@ -57,7 +53,6 @@ func physics_update(delta):
 			state_machine.transition_to("Idle")
 		else:
 			state_machine.transition_to("InAir")
-			state_machine.get_node("InAir").flipping = true
 
 
 func exit():
@@ -65,7 +60,7 @@ func exit():
 
 
 func jump():
-	player.velocity.y = player.JUMP_VELOCITY
+	player.velocity.y = player.jump_force
 	player.can_hold_jump = true
 	state_machine.transition_to("InAir")
 	
@@ -73,7 +68,7 @@ func jump():
 func best_target(aim_ahead = 0):
 	var dist = 20
 	var target_node = null
-	var target_angle = Vector3(player.target_facing_dir.x, 0, player.target_facing_dir.y).normalized()
+	var target_angle = Vector3(player.facing_dir_target.x, 0, player.facing_dir_target.y).normalized()
 	for n in get_tree().get_nodes_in_group("enemies"): #change this to hurtbox
 		
 		var ppos = player.global_position
@@ -90,7 +85,7 @@ func best_target(aim_ahead = 0):
 		if result:
 			# collision at ray point
 			pass
-		elif abs(ppos2d.direction_to(npos2d).angle_to(player.target_facing_dir.normalized())) < PI/4: # change to else to just target nearest enemy
+		elif abs(ppos2d.direction_to(npos2d).angle_to(player.facing_dir_target.normalized())) < PI/4: # change to else to just target nearest enemy
 		#else:
 			var current_dist = ppos.distance_to(npos)
 			if current_dist < dist:

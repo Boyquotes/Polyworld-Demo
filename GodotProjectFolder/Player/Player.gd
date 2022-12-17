@@ -1,22 +1,12 @@
 class_name Player
-extends CharacterBody3D
+extends Entity
 
 
-const RUN_SPEED := 12.0 #12
-const RUN_ACCEL := 60.0 # 60
-const RUN_DECEL := 50.0 # 50
-const AIR_ACCEL := 25.0
-const TURN_SPEED := 15.0
-const JUMP_VELOCITY := 15.0
-const GRAVITY := 70.0
-const HOLD_GRAVITY := 30.0
 const JUMP_BUFFER := 0.075
 const COYOTE_TIME := 0.075
 
 var input_dir := Vector2.ZERO
 var relative_input_dir := Vector2.ZERO
-var facing_dir := Vector2.DOWN
-var target_facing_dir := Vector2.DOWN
 
 var can_hold_jump = false
 
@@ -26,6 +16,7 @@ var aim_direction : Vector3
 @onready var cam = get_viewport().get_camera_3d() 
 @onready var anim = $Model/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
+@onready var aim_icon = get_parent().get_node("AimIcon") as Node3D
 
 var right_cooldown = 0.5
 var left_cooldown = 1
@@ -33,35 +24,36 @@ var left_cooldown = 1
 var is_right_cooling = false
 var is_left_cooling = false
 
+var partner_activation_position = Vector3.ZERO
+var partner_activation_time = 0.0
+
+
 func _ready():
 	pass
 
 
 func _process(delta):
 	
+	var partner = get_parent().get_node("Partner")
+	if Input.is_action_pressed("special"):
+		partner.is_being_called = true
+		if Input.is_action_just_pressed("special"):
+			partner_activation_time = 0.0
+			partner_activation_position = partner.global_position
+		partner_activation_time += 0.025
+		if partner_activation_time >= 0.5:
+			partner_activation_time = 1.0
+			get_node("StateMachine").transition_to("Partner")
+		partner.global_position = partner.global_position.lerp(global_position, partner_activation_time)
+		partner.rotation.y = rotation.y
+	else:
+		partner.is_being_called = false
+		partner_activation_time = 0.0
+	
 	# Get the input direction
 	input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
-	
 	# Get the input direction relative to the camera
 	relative_input_dir = input_dir.rotated(-cam.global_rotation.y).normalized()
-	
-	# Set the rotation
-	facing_dir = facing_dir.slerp(target_facing_dir, TURN_SPEED * delta)
-	rotation.y = -facing_dir.angle() + PI/2
-	
-	aim_target = auto_aim_target()
-	var aim_icon = get_parent().get_node("AimIcon")
-	if aim_target:
-		aim_direction = global_position.direction_to(aim_target.global_position)
-		aim_icon.global_position = lerp(aim_icon.global_position, aim_target.global_position, 0.2)
-		aim_icon.visible = true
-	else:
-		aim_direction = Vector3(target_facing_dir.x, 0, target_facing_dir.y)
-		aim_icon.visible = false
-	
-
-
-func _physics_process(delta):
 	
 	# Handle interaction
 	if Input.is_action_just_pressed("interact"):
@@ -73,14 +65,26 @@ func _physics_process(delta):
 			if body.has_method("interact"):
 				body.interact()
 	
+	# Update aim
+	aim_target = auto_aim_target()
+	if aim_target:
+		aim_direction = global_position.direction_to(aim_target.global_position)
+		aim_icon.global_position = lerp(aim_icon.global_position, aim_target.global_position, 0.2)
+		aim_icon.visible = true
+	else:
+		aim_direction = Vector3(facing_dir_target.x, 0, facing_dir_target.y)
+		aim_icon.visible = false
+	
+	update_facing(delta)
+
+
+func _physics_process(delta):
+	
+	# Push rigidbodies out of the way
 	for i in get_slide_collision_count():
 		var col = get_slide_collision(i)
 		if col.get_collider() is RigidBody3D:
 			col.get_collider().apply_central_impulse(-col.get_normal() * 3)
-
-
-func set_target_facing(dir:Vector2):
-	target_facing_dir = dir.normalized()
 
 
 func auto_aim_target(aim_ahead = 0):
@@ -101,7 +105,7 @@ func auto_aim_target(aim_ahead = 0):
 			var space_state = get_world_3d().direct_space_state
 			var result := space_state.intersect_ray(param)
 			
-			var angle_difference = abs(ppos2d.direction_to(npos2d).angle_to(target_facing_dir.normalized()))
+			var angle_difference = abs(ppos2d.direction_to(npos2d).angle_to(facing_dir_target.normalized()))
 			
 			if result:
 				# collision at ray point

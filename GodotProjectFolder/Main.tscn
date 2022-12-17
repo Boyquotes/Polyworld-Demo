@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://je8o3ba2i5oe"]
+[gd_scene load_steps=12 format=3 uid="uid://je8o3ba2i5oe"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_ohqny"]
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="2_774ge"]
@@ -67,65 +67,6 @@ _data = {
 "RESET": SubResource("Animation_vw2r7")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8r5fy"]
-shader = ExtResource("2_774ge")
-shader_parameter/color = null
-shader_parameter/scale = 0.8
-
-[sub_resource type="Animation" id="Animation_p0c8c"]
-resource_name = "Close"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.3, 0.8]
-}
-
-[sub_resource type="Animation" id="Animation_4xoqs"]
-resource_name = "Open"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.3]
-}
-
-[sub_resource type="Animation" id="Animation_ocdxc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.8]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_mhnld"]
-_data = {
-"Close": SubResource("Animation_p0c8c"),
-"Open": SubResource("Animation_4xoqs"),
-"RESET": SubResource("Animation_ocdxc")
-}
-
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ohqny")
 
@@ -191,6 +132,7 @@ grow_vertical = 0
 one_shot = true
 
 [node name="Vignette" type="ColorRect" parent="UILayer"]
+visible = false
 top_level = true
 material = SubResource("ShaderMaterial_ty0ol")
 anchors_preset = 15
@@ -204,20 +146,6 @@ grow_vertical = 2
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/Vignette"]
 libraries = {
 "": SubResource("AnimationLibrary_njwq4")
-}
-
-[node name="Binoculars" type="ColorRect" parent="UILayer"]
-top_level = true
-material = SubResource("ShaderMaterial_8r5fy")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/Binoculars"]
-libraries = {
-"": SubResource("AnimationLibrary_mhnld")
 }
 
 [node name="FourthWorld" parent="." instance=ExtResource("3_ivkmp")]

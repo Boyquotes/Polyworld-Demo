@@ -37,14 +37,10 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 		hitbox.hit_list.append(self)
 	
 	# Don't get hit if superguarding
-	if not superguarding:
-		pass
+	if superguarding:
+		return
 	
-	# Instantiate damage floater
-	var floater = load("res://DamageFloater.tscn").instantiate()
-	floater.text = str(hitbox.damage)
-	floater.hit_position = global_position
-	get_tree().root.get_child(0).add_child(floater)
+	get_parent().health_change(hitbox.damage)
 	
 	# Set knockback
 	if "velocity" in get_parent():
@@ -83,11 +79,10 @@ func hitlag(hitbox : Hitbox):
 				hitbox_parent.contact()
 	hitbox.stream_player.play()
 	
-	disable(hitbox_parent)
+	#disable(hitbox_parent)
 	if hitbox.lag_caster:
-		disable(hitbox.caster)
-		get_tree().root.get_node("Main").card_left_cooldown.paused = true
-		get_tree().root.get_node("Main").card_right_cooldown.paused = true
+		#disable(hitbox.caster)
+		pass
 	
 	await lag_timer.timeout
 	
@@ -95,8 +90,6 @@ func hitlag(hitbox : Hitbox):
 		enable(hitbox_parent)
 		if hitbox.lag_caster:
 			enable(hitbox_caster)
-			get_tree().root.get_node("Main").card_left_cooldown.paused = false
-			get_tree().root.get_node("Main").card_right_cooldown.paused = false
 	
 
 
@@ -112,7 +105,7 @@ func hurtlag():
 	# Hurtlag
 	if hurtbox_parent.has_method("hurt"):
 		hurtbox_parent.hurt()
-	disable(hurtbox_parent)
+	#disable(hurtbox_parent)
 	
 	await lag_timer.timeout
 	

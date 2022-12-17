@@ -18,8 +18,7 @@ func _ready():
 func enter():
 	stored_velocity = player.velocity
 	
-	
-	player.target_facing_dir = Vector2(player.aim_direction.x, player.aim_direction.z)
+	player.set_facing_target(Vector2(player.aim_direction.x, player.aim_direction.z))
 	player.velocity.y = 2
 
 	await get_tree().create_timer(0.2).timeout
@@ -47,13 +46,8 @@ func update(delta):
 func physics_update(delta):
 	player.anim.play("cast1")
 	
-	#player.target_facing_dir = Vector2(player.aim_direction.x, player.aim_direction.z)
-	
-	# Add the gravity
-	#player.velocity.y -= player.GRAVITY * delta
-	
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-	hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.RUN_DECEL * 0.5 * delta)
+	hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.move_decel * 0.5 * delta)
 	player.velocity.x = hor_velocity.x
 	player.velocity.z = hor_velocity.y
 	
@@ -61,7 +55,6 @@ func physics_update(delta):
 
 
 func exit():
-	#pass
 	player.velocity.x = stored_velocity.x
 	player.velocity.z = stored_velocity.z
 	

@@ -20,10 +20,7 @@ func _ready():
 	velocity = Vector3(direction.x, 0, direction.y) * speed
 	
 	var best_targ = best_target(0.0)
-	#best_targ = caster.target_facing_dir
-	#direction = direction.slerp(Vector2(best_targ.x, best_targ.y), 0.5)
 	direction = best_targ
-	#velocity = Vector3(direction.x, 0, direction.y) * speed
 	velocity = direction * speed
 
 func _physics_process(delta):
@@ -33,7 +30,6 @@ func _physics_process(delta):
 	var collide = move_and_collide(velocity) as KinematicCollision3D
 
 	if collide:
-		
 		
 		var collision_angle = collide.get_angle()
 		if collision_angle < PI/4: # floor collision

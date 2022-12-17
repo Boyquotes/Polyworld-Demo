@@ -10,6 +10,7 @@ script = ExtResource("1_62j8l")
 [node name="CollisionShape3d" type="CollisionShape3D" parent="."]
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+attenuation_model = 3
 
 [node name="LagTimer" type="Timer" parent="."]
 one_shot = true

@@ -18,13 +18,9 @@ func _ready():
 	$Hitbox.caster = self.caster
 	global_position = caster.global_position
 	velocity = Vector3(direction.x, 0, direction.y) * speed
-	#screenshake(0.1)
 	
 	var best_targ = best_target(0.0)
-	#best_targ = caster.target_facing_dir
-	#direction = direction.slerp(Vector2(best_targ.x, best_targ.y), 0.5)
 	direction = best_targ
-	#velocity = Vector3(direction.x, 0, direction.y) * speed
 	velocity = direction * speed
 
 

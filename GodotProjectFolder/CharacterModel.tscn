@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://dyblx62wxe2ac"]
+[gd_scene load_steps=68 format=3 uid="uid://dyblx62wxe2ac"]
 
 [ext_resource type="Material" uid="uid://cn2hsvjcxpy5k" path="res://Materials/ShirtMat1.tres" id="1_j5enh"]
 [ext_resource type="Material" uid="uid://bigeh386gtlxf" path="res://Materials/SkinMat1.tres" id="2_uqj52"]
@@ -256,6 +256,70 @@ point_size = 16.0
 [sub_resource type="PointMesh" id="PointMesh_td26v"]
 material = SubResource("StandardMaterial3D_uwn08")
 
+[sub_resource type="Shader" id="Shader_wevie"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.0.beta7's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_always,cull_back,unshaded;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_nearest,repeat_disable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_nearest,repeat_disable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_nearest,repeat_disable;
+uniform float specular;
+uniform float metallic;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	POINT_SIZE=point_size;
+	
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
+	MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+	
+	// Perspective scale clamping (to reduce distortion from upscaling)
+	float s = -(MODELVIEW_MATRIX)[3].z / PROJECTION_MATRIX[0][0];
+	float w = (VIEWPORT_SIZE.x / 2.) * 0.05;//half the viewport width * max size (sprite pixel size)
+	float max_size_thresh = 8.;
+	float min_size_thresh = 3.;
+	if (s < w - min_size_thresh) {
+		float scale = s / (w - min_size_thresh);
+		POINT_SIZE = point_size / scale;
+	} if (s > w + max_size_thresh) {
+		float scale = s / (w + max_size_thresh);
+		POINT_SIZE = point_size / scale;
+	}
+
+}
+
+
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,POINT_COORD);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	ALPHA *= albedo.a * albedo_tex.a;
+	if (ALPHA != 1.) {
+		discard;
+	}
+}
+"
+
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_nq3l1"]
 resource_local_to_scene = true
 frames = 10
@@ -280,20 +344,25 @@ frame_8/duration = 1.0
 frame_9/texture = ExtResource("13_ta5uv")
 frame_9/duration = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q3dl4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ir0v"]
 resource_local_to_scene = true
-transparency = 1
-shading_mode = 0
-albedo_texture = SubResource("AnimatedTexture_nq3l1")
-texture_filter = 0
-texture_repeat = false
-billboard_mode = 1
-use_point_size = true
-point_size = 32.0
+render_priority = 0
+shader = SubResource("Shader_wevie")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/point_size = 32.0
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/texture_albedo = SubResource("AnimatedTexture_nq3l1")
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
 
 [sub_resource type="PointMesh" id="PointMesh_fm5nm"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_q3dl4")
+material = SubResource("ShaderMaterial_7ir0v")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlfuy"]
 shading_mode = 0

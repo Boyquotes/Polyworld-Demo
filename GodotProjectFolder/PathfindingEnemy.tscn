@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2sqmde2h8gfg"]
+[gd_scene load_steps=12 format=3 uid="uid://c0t7yti247e6d"]
 
 [ext_resource type="Script" path="res://PathfindingEnemy.gd" id="1_7i3iw"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="2_bwnuo"]
+[ext_resource type="Script" path="res://StateMachine.gd" id="2_ip005"]
+[ext_resource type="Script" path="res://EnemyStateDetected.gd" id="3_ksixs"]
+[ext_resource type="Script" path="res://EnemyStateWandering.gd" id="4_vphl8"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_v5sbh"]
 
@@ -25,13 +28,24 @@ margin = 0.5
 [node name="PathfindingEnemy" type="CharacterBody3D" groups=["enemies"]]
 collision_layer = 2
 script = ExtResource("1_7i3iw")
-health = 100.0
+can_jump = true
+should_avoid = false
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("2_ip005")
+current_state = NodePath("Wandering")
+
+[node name="Detected" type="Node" parent="StateMachine"]
+script = ExtResource("3_ksixs")
+
+[node name="Wandering" type="Node" parent="StateMachine"]
+script = ExtResource("4_vphl8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_v5sbh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 mesh = SubResource("BoxMesh_kh7gn")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]

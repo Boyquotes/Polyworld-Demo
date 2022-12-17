@@ -1,13 +1,7 @@
 class_name PathfindingEntity
-extends CharacterBody3D
+extends Entity
 
 
-@export var move_speed := 12.0
-@export var move_accel := 60.0
-@export var move_decel := 50.0
-@export var air_accel := 30.0
-@export var jump_velocity := 25.0
-@export var gravity := 70.0
 @export var should_avoid = true
 
 var jump_thresh = 0.2
@@ -23,14 +17,12 @@ func _ready():
 
 func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance:=false, can_hop=true, always_hop:=false, shortcut_bias:=2.0):
 	
-	# Store horizontal velocity
+	# Store horizontal and vertical velocities
 	var hor_velocity = Vector2(velocity.x, velocity.z)
-	
-	# Store vertical velocity
 	var vert_velocity = velocity.y
 	
-	# Add the gravity
-	vert_velocity -= gravity * delta
+	# Subtract gravity from vertical velocity
+	vert_velocity -= GRAVITY * delta
 	agent.set_target_location(destination)
 	
 	var destination_2d = Vector2(destination.x, destination.z)
@@ -64,7 +56,7 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 				direction = current_pos_2d.direction_to(destination_2d)
 				if can_hop: #maybe move this out of the outer if statement to help if entity is stuck while pathfinding ?
 					if (path_length <= 1 && destination.y > current_pos.y + jump_thresh) || always_hop || is_on_wall():
-						vert_velocity = jump_velocity
+						vert_velocity = jump_force
 			
 		if accel_by_distance:
 			hor_velocity = hor_velocity.move_toward(direction * (move_speed + (agent.distance_to_target() - min_range) * 2), move_accel * delta)
@@ -86,6 +78,8 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 		agent.set_velocity(Vector3(hor_velocity.x, vert_velocity, hor_velocity.y))
 	else:
 		velocity = Vector3(hor_velocity.x, vert_velocity, hor_velocity.y)
+		if hor_velocity != Vector2.ZERO:
+			set_facing_target(hor_velocity)
 		move_and_slide()
 
 
@@ -98,4 +92,6 @@ func get_path_distance(path:PackedVector3Array):
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	velocity = safe_velocity
+	if Vector2(velocity.x, velocity.z) != Vector2.ZERO:
+		set_facing_target(Vector2(velocity.x, velocity.z))
 	move_and_slide()
