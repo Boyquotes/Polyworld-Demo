@@ -35,6 +35,8 @@ func update(delta):
 	
 	if enemy.is_player_visible():
 			state_machine.transition_to("Detected")
+	
+	enemy.update_facing(delta)
 
 
 func physics_update(delta):
