@@ -11,6 +11,7 @@ var target_y = 0.0
 var default_fov = 10
 var default_distance = 85
 var default_rotation = Vector3(-PI/9, 0, 0)
+var default_near = 15
 
 @onready var cam = $Camera3d as Camera3D
 
@@ -71,11 +72,12 @@ func _physics_process(delta):
 		
 func switch_to_pov():
 	# change to use set_camera_properties()
-	get_node("Camera3d").position.z = -1
+	cam.position.z = -1
 	if target is Entity:
 		rotation.y = -target.facing_dir_target.angle() - PI / 2
 		rotation.x = 0
-		get_node("Camera3d").fov = 60
+		cam.fov = 60
+		cam.near = 0.05
 	
 	global_position = target.global_position + target_offset + Vector3.UP * 0.3
 
@@ -83,10 +85,10 @@ func switch_to_pov():
 func switch_to_fixed():
 	target.facing_dir_target = Vector2(-sin(rotation.y), -cos(rotation.y))
 	set_camera_properties()
-	get_node("Camera3d").fov = 10 #13
 
 
-func set_camera_properties(rot = default_rotation, dist = default_distance, fov = default_fov):
+func set_camera_properties(rot = default_rotation, dist = default_distance, fov = default_fov, near = default_near):
 	rotation = default_rotation
 	cam.position.z = dist
 	cam.fov = fov
+	cam.near = near

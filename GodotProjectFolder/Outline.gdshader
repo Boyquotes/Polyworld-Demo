@@ -45,7 +45,7 @@ void fragment() {
 
 	float line_strength = round(clamp(diff * depth_multiplier + depth_addend, 0.0, 1.0) * 2.0) / 2.0 * transparency;
 	
-	ALBEDO = mix(texture(SCREEN_TEXTURE, SCREEN_UV).rgb, outline_color.rgb, line_strength);
+	ALBEDO = mix(texture(SCREEN_TEXTURE, SCREEN_UV).rgb, outline_color.rgb, clamp(line_strength, 0.,1.));
 	//ALBEDO = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
 	
 	//ALBEDO = texelFetch(SCREEN_TEXTURE, ivec2(round(SCREEN_UV * vp))-1, 0).rgb;
