@@ -27,7 +27,7 @@ sky_material = SubResource("PanoramaSkyMaterial_n846w")
 
 [sub_resource type="Environment" id="Environment_24hwn"]
 background_mode = 1
-background_color = Color(0.133333, 0.137255, 0.196078, 1)
+background_color = Color(0.678431, 0.701961, 1, 1)
 background_canvas_max_layer = 1
 sky = SubResource("Sky_mblu3")
 sky_custom_fov = 80.0

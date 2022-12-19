@@ -23,7 +23,6 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	print($StateMachine.current_state)
 	pass
 #	if not stunned:
 #		$MeshInstance3D2.visible = false
