@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://dctj4hq7wjib1"]
+[gd_scene load_steps=53 format=3 uid="uid://dctj4hq7wjib1"]
 
 [ext_resource type="Texture2D" uid="uid://dxe6w32mi1min" path="res://sonic_sky.png" id="1_eli8q"]
 [ext_resource type="Script" path="res://Worlds/SecondWorldEnvironment.gd" id="2_ln7b3"]
@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_egant"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_4xgu5"]
 [ext_resource type="PackedScene" uid="uid://2mlo3yjgai2d" path="res://Player/Player.tscn" id="7_cdyhq"]
-[ext_resource type="Script" path="res://CameraRegion.gd" id="10_iwk4t"]
+[ext_resource type="PackedScene" uid="uid://bkujk4ac4f3sr" path="res://CameraRegion.tscn" id="10_y8tlv"]
 [ext_resource type="PackedScene" uid="uid://c0t7yti247e6d" path="res://PathfindingEnemy.tscn" id="11_dwh2e"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://TextArrowIcon.png" id="12_411re"]
 [ext_resource type="Shader" path="res://Worlds/Clouds.gdshader" id="18_mv84r"]
@@ -27,7 +27,7 @@ sky_material = SubResource("PanoramaSkyMaterial_n846w")
 
 [sub_resource type="Environment" id="Environment_24hwn"]
 background_mode = 1
-background_color = Color(0.678431, 0.701961, 1, 1)
+background_color = Color(0.345098, 0.333333, 0.929412, 1)
 background_canvas_max_layer = 1
 sky = SubResource("Sky_mblu3")
 sky_custom_fov = 80.0
@@ -306,6 +306,9 @@ size = Vector2(7.112, 7.186)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qphd1"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_h1lg7"]
+size = Vector3(16.48, 2.229, 15.0914)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dt056"]
 render_priority = -128
 shader = ExtResource("6_4xgu5")
@@ -398,7 +401,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Binoculars" type="ColorRect" parent="Interface"]
+[node name="PocketCamera" type="ColorRect" parent="Interface"]
 top_level = true
 material = SubResource("ShaderMaterial_0mm0g")
 layout_mode = 1
@@ -414,13 +417,13 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Binoculars"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/PocketCamera"]
 autoplay = "Close"
 libraries = {
 "": SubResource("AnimationLibrary_mhnld")
 }
 
-[node name="TextureRect" type="TextureRect" parent="Interface/Binoculars"]
+[node name="TextureRect" type="TextureRect" parent="Interface/PocketCamera"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -593,6 +596,7 @@ transform = Transform3D(2.50806, 0, 0.784008, 0, 2.62774, 0, -0.784008, 0, 2.508
 
 [node name="Grass" type="MultiMeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -0.942939)
+visible = false
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_gbcaw")
 
@@ -609,6 +613,7 @@ skeleton = NodePath("../..")
 
 [node name="Grass2" type="MultiMeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, 1, 3.87689, -12, 13.4913)
+visible = false
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_bio5r")
 
@@ -625,6 +630,7 @@ skeleton = NodePath("../..")
 
 [node name="Grass3" type="MultiMeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, 1, -1.44543, 3, -15.6354)
+visible = false
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_u7nte")
 
@@ -641,6 +647,7 @@ skeleton = NodePath("../..")
 
 [node name="Grass4" type="MultiMeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, 1, 7.87689, 4, -16.3834)
+visible = false
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_hlomo")
 
@@ -664,10 +671,20 @@ script = ExtResource("4_trc8x")
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_qphd1")
 
-[node name="CameraRegion" type="Area3D" parent="Environment"]
-script = ExtResource("10_iwk4t")
+[node name="CameraRegion" parent="Environment" instance=ExtResource("10_y8tlv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.65898, -5.64776, -0.401953)
+x_rotation = -0.262
+y_rotation = 1.571
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/CameraRegion"]
+[node name="CollisionShape3D" parent="Environment/CameraRegion" index="0"]
+shape = SubResource("BoxShape3D_h1lg7")
+
+[node name="CameraRegion2" parent="Environment" instance=ExtResource("10_y8tlv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.65898, -5.7089, 16.6332)
+
+[node name="CollisionShape3D" parent="Environment/CameraRegion2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0305676, -0.657202)
+shape = SubResource("BoxShape3D_h1lg7")
 
 [node name="CameraArm" type="Node3D" parent="." node_paths=PackedStringArray("target")]
 transform = Transform3D(0.94049, 0.116226, -0.319328, 0, 0.939692, 0.34202, 0.339821, -0.321666, 0.883771, -3.6255, -2, 15.9946)
@@ -708,10 +725,15 @@ skeleton = NodePath("../..")
 
 [node name="CloudPlane" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18.9608, 8.21198)
+visible = false
 mesh = SubResource("PlaneMesh_sfewr")
 
 [node name="CloudPlane2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 39.9962, 8.21198)
+transform = Transform3D(-1.19249e-08, 1.04251e-15, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, 1.19249e-08, 0, 15.8691, 8.21198)
+visible = false
 mesh = SubResource("PlaneMesh_sfewr")
 
 [connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]
+
+[editable path="Environment/CameraRegion"]
+[editable path="Environment/CameraRegion2"]

@@ -13,6 +13,4 @@ func _process(delta):
 
 func _on_kill_plane_body_entered(body):
 	body.global_position = Vector3(0,10,0)
-	#body.global_position.y = 10
 	
-

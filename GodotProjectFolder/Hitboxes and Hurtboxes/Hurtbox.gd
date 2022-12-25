@@ -12,6 +12,9 @@ var superguarding = false
 @onready var lag_timer = $LagTimer as Timer
 
 
+signal change_health
+
+
 func _ready():
 	if get_parent().has_node("Model"):
 		shake_target = get_parent().get_node("Model")
@@ -52,7 +55,7 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 	
 	# Set stun
 	if get_parent().has_method("stun"):
-		get_parent().stun(0.5)
+		get_parent().stun(60)
 	
 	# Shake the screen
 	screenshake(0.15)
@@ -63,8 +66,8 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 	lag_timer.start(lag_dur)
 	
 	# Hitlag and hurtlag
-	hitlag(hitbox)
-	hurtlag()
+	#hitlag(hitbox)
+	#hurtlag()
 
 
 func hitlag(hitbox : Hitbox):

@@ -17,9 +17,10 @@ func _ready():
 
 
 func _process(delta):
+	#print($StateMachine.current_state)
 	if health <= 0:
 		queue_free()
-	attacking(player)
+	#attacking(player)
 
 
 func _physics_process(delta):
@@ -77,10 +78,13 @@ func shoot(target_angle):
 
 
 func stun(dur = 2):
-	stunned = true
-	stun_timer.start(dur)
-	await stun_timer.timeout
-	stunned = false
+#	stunned = true
+#	stun_timer.start(dur)
+#	await stun_timer.timeout
+#	stunned = false
+	$StateMachine/Stunned.stun_duration = dur
+	$StateMachine.transition_to("Stunned")
+	
 	
 
 func is_player_visible(aim_ahead = 0):

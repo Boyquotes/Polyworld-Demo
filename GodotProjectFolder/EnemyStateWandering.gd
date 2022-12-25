@@ -18,6 +18,7 @@ func _ready():
 func enter():
 	enemy.move_speed = 4
 	enemy.get_node("MeshInstance3D2").visible = false
+	enemy.get_node("MeshInstance3D3").visible = false
 
 
 func update(delta):
@@ -58,7 +59,7 @@ func physics_update(delta):
 
 
 func exit():
-	enemy.get_node("MeshInstance3D2").visible = true
+	pass
 
 
 

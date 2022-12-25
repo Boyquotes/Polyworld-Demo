@@ -3,7 +3,7 @@ extends State
 
 var enemy : Entity
 
-var lost_duration = 600
+var lost_duration = 400
 var lost_counter = lost_duration
 
 # Called when the node enters the scene tree for the first time.
@@ -13,9 +13,9 @@ func _ready():
 
 
 func enter():
-	enemy.move_speed = 9
-	enemy.get_node("MeshInstance3D2").visible = true
-	enemy.get_node("MeshInstance3D3").visible = false
+	enemy.move_speed = 7
+	enemy.get_node("MeshInstance3D2").visible = false
+	enemy.get_node("MeshInstance3D3").visible = true
 
 
 func update(delta):
