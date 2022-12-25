@@ -52,22 +52,19 @@ func _physics_process(delta):
 				target_vert_position = target.global_position.y
 			
 			global_position.y = lerp(global_position.y, target_vert_position + target_offset.y, 0.1)
-			global_position.y = clamp(global_position.y, target.global_position.y - 4, target.global_position.y + 4)
+			global_position.y = clamp(global_position.y, target.global_position.y - 6, target.global_position.y + 6)
 		else:
 			global_position.y = target.global_position.y + target_offset.y
 		
 		# Lerp camera to target rotation
 		if rotation_phase < 1:
 			rotation_phase = clamp(rotation_phase + rotation_rate * delta, 0, 1)
-			
+		if !is_pov:
 			rotation.x = lerp_angle(last_rotation.x, rotation_target.x, ease(rotation_phase, ease_curve))
 			rotation.y = lerp_angle(last_rotation.y, rotation_target.y, ease(rotation_phase, ease_curve))
-			
 		
 	else:
 		pass
-	
-	
 	
 	# Pocket Camera
 	var pocket_cam = get_parent().get_node("Interface/PocketCamera")

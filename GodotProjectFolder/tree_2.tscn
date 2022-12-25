@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://s50oblcaavj"]
+[gd_scene load_steps=11 format=3 uid="uid://s50oblcaavj"]
 
 [ext_resource type="Texture2D" uid="uid://hreirubmxmtm" path="res://Textures/leavestuft.png" id="2_1fhr5"]
 [ext_resource type="PackedScene" uid="uid://kfd53p86720d" path="res://treemodel.tscn" id="2_u6he7"]
+[ext_resource type="PackedScene" uid="uid://uxa7dl1sb6au" path="res://ClimbRegion.tscn" id="3_tv2du"]
 
 [sub_resource type="Shader" id="Shader_oko5y"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.0.beta7's StandardMaterial3D.
@@ -126,6 +127,9 @@ _data = {
 "Sway": SubResource("Animation_drx2v")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_of2ag"]
+size = Vector3(0.6, 2.5, 0.6)
+
 [node name="tree2" type="Node3D"]
 
 [node name="MeshInstance3D13" type="MeshInstance3D" parent="."]
@@ -171,3 +175,12 @@ autoplay = "Sway"
 libraries = {
 "": SubResource("AnimationLibrary_yenxv")
 }
+
+[node name="ClimbRegion" parent="." instance=ExtResource("3_tv2du")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494135, 2.43827, 0)
+
+[node name="CollisionShape3D" parent="ClimbRegion" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0183149, 0.613547, -0.0877204)
+shape = SubResource("BoxShape3D_of2ag")
+
+[editable path="ClimbRegion"]

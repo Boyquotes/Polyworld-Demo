@@ -596,7 +596,6 @@ transform = Transform3D(2.50806, 0, 0.784008, 0, 2.62774, 0, -0.784008, 0, 2.508
 
 [node name="Grass" type="MultiMeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -0.942939)
-visible = false
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_gbcaw")
 
@@ -613,7 +612,6 @@ skeleton = NodePath("../..")
 
 [node name="Grass2" type="MultiMeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, 1, 3.87689, -12, 13.4913)
-visible = false
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_bio5r")
 
@@ -647,7 +645,6 @@ skeleton = NodePath("../..")
 
 [node name="Grass4" type="MultiMeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, 1, 7.87689, 4, -16.3834)
-visible = false
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_hlomo")
 

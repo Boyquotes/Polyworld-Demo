@@ -5,6 +5,8 @@ extends Entity
 const JUMP_BUFFER := 0.075
 const COYOTE_TIME := 0.075
 
+@export var climb_speed = 5.0
+
 var input_dir := Vector2.ZERO
 var relative_input_dir := Vector2.ZERO
 

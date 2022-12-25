@@ -51,3 +51,7 @@ func health_change(amount:=0):
 
 func stun(dur:=0.0):
 	pass
+
+
+func die():
+	queue_free()
