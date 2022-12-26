@@ -17,28 +17,11 @@ func _ready():
 
 
 func _process(delta):
-	#print($StateMachine.current_state)
-	if health <= 0:
-		queue_free()
-	#attacking(player)
+	pass
 
 
 func _physics_process(delta):
 	pass
-#	if not stunned:
-#		$MeshInstance3D2.visible = false
-#		ai_move(delta, player.global_position, 6.0, false, can_jump)
-#		update_facing(delta)
-#	else:
-#		$MeshInstance3D2.visible = true
-#		velocity.y -= GRAVITY * delta
-#		if is_on_floor():
-#			var hor_velocity = Vector2(velocity.x, velocity.z)
-#			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, move_decel * delta)
-#			velocity.x = hor_velocity.x
-#			velocity.z = hor_velocity.y
-#		move_and_slide()
-	
 
 
 func attacking(target):
@@ -78,10 +61,6 @@ func shoot(target_angle):
 
 
 func stun(dur = 2):
-#	stunned = true
-#	stun_timer.start(dur)
-#	await stun_timer.timeout
-#	stunned = false
 	$StateMachine/Stunned.stun_duration = dur
 	$StateMachine.transition_to("Stunned")
 	
@@ -112,3 +91,7 @@ func is_player_visible(aim_ahead = 0):
 		if angle_difference < PI/3: # change to else to just target nearest enemy
 			return true
 	return false
+
+
+func _on_entity_died():
+	die()

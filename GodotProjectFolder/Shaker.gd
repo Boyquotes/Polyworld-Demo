@@ -21,7 +21,6 @@ func _ready():
 func _process(delta):
 	if active:
 		target.position = target.position.lerp(target_position, 0.5)
-	
 
 
 func initialize(amp : float, rate : float):

@@ -12,9 +12,6 @@ var superguarding = false
 @onready var lag_timer = $LagTimer as Timer
 
 
-signal change_health
-
-
 func _ready():
 	if get_parent().has_node("Model"):
 		shake_target = get_parent().get_node("Model")

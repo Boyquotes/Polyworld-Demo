@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Main.gd" id="1_ohqny"]
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="2_774ge"]
-[ext_resource type="PackedScene" uid="uid://dctj4hq7wjib1" path="res://Worlds/FourthWorld.tscn" id="3_ivkmp"]
+[ext_resource type="PackedScene" uid="uid://ciri6akj5mtwy" path="res://Worlds/FourthWorld.tscn" id="3_ivkmp"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_msvjc"]
 

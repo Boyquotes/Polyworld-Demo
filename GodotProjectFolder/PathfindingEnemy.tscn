@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0t7yti247e6d"]
+[gd_scene load_steps=17 format=3 uid="uid://c0t7yti247e6d"]
 
 [ext_resource type="Script" path="res://PathfindingEnemy.gd" id="1_7i3iw"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="2_bwnuo"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://EnemyStateWandering.gd" id="4_vphl8"]
 [ext_resource type="Script" path="res://Stunned.gd" id="5_6fvtl"]
 [ext_resource type="Script" path="res://EnemyStateAlerted.gd" id="6_dufk3"]
+[ext_resource type="PackedScene" uid="uid://c2mqx6mqhb1s8" path="res://HealthBar.tscn" id="8_4ksgh"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_v5sbh"]
 
@@ -89,5 +90,9 @@ shape = SubResource("CapsuleShape3D_ulo86")
 
 [node name="StunTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="HealthBar" parent="." instance=ExtResource("8_4ksgh")]
+
+[connection signal="entity_died" from="." to="." method="_on_entity_died"]
 
 [editable path="Hurtbox"]

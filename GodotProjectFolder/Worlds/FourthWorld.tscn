@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dctj4hq7wjib1"]
+[gd_scene load_steps=53 format=3 uid="uid://ciri6akj5mtwy"]
 
 [ext_resource type="Texture2D" uid="uid://dxe6w32mi1min" path="res://sonic_sky.png" id="1_eli8q"]
 [ext_resource type="Script" path="res://Worlds/SecondWorldEnvironment.gd" id="2_ln7b3"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bkujk4ac4f3sr" path="res://CameraRegion.tscn" id="10_y8tlv"]
 [ext_resource type="PackedScene" uid="uid://c0t7yti247e6d" path="res://PathfindingEnemy.tscn" id="11_dwh2e"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://TextArrowIcon.png" id="12_411re"]
-[ext_resource type="Shader" path="res://Worlds/Clouds.gdshader" id="18_mv84r"]
+[ext_resource type="Shader" path="res://Clouds.gdshader" id="18_vftqk"]
 [ext_resource type="PackedScene" uid="uid://cps3br5v0dfcj" path="res://Partner.tscn" id="23_4d5ub"]
 [ext_resource type="PackedScene" uid="uid://s50oblcaavj" path="res://tree_2.tscn" id="25_tdovx"]
 [ext_resource type="Texture2D" uid="uid://b4mav36hcn3cb" path="res://Textures/atari-8-bit-series-gtia-1x.png" id="27_bk1ir"]
@@ -371,7 +371,7 @@ noise = SubResource("FastNoiseLite_3vsvl")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fdkfx"]
 render_priority = 0
-shader = ExtResource("18_mv84r")
+shader = ExtResource("18_vftqk")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_albedo = SubResource("NoiseTexture2D_dkrot")
 shader_parameter/texture_albedo2 = SubResource("NoiseTexture2D_6kb0i")
@@ -404,14 +404,13 @@ grow_vertical = 2
 [node name="PocketCamera" type="ColorRect" parent="Interface"]
 top_level = true
 material = SubResource("ShaderMaterial_0mm0g")
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -4.0
 offset_top = -109.0
-offset_right = 4.0
-offset_bottom = 109.0
+offset_right = 484.0
+offset_bottom = 379.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -424,7 +423,6 @@ libraries = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Interface/PocketCamera"]
-layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -698,6 +696,25 @@ transform = Transform3D(0.670569, 0, 0.741847, 0, 1, 0, -0.741847, 0, 0.670569, 
 
 [node name="PathfindingEnemy" parent="." instance=ExtResource("11_dwh2e")]
 transform = Transform3D(-0.999976, 0, -0.00687657, 0, 1, 0, 0.00687657, 0, -0.999976, 0.424739, -0.484544, 5.27399)
+should_avoid = true
+move_speed = 7.0
+move_accel = 40.0
+move_decel = 30.0
+jump_force = 20.0
+
+[node name="PathfindingEnemy2" parent="." instance=ExtResource("11_dwh2e")]
+transform = Transform3D(-0.999976, 0, -0.00687657, 0, 1, 0, 0.00687657, 0, -0.999976, 20.7305, -6.58852, 5.27399)
+can_jump = false
+should_avoid = true
+move_speed = 7.0
+move_accel = 40.0
+move_decel = 30.0
+jump_force = 20.0
+
+[node name="PathfindingEnemy3" parent="." instance=ExtResource("11_dwh2e")]
+transform = Transform3D(-0.999976, 0, -0.00687657, 0, 1, 0, 0.00687657, 0, -0.999976, 20.7305, -14.1775, 17.1912)
+can_jump = false
+should_avoid = true
 move_speed = 7.0
 move_accel = 40.0
 move_decel = 30.0
@@ -722,12 +739,10 @@ skeleton = NodePath("../..")
 
 [node name="CloudPlane" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18.9608, 8.21198)
-visible = false
 mesh = SubResource("PlaneMesh_sfewr")
 
 [node name="CloudPlane2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1.19249e-08, 1.04251e-15, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, 1.19249e-08, 0, 15.8691, 8.21198)
-visible = false
 mesh = SubResource("PlaneMesh_sfewr")
 
 [connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]
