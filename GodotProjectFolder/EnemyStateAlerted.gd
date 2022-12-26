@@ -16,6 +16,7 @@ func enter():
 	enemy.move_speed = 7
 	enemy.get_node("MeshInstance3D2").visible = false
 	enemy.get_node("MeshInstance3D3").visible = true
+	enemy.get_node("HealthBar").visible = true
 
 
 func update(delta):

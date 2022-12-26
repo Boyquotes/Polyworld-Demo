@@ -2,7 +2,6 @@ class_name Hurtbox
 extends Area3D
 
 
-@export var mass := 1.0
 @export var shake_target : Node3D
 
 var superguarding = false
@@ -52,10 +51,10 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 	
 	# Set stun
 	if get_parent().has_method("stun"):
-		get_parent().stun(60)
+		get_parent().stun(80)
 	
 	# Shake the screen
-	screenshake(0.15)
+	screenshake(10)
 	
 	# Start lag timers
 	var lag_dur = hitbox.damage * 0.025
@@ -119,11 +118,8 @@ func hurtlag():
 
 func screenshake(duration:float):
 	var screenshaker = load("res://Shaker.tscn").instantiate() as Shaker
-	screenshaker.initialize(1, 0.025)
+	screenshaker.initialize(1, 0.025, duration)
 	get_viewport().get_camera_3d().add_child(screenshaker)
-	await get_tree().create_timer(duration).timeout
-	if screenshaker != null:
-		screenshaker.end_shake()
 
 
 # Recursively disable all children

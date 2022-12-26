@@ -15,7 +15,7 @@ func _ready():
 func enter():
 	# play stun animation
 	stun_counter = stun_duration
-	pass
+	enemy.get_node("HealthBar").visible = true
 
 
 func update(delta):

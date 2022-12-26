@@ -16,7 +16,7 @@ signal entity_died
 
 var health := max_health:
 	set(val):
-		if val < 0: 
+		if val <= 0: 
 			val = 0
 			emit_signal("entity_died")
 		health = val

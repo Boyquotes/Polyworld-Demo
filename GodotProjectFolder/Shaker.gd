@@ -4,6 +4,7 @@ extends Timer
 
 var active = true
 var amplitude : float
+var duration = -1
 
 @onready var target = get_parent()
 @onready var center_position = target.position
@@ -20,12 +21,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if active:
+		if duration != -1:
+			duration -= 1
+			if duration <= 0:
+				end_shake()
 		target.position = target.position.lerp(target_position, 0.5)
 
 
-func initialize(amp : float, rate : float):
+func initialize(amp : float, rate : float, dur = -1):
 	amplitude = amp
 	wait_time = rate
+	duration = dur
 	
 
 

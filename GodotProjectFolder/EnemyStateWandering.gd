@@ -4,7 +4,7 @@ extends State
 var enemy : PathfindingEntity
 
 var move_duration = 100
-var stand_duration = 300
+var stand_duration = 200
 var movement_counter = stand_duration
 
 var move = false
@@ -19,6 +19,7 @@ func enter():
 	enemy.move_speed = 4
 	enemy.get_node("MeshInstance3D2").visible = false
 	enemy.get_node("MeshInstance3D3").visible = false
+	enemy.get_node("HealthBar").visible = false
 
 
 func update(delta):
@@ -35,7 +36,7 @@ func update(delta):
 			movement_counter = stand_duration + randf_range(-50, 50)
 	
 	if enemy.is_player_visible():
-			state_machine.transition_to("Detected")
+		state_machine.transition_to("Detected")
 	
 	enemy.update_facing(delta)
 
