@@ -7,9 +7,6 @@ extends PathfindingEntity
 var player : Player
 var rng = RandomNumberGenerator.new()
 
-var stunned = false
-@onready var stun_timer = $StunTimer as Timer
-
 
 func _ready():
 	super()
@@ -63,8 +60,7 @@ func shoot(target_angle):
 func stun(dur = 2):
 	$StateMachine/Stunned.stun_duration = dur
 	$StateMachine.transition_to("Stunned")
-	
-	
+
 
 func is_player_visible(aim_ahead = 0):
 	var dist = 20
@@ -88,10 +84,20 @@ func is_player_visible(aim_ahead = 0):
 		# collision at ray point
 		return false
 	else:
-		if angle_difference < PI/3: # change to else to just target nearest enemy
+		if angle_difference < PI/3:
 			return true
 	return false
 
 
 func _on_entity_died():
 	die()
+
+
+func _on_hurtbox_area_entered(hitbox : Hitbox):
+	if hitbox.caster != self:
+		if "contact" in hitbox.get_parent():
+			hitbox.get_parent().contact()
+		take_damage(hitbox.damage)
+		var impact_angle = hitbox.global_position.direction_to(global_position)
+		velocity = Vector3(hitbox.push_force_horizontal * impact_angle.x, hitbox.push_force_vertical, hitbox.push_force_horizontal * impact_angle.z)
+		$StateMachine.transition_to("Stunned")

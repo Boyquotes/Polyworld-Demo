@@ -26,6 +26,7 @@ script = ExtResource("1_nckms")
 
 [node name="DifferenceBar" type="ProgressBar" parent="."]
 show_behind_parent = true
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 6.0
 theme_override_styles/background = SubResource("StyleBoxFlat_rrsj8")

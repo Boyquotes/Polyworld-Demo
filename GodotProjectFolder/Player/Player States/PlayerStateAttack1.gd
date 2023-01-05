@@ -13,7 +13,8 @@ func _ready():
 
 
 func enter():
-	player.set_facing_target(Vector2(player.aim_direction.x, player.aim_direction.z))
+	
+	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
 	
 	attack_length = 0
 	
@@ -23,7 +24,6 @@ func enter():
 	burst.caster = player
 	get_tree().root.add_child(burst)
 	player.velocity = player.aim_direction * 60
-	player.set_facing_target(Vector2(player.velocity.x, player.velocity.z))
 	
 	await get_tree().create_timer(0.2).timeout
 	state_machine.transition_to("Idle")
@@ -37,7 +37,7 @@ func physics_update(delta):
 	
 	player.anim.play("thrust")
 	
-	player.set_facing_target(Vector2(player.aim_direction.x, player.aim_direction.z))
+	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
 	
 	player.move_and_slide()
 	

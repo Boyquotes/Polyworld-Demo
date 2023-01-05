@@ -82,8 +82,7 @@ path_max_distance = 8.0
 avoidance_enabled = true
 neighbor_distance = 10.0
 
-[node name="Hurtbox" parent="." node_paths=PackedStringArray("shake_target") instance=ExtResource("2_bwnuo")]
-shake_target = NodePath("../MeshInstance3D")
+[node name="Hurtbox" parent="." instance=ExtResource("2_bwnuo")]
 
 [node name="CollisionShape3d" parent="Hurtbox" index="0"]
 shape = SubResource("CapsuleShape3D_ulo86")
@@ -94,5 +93,6 @@ one_shot = true
 [node name="HealthBar" parent="." instance=ExtResource("8_4ksgh")]
 
 [connection signal="entity_died" from="." to="." method="_on_entity_died"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 
 [editable path="Hurtbox"]

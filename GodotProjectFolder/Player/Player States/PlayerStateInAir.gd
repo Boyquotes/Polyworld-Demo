@@ -36,7 +36,7 @@ func physics_update(delta):
 	if player.velocity.y >= 0:
 		player.anim.play("inair_up")
 		if player.can_hold_jump:
-			player.velocity.y -= player.HOLD_GRAVITY * delta
+			player.velocity.y -= player.GRAVITY / 2 * delta
 		else:
 			player.velocity.y -= player.GRAVITY * delta
 	else:
@@ -46,7 +46,7 @@ func physics_update(delta):
 	
 	if player.input_dir:
 		
-		player.set_facing_target(player.relative_input_dir)
+		player.facing_dir_target = player.relative_input_dir
 		
 		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
 		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.air_accel * delta)
@@ -76,6 +76,7 @@ func physics_update(delta):
 			else: 
 				state_machine.transition_to("Idle")
 	
+	# Handle state transitions
 	if Input.is_action_just_pressed("primary"):
 		if not player.is_left_cooling:
 			player.is_left_cooling = true

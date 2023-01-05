@@ -18,7 +18,7 @@ func _ready():
 func enter():
 	stored_velocity = player.velocity
 	
-	player.set_facing_target(Vector2(player.aim_direction.x, player.aim_direction.z))
+	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
 	player.velocity.y = 2
 
 	await get_tree().create_timer(0.2).timeout

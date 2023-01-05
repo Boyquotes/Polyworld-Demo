@@ -30,7 +30,9 @@ func update(delta):
 
 
 func physics_update(delta):
-	enemy.ai_move(delta, enemy.player.global_position, 1.0, false, enemy.can_jump)
+	enemy.ai_move(delta, enemy.player.global_position, 10.0, false, enemy.can_jump)
+	if enemy.velocity == Vector3.ZERO:
+		enemy.face_toward(enemy.player.global_position)
 	enemy.update_facing(delta)
 
 

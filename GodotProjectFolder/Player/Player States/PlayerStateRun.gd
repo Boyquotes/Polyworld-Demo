@@ -29,7 +29,7 @@ func physics_update(delta):
 	
 	if player.input_dir:
 		
-		player.set_facing_target(player.relative_input_dir)
+		player.facing_dir_target = player.relative_input_dir
 		
 		var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
 		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.move_accel * delta)

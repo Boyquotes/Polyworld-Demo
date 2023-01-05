@@ -22,8 +22,6 @@ func physics_update(delta):
 	
 	player.anim.play("idle") #riding animation
 	
-	player.set_facing_target(player.relative_input_dir)
-	
 	var vert_velocity = player.velocity.y
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
 	
@@ -39,7 +37,7 @@ func physics_update(delta):
 		hor_velocity = hor_velocity.move_toward(
 			player.relative_input_dir * partner_speed, partner_accel * delta)
 		# Set facing direction based on run direction
-		player.set_facing_target(player.relative_input_dir)
+		player.facing_dir_target = player.relative_input_dir
 	else:
 		# Decelerate towards zero
 		hor_velocity = hor_velocity.move_toward(

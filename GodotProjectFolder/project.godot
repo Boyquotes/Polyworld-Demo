@@ -253,6 +253,13 @@ camera_down={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Environment"
+3d_physics/layer_2="Entities"
+3d_physics/layer_5="Hurtboxes"
+3d_physics/layer_6="Hitboxes"
+
 [rendering]
 
 shading/overrides/force_lambert_over_burley=true

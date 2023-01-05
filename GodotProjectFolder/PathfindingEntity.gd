@@ -23,21 +23,18 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 	
 	# Subtract gravity from vertical velocity
 	vert_velocity -= GRAVITY * delta
+	
+	# Set the destination as the target location
 	agent.set_target_location(destination)
 	
 	var destination_2d = Vector2(destination.x, destination.z)
 	var current_pos = global_transform.origin
 	var current_pos_2d = Vector2(current_pos.x, current_pos.z)
-	var distance = current_pos.distance_to(destination)
-	var distance_2d = current_pos_2d.distance_to(destination_2d)
+	var direct_distance = current_pos.distance_to(destination)
+	var direct_distance_2d = current_pos_2d.distance_to(destination_2d)
 	var direction = current_pos_2d.direction_to(destination_2d)
 	
-	if is_on_floor() and should_avoid:
-		agent.avoidance_enabled = true
-	else:
-		agent.avoidance_enabled = false
-	
-	if distance_2d > min_range:
+	if direct_distance_2d > min_range:
 		if is_on_floor():
 			var next_location = agent.get_next_location()
 			var next_location_2d = Vector2(next_location.x, next_location.z)
@@ -46,16 +43,18 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 			
 			# if final location is closer to destination than your current distance to destination,
 			# meaning, you won't end up further away from destination if going to the final location
-			if final_location.distance_to(destination) < current_pos.distance_to(destination):
+			if final_location.distance_to(destination) < direct_distance:
 				direction = current_pos_2d.direction_to(next_location_2d)
-				path_length = get_path_distance(agent.get_nav_path())
+				path_length = get_path_distance(agent.get_current_navigation_path())
+			
+			var at_end_of_path = path_length <= 1
 			
 			# If it has made it as close as possible to its destination, or if the path is much further 
 			# than the direct distance, just jump in the target's direction instead of pathfinding
-			if path_length <= 1 || path_length > agent.distance_to_target() * shortcut_bias:
+			if at_end_of_path || path_length > direct_distance * shortcut_bias:
 				direction = current_pos_2d.direction_to(destination_2d)
 				if can_hop: #maybe move this out of the outer if statement to help if entity is stuck while pathfinding ?
-					if (path_length <= 1 && destination.y > current_pos.y + jump_thresh) || always_hop || is_on_wall():
+					if (at_end_of_path && destination.y > current_pos.y + jump_thresh) || always_hop || is_on_wall():
 						vert_velocity = jump_force
 			
 		if accel_by_distance:
@@ -72,14 +71,16 @@ func ai_move(delta:float, destination:Vector3, min_range:=2.0, accel_by_distance
 		else:
 			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, air_accel * delta)
 		
-	# Set new velocity and move
-	if agent.avoidance_enabled:
+	
+	# Set agent avoidance and move with new velicocity
+	if is_on_floor() and should_avoid:
+		agent.avoidance_enabled = true
 		agent.max_speed = move_speed
 		agent.set_velocity(Vector3(hor_velocity.x, vert_velocity, hor_velocity.y))
 	else:
+		agent.avoidance_enabled = false
 		velocity = Vector3(hor_velocity.x, vert_velocity, hor_velocity.y)
-		if hor_velocity != Vector2.ZERO:
-			set_facing_target(hor_velocity)
+		facing_dir_target = hor_velocity
 		move_and_slide()
 
 
@@ -92,6 +93,5 @@ func get_path_distance(path:PackedVector3Array):
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	velocity = safe_velocity
-	if Vector2(velocity.x, velocity.z) != Vector2.ZERO:
-		set_facing_target(Vector2(velocity.x, velocity.z))
+	facing_dir_target = Vector2(velocity.x, velocity.z)
 	move_and_slide()

@@ -44,7 +44,7 @@ func jump():
 	player.velocity.y = player.jump_force
 	player.velocity.z = -player.facing_dir_target.y * player.jump_force
 	
-	player.set_facing_target(-player.facing_dir_target)
+	player.facing_dir_target = -player.relative_input_dir
 	
 	player.can_hold_jump = true
 	state_machine.transition_to("InAir")
