@@ -19,7 +19,7 @@ func enter():
 	
 	var ball = load("res://Attacks/EnergyBall.tscn").instantiate()
 	ball.caster = player
-	ball.direction = Vector3(player.aim_direction.x, 0, player.aim_direction.z)
+	ball.direction = player.aim_direction
 	get_tree().root.add_child(ball)
 	ball.global_position = player.global_position
 	

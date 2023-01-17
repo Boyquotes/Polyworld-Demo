@@ -15,12 +15,14 @@ var can_hold_jump = false
 var aim_target : Node3D
 var aim_direction : Vector3
 
+var target_lock_range = 18
+
 @onready var cam = get_viewport().get_camera_3d() as Camera3D
 @onready var anim = $Model/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 @onready var aim_icon = get_parent().get_node("AimIcon") as Node3D
 
-@onready var auto_aim_param := PhysicsRayQueryParameters3D.new()
+@onready var target_lock_param := PhysicsRayQueryParameters3D.new()
 
 var right_cooldown = 0.5
 var left_cooldown = 1
@@ -68,14 +70,18 @@ func _process(delta):
 			if body == self:
 				break
 			if body.has_method("interact"):
-				body.interact()
+				body.interact() 
 	
-	# Update aim and aim icon
-	update_auto_aim()
-	if aim_target:
+	# Update aim and aim icon, store results in aim_target and aim_direction
+	if Input.is_action_just_pressed("target_lock"):
+		update_aim_target()
+	if is_instance_valid(aim_target) && global_position.distance_to(aim_target.global_position) < target_lock_range:
+		aim_direction = global_position.direction_to(aim_target.global_position)
 		aim_icon.global_position = lerp(aim_icon.global_position, aim_target.global_position, 0.2)
 		aim_icon.visible = true
 	else:
+		aim_target = null
+		aim_direction = Vector3(facing_dir_target.x, 0, facing_dir_target.y)
 		aim_icon.global_position = global_position
 		aim_icon.visible = false
 	
@@ -92,7 +98,7 @@ func _physics_process(delta):
 	pass
 
 
-func update_auto_aim(aim_ahead = 0):
+func update_aim_target(aim_ahead = 0):
 	
 	# Get the direct space state for the current world
 	var space_state = get_world_3d().direct_space_state
@@ -100,8 +106,8 @@ func update_auto_aim(aim_ahead = 0):
 	# Set physics ray query parameters
 	var ppos = global_position
 	var ppos2d = Vector2(ppos.x, ppos.z)
-	auto_aim_param.from = ppos
-	auto_aim_param.collision_mask = 0b0001 #Bit mask for the first layer
+	target_lock_param.from = ppos
+	target_lock_param.collision_mask = 0b0001 #Bit mask for the first layer
 	
 	# Initialize loop variables
 	var dist = 20
@@ -121,13 +127,13 @@ func update_auto_aim(aim_ahead = 0):
 			var angle_difference = abs(nangle.angle_to(facing_dir_target))
 			
 			# If the angle difference is within range
-			if angle_difference < PI * 0.4 || (angle_difference < PI * 0.8 && n == aim_target):
+			if angle_difference < PI * 0.4:
 				
 				# Set physics ray query parameter
-				auto_aim_param.to = npos
+				target_lock_param.to = npos
 				
 				# Store ray collision information
-				var result := space_state.intersect_ray(auto_aim_param)
+				var result := space_state.intersect_ray(target_lock_param)
 				
 				if result:
 					# Collision at ray point
@@ -147,7 +153,7 @@ func update_auto_aim(aim_ahead = 0):
 						target_angle = ppos.direction_to(npos + nvel * aim_ahead)
 			
 	aim_target = target_node
-	aim_direction = target_angle
+	# aim_direction = target_angle
 
 
 func _on_hurtbox_area_entered(hitbox : Hitbox):

@@ -34,6 +34,12 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	global_position = round(global_position * 200) / 200
+	
+	if Input.is_action_pressed("ui_up"):
+		cam.position.z += 0.01
+	if Input.is_action_pressed("ui_down"):
+		cam.position.z -= 0.01
+		
 
 
 func _physics_process(delta):

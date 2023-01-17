@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://ciri6akj5mtwy"]
+[gd_scene load_steps=53 format=3 uid="uid://dctj4hq7wjib1"]
 
 [ext_resource type="Texture2D" uid="uid://dxe6w32mi1min" path="res://sonic_sky.png" id="1_eli8q"]
 [ext_resource type="Script" path="res://Worlds/SecondWorldEnvironment.gd" id="2_ln7b3"]
@@ -9,8 +9,8 @@
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_trc8x"]
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_egant"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_4xgu5"]
-[ext_resource type="PackedScene" uid="uid://2mlo3yjgai2d" path="res://Player/Player.tscn" id="7_cdyhq"]
-[ext_resource type="PackedScene" uid="uid://bkujk4ac4f3sr" path="res://CameraRegion.tscn" id="10_y8tlv"]
+[ext_resource type="PackedScene" uid="uid://clqddee5b0xxg" path="res://Player/Player.tscn" id="7_cdyhq"]
+[ext_resource type="PackedScene" path="res://CameraRegion.tscn" id="10_y8tlv"]
 [ext_resource type="PackedScene" uid="uid://c0t7yti247e6d" path="res://PathfindingEnemy.tscn" id="11_dwh2e"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://TextArrowIcon.png" id="12_411re"]
 [ext_resource type="Shader" path="res://Clouds.gdshader" id="18_vftqk"]
@@ -250,16 +250,16 @@ render_priority = 0
 shader = SubResource("Shader_g1mdt")
 shader_parameter/albedo = Color(0.447059, 0.878431, 0.894118, 1)
 shader_parameter/alpha_scissor_threshold = 0.5
-shader_parameter/metallic = null
-shader_parameter/metallic_texture_channel = null
 shader_parameter/point_size = 32.0
 shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
 shader_parameter/specular = 0.0
-shader_parameter/texture_albedo = ExtResource("3_pidog")
-shader_parameter/uv1_offset = null
+shader_parameter/metallic = null
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = null
+shader_parameter/uv1_offset = null
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("3_pidog")
 
 [sub_resource type="PointMesh" id="PointMesh_8qe46"]
 material = SubResource("ShaderMaterial_1pb3r")
@@ -309,22 +309,22 @@ size = Vector2(7.112, 7.186)
 [sub_resource type="BoxShape3D" id="BoxShape3D_h1lg7"]
 size = Vector3(16.48, 2.229, 15.0914)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dt056"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mse8a"]
 render_priority = -128
 shader = ExtResource("6_4xgu5")
-shader_parameter/depth_addend = 0.0
-shader_parameter/depth_multiplier = 16.0
 shader_parameter/is_inverted = false
-shader_parameter/outline_color = Color(0.121569, 0.12549, 0.141176, 1)
-shader_parameter/palette = ExtResource("27_bk1ir")
-shader_parameter/palette_size = 256
+shader_parameter/depth_multiplier = 1.5
+shader_parameter/depth_addend = 0.0
 shader_parameter/transparency = 2.0
+shader_parameter/outline_color = Color(0.156863, 0.160784, 0.180392, 1)
+shader_parameter/palette_size = 256
+shader_parameter/palette = ExtResource("27_bk1ir")
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
-material = SubResource("ShaderMaterial_dt056")
+material = SubResource("ShaderMaterial_mse8a")
 size = Vector2(2, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqxse"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g01dm"]
 transparency = 1
 no_depth_test = true
 shading_mode = 0
@@ -334,7 +334,7 @@ use_point_size = true
 point_size = 16.0
 
 [sub_resource type="PointMesh" id="PointMesh_h8w8p"]
-material = SubResource("StandardMaterial3D_hqxse")
+material = SubResource("StandardMaterial3D_g01dm")
 
 [sub_resource type="Gradient" id="Gradient_jy5mq"]
 offsets = PackedFloat32Array(0.625, 0.693182)
@@ -404,6 +404,7 @@ grow_vertical = 2
 [node name="PocketCamera" type="ColorRect" parent="Interface"]
 top_level = true
 material = SubResource("ShaderMaterial_0mm0g")
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -423,6 +424,7 @@ libraries = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Interface/PocketCamera"]
+layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -440,7 +442,7 @@ stretch_mode = 3
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment"]
-navmesh = SubResource("NavigationMesh_cq3md")
+navigation_mesh = SubResource("NavigationMesh_cq3md")
 metadata/_edit_lock_ = true
 
 [node name="Ground" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
@@ -626,7 +628,6 @@ skeleton = NodePath("../..")
 
 [node name="Grass3" type="MultiMeshInstance3D" parent="Environment/NavigationRegion3D"]
 transform = Transform3D(1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, 1, -1.44543, 3, -15.6354)
-visible = false
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_u7nte")
 

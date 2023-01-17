@@ -1,7 +1,7 @@
 // NOTE: Shader automatically converted from Godot Engine 4.0.beta7's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_always,cull_back,unshaded;
+render_mode blend_mix,depth_draw_always,cull_back;
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color,filter_nearest,repeat_disable;
 uniform float point_size : hint_range(0,128);
@@ -67,6 +67,8 @@ void fragment() {
 	if (ALPHA != 1.) {
 		discard;
 	}
+	
+	NORMAL = -CAMERA_DIRECTION_WORLD;
 	
 	//outline
 	vec2 vp = VIEWPORT_SIZE;

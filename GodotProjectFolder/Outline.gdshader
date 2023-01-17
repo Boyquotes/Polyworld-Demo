@@ -40,7 +40,7 @@ void fragment() {
 	if (is_inverted) {
 		diff = -min(depth-depth_neighbor1 + depth-depth_neighbor2, depth-depth_neighbor3 + depth-depth_neighbor4);
 	} else {
-		diff = max(sqrt(depth)-sqrt(depth_neighbor1) + sqrt(depth)-sqrt(depth_neighbor2), sqrt(depth)-sqrt(depth_neighbor3) + sqrt(depth)-sqrt(depth_neighbor4));
+		diff = max(depth-depth_neighbor1 + depth-depth_neighbor2, depth-depth_neighbor3 + depth-depth_neighbor4);
 	}
 
 	float line_strength = round(clamp(diff * depth_multiplier + depth_addend, 0.0, 1.0) * 2.0) / 2.0 * transparency;

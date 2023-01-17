@@ -1,6 +1,6 @@
-[gd_scene load_steps=68 format=3 uid="uid://dyblx62wxe2ac"]
+[gd_scene load_steps=68 format=3 uid="uid://xd1bfgk6xx34"]
 
-[ext_resource type="Material" uid="uid://cn2hsvjcxpy5k" path="res://Materials/ShirtMat1.tres" id="1_j5enh"]
+[ext_resource type="Material" uid="uid://cn2hsvjcxpy5k" path="res://Materials/SuitMat1.tres" id="1_h04t6"]
 [ext_resource type="Material" uid="uid://bigeh386gtlxf" path="res://Materials/SkinMat1.tres" id="2_uqj52"]
 [ext_resource type="Material" uid="uid://cg1t3sc20gx0c" path="res://Materials/PantsMat1.tres" id="3_dj8vk"]
 [ext_resource type="Texture2D" uid="uid://bw8nhytu5avd" path="res://Face Textures/head1.png" id="4_ca0xs"]
@@ -239,7 +239,7 @@ height = 0.629
 radial_segments = 22
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_vfubj"]
-material = ExtResource("1_j5enh")
+material = ExtResource("1_h04t6")
 top_radius = 0.326
 bottom_radius = 0.405
 height = 0.3
@@ -281,25 +281,25 @@ frame_8/duration = 1.0
 frame_9/texture = ExtResource("13_ta5uv")
 frame_9/duration = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ir0v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uj0if"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("6_k41sj")
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/metallic = 0.0
-shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
 shader_parameter/point_size = 32.0
 shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
 shader_parameter/specular = 0.5
-shader_parameter/texture_albedo = SubResource("AnimatedTexture_nq3l1")
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = SubResource("AnimatedTexture_nq3l1")
 
 [sub_resource type="PointMesh" id="PointMesh_fm5nm"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_7ir0v")
+material = SubResource("ShaderMaterial_uj0if")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlfuy"]
 shading_mode = 0
@@ -333,16 +333,16 @@ size = Vector2(9.002, 0.24)
 render_priority = 0
 shader = ExtResource("6_k41sj")
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/metallic = null
-shader_parameter/metallic_texture_channel = null
 shader_parameter/point_size = 8.0
 shader_parameter/roughness = null
+shader_parameter/metallic_texture_channel = null
 shader_parameter/specular = null
-shader_parameter/texture_albedo = ExtResource("15_utsru")
-shader_parameter/uv1_offset = null
+shader_parameter/metallic = null
 shader_parameter/uv1_scale = null
-shader_parameter/uv2_offset = null
+shader_parameter/uv1_offset = null
 shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("15_utsru")
 
 [sub_resource type="PointMesh" id="PointMesh_mjrub"]
 material = SubResource("ShaderMaterial_pb25t")
@@ -1755,13 +1755,13 @@ bones/12/rotation = Quaternion(0.511301, 0.0785251, -0.042934, 0.854729)
 bones/12/scale = Vector3(1, 1, 1)
 
 [node name="arm" type="MeshInstance3D" parent="Armature/Skeleton3D"]
-material_override = ExtResource("1_j5enh")
+material_override = ExtResource("1_h04t6")
 mesh = SubResource("ArrayMesh_avd7i")
 skin = SubResource("Skin_mggcp")
 
 [node name="chest" type="MeshInstance3D" parent="Armature/Skeleton3D"]
 transform = Transform3D(1, 0, 0, 0, 0.993566, -0.100344, 0, 0.113255, 0.880299, 0, 0, 0)
-material_override = ExtResource("1_j5enh")
+material_override = ExtResource("1_h04t6")
 mesh = SubResource("ArrayMesh_i0dq0")
 skin = SubResource("Skin_mggcp")
 
@@ -1792,7 +1792,7 @@ mesh = SubResource("ArrayMesh_ba6e1")
 skin = SubResource("Skin_mggcp")
 
 [node name="shoulder" type="MeshInstance3D" parent="Armature/Skeleton3D"]
-material_override = ExtResource("1_j5enh")
+material_override = ExtResource("1_h04t6")
 mesh = SubResource("ArrayMesh_uakcg")
 skin = SubResource("Skin_mggcp")
 
@@ -1812,6 +1812,7 @@ mesh = SubResource("CylinderMesh_lhto8")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Armature/Skeleton3D/HeadAttachment"]
 transform = Transform3D(1, 9.16513e-08, -2.16675e-07, -8.45607e-08, 0.999305, 0.0372421, 2.09873e-07, -0.0372415, 0.999305, 0.000587421, -0.0663298, -0.0118174)
+visible = false
 mesh = SubResource("CylinderMesh_vfubj")
 
 [node name="NeckSprite" type="MeshInstance3D" parent="Armature/Skeleton3D/HeadAttachment"]

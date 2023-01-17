@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Main.gd" id="1_ohqny"]
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="2_774ge"]
-[ext_resource type="PackedScene" uid="uid://ciri6akj5mtwy" path="res://Worlds/FourthWorld.tscn" id="3_ivkmp"]
+[ext_resource type="PackedScene" uid="uid://dctj4hq7wjib1" path="res://Worlds/FourthWorld.tscn" id="3_ivkmp"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_msvjc"]
 
@@ -98,7 +98,7 @@ color = Color(0, 0, 0, 0.172549)
 [node name="CardR" type="ColorRect" parent="UILayer/CardHolder"]
 top_level = true
 material = SubResource("CanvasItemMaterial_m3yjn")
-anchors_preset = 3
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -116,7 +116,7 @@ one_shot = true
 [node name="CardL" type="ColorRect" parent="UILayer/CardHolder"]
 top_level = true
 material = SubResource("CanvasItemMaterial_3syqg")
-anchors_preset = 3
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0

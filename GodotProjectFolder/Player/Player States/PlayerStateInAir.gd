@@ -34,13 +34,13 @@ func physics_update(delta):
 	
 	# Add the appropriate gravity
 	if player.velocity.y >= 0:
-		player.anim.play("inair_up")
+		player.anim.play("in_air_up2")
 		if player.can_hold_jump:
 			player.velocity.y -= player.GRAVITY / 2 * delta
 		else:
 			player.velocity.y -= player.GRAVITY * delta
 	else:
-		player.anim.play("inair_down")
+		player.anim.play("in_air_down_2")
 		player.velocity.y -= player.GRAVITY * delta
 		player.can_hold_jump = false
 	
@@ -53,6 +53,7 @@ func physics_update(delta):
 		player.velocity.x = hor_velocity.x
 		player.velocity.z = hor_velocity.y
 	
+	var last_vel = player.velocity.y
 	
 	player.move_and_slide()
 	
@@ -65,7 +66,7 @@ func physics_update(delta):
 		player.s_player.pitch_scale = randf_range(0.8, 1.2)
 		player.s_player.play()
 		
-		if player.velocity.y <= -40.0:
+		if last_vel <= -30.0:
 			print("fall damage")
 		
 		if in_jump_buffer:

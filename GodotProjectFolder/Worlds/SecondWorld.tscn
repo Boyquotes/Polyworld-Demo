@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://cy6avb87a0xk"]
+[gd_scene load_steps=35 format=3 uid="uid://cy6avb87a0xk"]
 
 [ext_resource type="Script" path="res://TransitionArea.gd" id="1_3f51b"]
 [ext_resource type="Texture2D" uid="uid://c6vfolucpeohl" path="res://sonic_skyPAN.png" id="1_l22cf"]
@@ -7,34 +7,15 @@
 [ext_resource type="Script" path="res://KillPlane.gd" id="4_7y4x8"]
 [ext_resource type="Script" path="res://CameraArm.gd" id="5_p7en2"]
 [ext_resource type="Shader" path="res://Outline.gdshader" id="6_070li"]
-[ext_resource type="Texture2D" uid="uid://b2272uqayofwy" path="res://Textures/macintosh-8-bit-system-palette-1x.png" id="7_secfw"]
-[ext_resource type="PackedScene" uid="uid://braenof5sfums" path="res://Player/Player.tscn" id="7_tnk0w"]
+[ext_resource type="PackedScene" uid="uid://clqddee5b0xxg" path="res://Player/Player.tscn" id="7_tnk0w"]
 [ext_resource type="Script" path="res://NPC.gd" id="9_ppddr"]
-[ext_resource type="PackedScene" uid="uid://dyblx62wxe2ac" path="res://CharacterModel.tscn" id="10_j3vkr"]
-[ext_resource type="Material" uid="uid://dwd4v66xj57wb" path="res://Materials/ShirtMat3.tres" id="11_4xgqk"]
+[ext_resource type="PackedScene" uid="uid://xd1bfgk6xx34" path="res://CharacterModel.tscn" id="10_j3vkr"]
 [ext_resource type="PackedScene" uid="uid://cps3br5v0dfcj" path="res://Partner.tscn" id="11_kdk1p"]
-[ext_resource type="Texture2D" uid="uid://bw8nhytu5avd" path="res://Face Textures/head1.png" id="11_kxvy2"]
-[ext_resource type="Texture2D" uid="uid://dyp8o3aieogx8" path="res://Face Textures/head2.png" id="12_0opjw"]
-[ext_resource type="PackedScene" uid="uid://37s7ednup61r" path="res://Enemy.tscn" id="12_nqlpq"]
-[ext_resource type="Texture2D" uid="uid://c6f1urtqksw7s" path="res://Face Textures/head3.png" id="13_vmh3l"]
-[ext_resource type="Texture2D" uid="uid://c6jae17f1d73e" path="res://Face Textures/head4.png" id="14_eeqcq"]
-[ext_resource type="Texture2D" uid="uid://demos1o33m0bc" path="res://Face Textures/head5.png" id="15_55kmw"]
-[ext_resource type="Texture2D" uid="uid://od8owedc74l1" path="res://Face Textures/head6.png" id="16_4jt0y"]
-[ext_resource type="Texture2D" uid="uid://j4vx1ny5xwpq" path="res://Face Textures/head7.png" id="17_swyh5"]
-[ext_resource type="Texture2D" uid="uid://dn6d8oy4hlspk" path="res://Face Textures/head8.png" id="18_ysikh"]
-[ext_resource type="Texture2D" uid="uid://c26ak17vulcu8" path="res://Face Textures/head9.png" id="19_4tr70"]
-[ext_resource type="Texture2D" uid="uid://bko0tvfpiyn4a" path="res://Face Textures/head10.png" id="20_iujds"]
+[ext_resource type="Shader" path="res://Vignette.gdshader" id="15_26laa"]
+[ext_resource type="Texture2D" uid="uid://cmpocrfn421xq" path="res://Textures/gumsoft logo0.png" id="16_6tn04"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://TextArrowIcon.png" id="23_xguir"]
-[ext_resource type="Texture2D" uid="uid://b6vnfctluyu4y" path="res://Face Textures/goathead1.png" id="24_u3hru"]
-[ext_resource type="Texture2D" uid="uid://bpqcxvthf6ppq" path="res://Face Textures/goathead2.png" id="25_2jjgx"]
-[ext_resource type="Texture2D" uid="uid://cvw358j6weok4" path="res://Face Textures/goathead3.png" id="26_3plup"]
-[ext_resource type="Texture2D" uid="uid://btvjkeqp06f0" path="res://Face Textures/goathead4.png" id="27_m238b"]
-[ext_resource type="Texture2D" uid="uid://bk5gw0g37dhh5" path="res://Face Textures/goathead5.png" id="28_ewb1r"]
-[ext_resource type="Texture2D" uid="uid://cbcob4gn8xams" path="res://Face Textures/goathead6.png" id="29_u6cnb"]
-[ext_resource type="Texture2D" uid="uid://bfapjj0hwws2j" path="res://Face Textures/goathead7.png" id="30_o3eci"]
-[ext_resource type="Texture2D" uid="uid://cjo28ngm1oxe" path="res://Face Textures/goathead8.png" id="31_jv8j8"]
-[ext_resource type="Script" path="res://Head.gd" id="32_ohip0"]
-[ext_resource type="PackedScene" uid="uid://b2sqmde2h8gfg" path="res://PathfindingEnemy.tscn" id="35_rssv7"]
+[ext_resource type="Texture2D" uid="uid://b4mav36hcn3cb" path="res://Textures/atari-8-bit-series-gtia-1x.png" id="25_pfhyf"]
+[ext_resource type="PackedScene" uid="uid://c0t7yti247e6d" path="res://PathfindingEnemy.tscn" id="35_rssv7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6rs0"]
 panorama = ExtResource("1_l22cf")
@@ -83,122 +64,157 @@ texture_filter = 0
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qphd1"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_65ouc"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dt056"]
 render_priority = -128
 shader = ExtResource("6_070li")
-shader_parameter/depth_addend = 0.0
-shader_parameter/depth_multiplier = 1.5
 shader_parameter/is_inverted = false
-shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/palette = ExtResource("7_secfw")
+shader_parameter/depth_multiplier = 1.5
+shader_parameter/depth_addend = 0.0
+shader_parameter/transparency = 2.0
+shader_parameter/outline_color = Color(0.156863, 0.160784, 0.180392, 1)
 shader_parameter/palette_size = 256
-shader_parameter/transparency = 5.0
+shader_parameter/palette = ExtResource("25_pfhyf")
 
-[sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
+[sub_resource type="QuadMesh" id="QuadMesh_60xbv"]
 material = SubResource("ShaderMaterial_dt056")
 size = Vector2(2, 2)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_65ouc"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6vjel"]
-albedo_color = Color(1, 1, 0, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4pe0"]
-material = SubResource("StandardMaterial3D_6vjel")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n7aei"]
-albedo_color = Color(1, 1, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_a7kpg"]
-material = SubResource("StandardMaterial3D_n7aei")
-size = Vector3(0.25, 0.25, 1)
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_ag4kf"]
-resource_local_to_scene = true
-frames = 10
-pause = true
-frame_0/texture = ExtResource("11_kxvy2")
-frame_1/texture = ExtResource("12_0opjw")
-frame_1/duration = 1.0
-frame_2/texture = ExtResource("13_vmh3l")
-frame_2/duration = 1.0
-frame_3/texture = ExtResource("14_eeqcq")
-frame_3/duration = 1.0
-frame_4/texture = ExtResource("15_55kmw")
-frame_4/duration = 1.0
-frame_5/texture = ExtResource("16_4jt0y")
-frame_5/duration = 1.0
-frame_6/texture = ExtResource("17_swyh5")
-frame_6/duration = 1.0
-frame_7/texture = ExtResource("18_ysikh")
-frame_7/duration = 1.0
-frame_8/texture = ExtResource("19_4tr70")
-frame_8/duration = 1.0
-frame_9/texture = ExtResource("20_iujds")
-frame_9/duration = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lqw4h"]
-resource_local_to_scene = true
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q5ngf"]
 transparency = 1
+no_depth_test = true
 shading_mode = 0
-albedo_texture = SubResource("AnimatedTexture_ag4kf")
+albedo_texture = ExtResource("23_xguir")
 texture_filter = 0
-texture_repeat = false
-billboard_mode = 1
 use_point_size = true
-point_size = 32.0
+point_size = 16.0
 
-[sub_resource type="PointMesh" id="PointMesh_sy6kf"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_lqw4h")
+[sub_resource type="PointMesh" id="PointMesh_aat70"]
+material = SubResource("StandardMaterial3D_q5ngf")
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hdxp6"]
-bounce = 0.5
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n8jj7"]
+shader = ExtResource("15_26laa")
+shader_parameter/color = null
+shader_parameter/scale = 0.8
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ei885"]
+[sub_resource type="Animation" id="Animation_p0c8c"]
+resource_name = "Close"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.3, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(488, 488), Vector2(488, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../CameraArm")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"switch_to_fixed"
+}]
+}
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yts5c"]
-shading_mode = 0
-albedo_color = Color(0.764706, 0.764706, 0.811765, 1)
-texture_filter = 0
+[sub_resource type="Animation" id="Animation_4xoqs"]
+resource_name = "Open"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(488, 0), Vector2(488, 488)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../CameraArm")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"switch_to_pov"
+}]
+}
 
-[sub_resource type="SphereMesh" id="SphereMesh_btrw4"]
-material = SubResource("StandardMaterial3D_yts5c")
-radius = 0.75
-height = 1.5
-radial_segments = 24
-rings = 9
+[sub_resource type="Animation" id="Animation_ocdxc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(488, 488)]
+}
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_tolvp"]
-frames = 8
-pause = true
-frame_0/texture = ExtResource("24_u3hru")
-frame_1/texture = ExtResource("25_2jjgx")
-frame_1/duration = 1.0
-frame_2/texture = ExtResource("26_3plup")
-frame_2/duration = 1.0
-frame_3/texture = ExtResource("27_m238b")
-frame_3/duration = 1.0
-frame_4/texture = ExtResource("28_ewb1r")
-frame_4/duration = 1.0
-frame_5/texture = ExtResource("29_u6cnb")
-frame_5/duration = 1.0
-frame_6/texture = ExtResource("30_o3eci")
-frame_6/duration = 1.0
-frame_7/texture = ExtResource("31_jv8j8")
-frame_7/duration = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5en8a"]
-transparency = 1
-shading_mode = 0
-albedo_texture = SubResource("AnimatedTexture_tolvp")
-texture_filter = 0
-texture_repeat = false
-use_point_size = true
-point_size = 64.0
-
-[sub_resource type="PointMesh" id="PointMesh_j6hyb"]
-material = SubResource("StandardMaterial3D_5en8a")
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mhnld"]
+_data = {
+"Close": SubResource("Animation_p0c8c"),
+"Open": SubResource("Animation_4xoqs"),
+"RESET": SubResource("Animation_ocdxc")
+}
 
 [node name="SecondWorld" type="Node3D"]
 
@@ -211,18 +227,10 @@ transform = Transform3D(0.784582, -0.536957, 0.310012, -2.27666e-08, 0.5, 0.8660
 shadow_enabled = true
 directional_shadow_max_distance = 253.9
 
-[node name="Interface" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment"]
-navmesh = SubResource("NavigationMesh_cq3md")
+navigation_mesh = SubResource("NavigationMesh_cq3md")
 metadata/_edit_lock_ = true
 
 [node name="House" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
@@ -447,92 +455,24 @@ script = ExtResource("4_7y4x8")
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_qphd1")
 
-[node name="CameraArm" type="Node3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(0.94049, 0.116226, -0.319328, 0, 0.939692, 0.34202, 0.339821, -0.321666, 0.883771, 0, -2, 0)
-script = ExtResource("5_p7en2")
-target = NodePath("../Player")
-
-[node name="Camera3d" type="Camera3D" parent="CameraArm"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
-fov = 20.0
-
-[node name="Outline" type="MeshInstance3D" parent="CameraArm/Camera3d"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
-mesh = SubResource("QuadMesh_x0ohu")
-skeleton = NodePath("../../../..")
-
 [node name="Player" parent="." instance=ExtResource("7_tnk0w")]
 transform = Transform3D(0.670569, 0, 0.741847, 0, 1, 0, -0.741847, 0, 0.670569, -2.79877, -0.751638, -2.46062)
 collision_mask = 5
 
 [node name="NPC" type="CharacterBody3D" parent="."]
 transform = Transform3D(0.379101, 0, -0.925355, 0, 1, 0, 0.925355, 0, 0.379101, 11.2946, -0.9774, -0.229118)
-visible = false
 collision_layer = 2
 script = ExtResource("9_ppddr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPC"]
 shape = SubResource("CapsuleShape3D_65ouc")
 
-[node name="Model2" type="Node3D" parent="NPC"]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC/Model2"]
-mesh = SubResource("CapsuleMesh_g4pe0")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="NPC/Model2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
-mesh = SubResource("BoxMesh_a7kpg")
-
 [node name="Model" parent="NPC" instance=ExtResource("10_j3vkr")]
-transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, 0, 0)
 
-[node name="arm" parent="NPC/Model/Armature/Skeleton3D" index="0"]
-material_override = ExtResource("11_4xgqk")
-
-[node name="chest" parent="NPC/Model/Armature/Skeleton3D" index="1"]
-material_override = ExtResource("11_4xgqk")
-
-[node name="shoulder" parent="NPC/Model/Armature/Skeleton3D" index="7"]
-material_override = ExtResource("11_4xgqk")
-
-[node name="HeadAttachment" parent="NPC/Model/Armature/Skeleton3D" index="9"]
-transform = Transform3D(0.996125, 0.0832876, -0.0282388, -0.0873311, 0.974658, -0.205952, 0.0103699, 0.20762, 0.978155, 0.0726121, 0.944382, 0.0695769)
-
-[node name="Head" parent="NPC/Model/Armature/Skeleton3D/HeadAttachment" index="3"]
-mesh = SubResource("PointMesh_sy6kf")
-
-[node name="ChestAttachment" parent="NPC/Model/Armature/Skeleton3D" index="10"]
-transform = Transform3D(0.995721, 0.082597, -0.0414326, -0.0924059, 0.891379, -0.443739, 0.000280583, 0.445669, 0.895198, -4.22703e-15, 0.160759, -0.322217)
-
-[node name="LeftHandAttachment" parent="NPC/Model/Armature/Skeleton3D" index="11"]
-transform = Transform3D(-0.921705, -0.377195, 0.0904593, 0.10454, -0.0169796, 0.994376, -0.373538, 0.925978, 0.0550823, 0.86822, 0.310434, 0.305137)
-
-[node name="RightHandAttachment" parent="NPC/Model/Armature/Skeleton3D" index="12"]
-transform = Transform3D(-0.973818, -0.225132, 0.0315253, 0.133512, -0.678644, -0.72223, 0.183992, -0.699112, 0.690934, -0.930584, 0.691131, -0.380683)
-
-[node name="BoneAttachment3D" parent="NPC/Model/Armature/Skeleton3D" index="13"]
-transform = Transform3D(-0.97729, 0.146095, -0.153494, -0.211833, -0.654561, 0.725725, 0.00555386, 0.741759, 0.670644, 0.805555, 0.591195, -0.0130261)
-
-[node name="BoneAttachment3D2" parent="NPC/Model/Armature/Skeleton3D" index="14"]
-transform = Transform3D(-0.860549, -0.507829, -0.0395737, 0.1019, -0.0955131, -0.990199, 0.499071, -0.856147, 0.133942, -0.712761, 0.7321, -0.0134546)
-
-[node name="BoneAttachment3D3" parent="NPC/Model/Armature/Skeleton3D" index="15"]
-transform = Transform3D(1, -1.5099e-14, 2.38418e-07, 8.70678e-09, 0.999333, -0.0365189, -2.38259e-07, 0.0365189, 0.999333, 1.13566e-18, -0.119158, -0.332446)
-
-[node name="Partner" parent="." instance=ExtResource("11_kdk1p")]
+[node name="Partner" parent="." node_paths=PackedStringArray("leader") instance=ExtResource("11_kdk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88796, 0)
-
-[node name="Enemy" parent="." instance=ExtResource("12_nqlpq")]
-visible = false
-
-[node name="Enemy2" parent="." instance=ExtResource("12_nqlpq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43292, -0.264593, 4.23859)
-visible = false
-
-[node name="Enemy3" parent="." instance=ExtResource("12_nqlpq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.99435, -0.264594, 3.93099)
-visible = false
+leader = NodePath("../Player")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
@@ -543,170 +483,77 @@ alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("23_xguir")
 
-[node name="Serpent" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7056, 0, 3.15339)
-
-[node name="RigidBody3D" type="RigidBody3D" parent="Serpent"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.136782, 0, 0)
-collision_layer = 4
-collision_mask = 3
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-mass = 0.3
-physics_material_override = SubResource("PhysicsMaterial_hdxp6")
-gravity_scale = 0.0
-continuous_cd = true
-linear_damp = 0.25
-angular_damp = 0.25
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D"]
-shape = SubResource("SphereShape3D_ei885")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D"]
-visible = false
-mesh = SubResource("SphereMesh_btrw4")
-
-[node name="Head" type="MeshInstance3D" parent="Serpent/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.218155, 0.423142, 0)
-mesh = SubResource("PointMesh_j6hyb")
-skeleton = NodePath("../..")
-script = ExtResource("32_ohip0")
-
-[node name="RigidBody3D2" type="RigidBody3D" parent="Serpent"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.7359, 0, 0)
-collision_layer = 4
-collision_mask = 3
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-mass = 0.3
-physics_material_override = SubResource("PhysicsMaterial_hdxp6")
-gravity_scale = 0.0
-continuous_cd = true
-linear_damp = 0.25
-angular_damp = 0.25
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D2"]
-shape = SubResource("SphereShape3D_ei885")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D2"]
-mesh = SubResource("SphereMesh_btrw4")
-
-[node name="RigidBody3D3" type="RigidBody3D" parent="Serpent"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.69814, 0, 0)
-collision_layer = 4
-collision_mask = 3
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-mass = 0.3
-physics_material_override = SubResource("PhysicsMaterial_hdxp6")
-gravity_scale = 0.0
-continuous_cd = true
-linear_damp = 0.25
-angular_damp = 0.25
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D3"]
-shape = SubResource("SphereShape3D_ei885")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D3"]
-mesh = SubResource("SphereMesh_btrw4")
-
-[node name="RigidBody3D4" type="RigidBody3D" parent="Serpent"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.66501, 0, 0)
-collision_layer = 4
-collision_mask = 3
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-mass = 0.3
-physics_material_override = SubResource("PhysicsMaterial_hdxp6")
-gravity_scale = 0.0
-continuous_cd = true
-linear_damp = 0.25
-angular_damp = 0.25
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D4"]
-shape = SubResource("SphereShape3D_ei885")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D4"]
-mesh = SubResource("SphereMesh_btrw4")
-
-[node name="RigidBody3D5" type="RigidBody3D" parent="Serpent"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.60894, 0, 0)
-collision_layer = 4
-collision_mask = 3
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-mass = 0.3
-physics_material_override = SubResource("PhysicsMaterial_hdxp6")
-gravity_scale = 0.0
-continuous_cd = true
-linear_damp = 0.25
-angular_damp = 0.25
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D5"]
-shape = SubResource("SphereShape3D_ei885")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D5"]
-mesh = SubResource("SphereMesh_btrw4")
-
-[node name="RigidBody3D6" type="RigidBody3D" parent="Serpent"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.48777, 0, 0)
-collision_layer = 4
-collision_mask = 3
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-mass = 0.3
-physics_material_override = SubResource("PhysicsMaterial_hdxp6")
-gravity_scale = 0.0
-continuous_cd = true
-linear_damp = 0.25
-angular_damp = 0.25
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Serpent/RigidBody3D6"]
-shape = SubResource("SphereShape3D_ei885")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Serpent/RigidBody3D6"]
-mesh = SubResource("SphereMesh_btrw4")
-
-[node name="ConeTwistJoint3D" type="ConeTwistJoint3D" parent="Serpent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.273659, 0, 0)
-node_a = NodePath("../RigidBody3D")
-node_b = NodePath("../RigidBody3D2")
-bias = 0.01
-softness = 5.0
-
-[node name="ConeTwistJoint3D2" type="ConeTwistJoint3D" parent="Serpent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707567, 0, 0)
-node_a = NodePath("../RigidBody3D2")
-node_b = NodePath("../RigidBody3D3")
-bias = 0.01
-softness = 5.0
-
-[node name="ConeTwistJoint3D3" type="ConeTwistJoint3D" parent="Serpent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.69052, 0, 0)
-node_a = NodePath("../RigidBody3D3")
-node_b = NodePath("../RigidBody3D4")
-bias = 0.01
-softness = 5.0
-
-[node name="ConeTwistJoint3D4" type="ConeTwistJoint3D" parent="Serpent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.65642, 0, 0)
-node_a = NodePath("../RigidBody3D4")
-node_b = NodePath("../RigidBody3D5")
-bias = 0.01
-softness = 5.0
-
-[node name="ConeTwistJoint3D5" type="ConeTwistJoint3D" parent="Serpent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61139, 0, 0)
-node_a = NodePath("../RigidBody3D5")
-node_b = NodePath("../RigidBody3D6")
-bias = 0.01
-softness = 5.0
-
 [node name="PathfindingEnemy" parent="." instance=ExtResource("35_rssv7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.93447, -0.458248, -2.06911)
-can_jump = true
+
+[node name="Outline" type="MeshInstance3D" parent="."]
+extra_cull_margin = 10000.0
+ignore_occlusion_culling = true
+mesh = SubResource("QuadMesh_60xbv")
+skeleton = NodePath("../..")
+
+[node name="AimIcon" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AimIcon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3539, 0)
+mesh = SubResource("PointMesh_aat70")
+skeleton = NodePath("../..")
+
+[node name="CameraArm" type="Node3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(0.94049, 0.116226, -0.319328, 0, 0.939692, 0.34202, 0.339821, -0.321666, 0.883771, -3.6255, -2, 15.9946)
+script = ExtResource("5_p7en2")
+target = NodePath("../Player")
+
+[node name="Camera3d" type="Camera3D" parent="CameraArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+fov = 20.0
+far = 1000.0
+
+[node name="Interface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PocketCamera" type="ColorRect" parent="Interface"]
+top_level = true
+material = SubResource("ShaderMaterial_n8jj7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -109.0
+offset_right = 4.0
+offset_bottom = 109.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/PocketCamera"]
+autoplay = "Close"
+libraries = {
+"": SubResource("AnimationLibrary_mhnld")
+}
+
+[node name="TextureRect" type="TextureRect" parent="Interface/PocketCamera"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -168.0
+offset_right = 32.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("16_6tn04")
+stretch_mode = 3
 
 [connection signal="body_entered" from="Environment/NavigationRegion3D/House/TransitionArea" to="Environment/NavigationRegion3D/House/TransitionArea" method="_on_body_entered"]
 [connection signal="body_entered" from="KillPlane" to="KillPlane" method="_on_kill_plane_body_entered"]
-
-[editable path="NPC/Model"]
