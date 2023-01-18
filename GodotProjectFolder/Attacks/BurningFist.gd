@@ -12,7 +12,7 @@ func _ready():
 	
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	global_position = caster.global_position
 	#look_at(global_position + Vector3(-caster.facing_dir.x, 0, -caster.facing_dir.y))
 	if caster.velocity.length() > 13:

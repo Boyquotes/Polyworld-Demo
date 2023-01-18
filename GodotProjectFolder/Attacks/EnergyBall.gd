@@ -26,12 +26,12 @@ func _ready():
 	velocity.y += 0.2
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+# Called every frame. '_delta' is the elapsed time since the previous frame.
+func _process(_delta):
 	pass
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	direction = global_position.direction_to(targ.global_position)
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed

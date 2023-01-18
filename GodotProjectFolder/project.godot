@@ -12,32 +12,32 @@ _global_script_classes=[{
 "base": "Node3D",
 "class": &"CameraArm",
 "language": &"GDScript",
-"path": "res://CameraArm.gd"
+"path": "res://Camera/CameraArm.gd"
 }, {
 "base": "Area3D",
 "class": &"CameraRegion",
 "language": &"GDScript",
-"path": "res://CameraRegion.gd"
+"path": "res://Camera/CameraRegion.gd"
 }, {
 "base": "Control",
 "class": &"Dialog",
 "language": &"GDScript",
-"path": "res://Dialog.gd"
+"path": "res://UI/Dialog.gd"
 }, {
 "base": "PathfindingEntity",
 "class": &"Enemy",
 "language": &"GDScript",
-"path": "res://PathfindingEnemy.gd"
+"path": "res://Entity/Enemy/PathfindingEnemy.gd"
 }, {
 "base": "CharacterBody3D",
 "class": &"Entity",
 "language": &"GDScript",
-"path": "res://Entity.gd"
+"path": "res://Entity/Entity.gd"
 }, {
 "base": "ProgressBar",
 "class": &"HealthBar",
 "language": &"GDScript",
-"path": "res://HealthBar.gd"
+"path": "res://UI/HealthBar.gd"
 }, {
 "base": "Area3D",
 "class": &"Hitbox",
@@ -52,32 +52,27 @@ _global_script_classes=[{
 "base": "Node",
 "class": &"Inventory",
 "language": &"GDScript",
-"path": "res://Inventory.gd"
+"path": "res://UI/Inventory.gd"
 }, {
 "base": "PathfindingEntity",
 "class": &"Partner",
 "language": &"GDScript",
-"path": "res://Partner.gd"
+"path": "res://Entity/Partner/Partner.gd"
 }, {
 "base": "Entity",
 "class": &"PathfindingEntity",
 "language": &"GDScript",
-"path": "res://PathfindingEntity.gd"
+"path": "res://Entity/PathfindingEntity.gd"
 }, {
 "base": "Entity",
 "class": &"Player",
 "language": &"GDScript",
-"path": "res://Player/Player.gd"
-}, {
-"base": "CharacterBody3D",
-"class": &"PlayerOLD",
-"language": &"GDScript",
-"path": "res://Player/PlayerOLD.gd"
+"path": "res://Entity/Player/Player.gd"
 }, {
 "base": "RichTextEffect",
 "class": &"RichTextWavy",
 "language": &"GDScript",
-"path": "res://RichTextWavy.gd"
+"path": "res://UI/RichTextWavy.gd"
 }, {
 "base": "Timer",
 "class": &"Shaker",
@@ -87,12 +82,12 @@ _global_script_classes=[{
 "base": "Node",
 "class": &"State",
 "language": &"GDScript",
-"path": "res://State.gd"
+"path": "res://Entity/State.gd"
 }, {
 "base": "Node",
 "class": &"StateMachine",
 "language": &"GDScript",
-"path": "res://StateMachine.gd"
+"path": "res://Entity/StateMachine.gd"
 }]
 _global_script_class_icons={
 "CameraArm": "",
@@ -107,7 +102,6 @@ _global_script_class_icons={
 "Partner": "",
 "PathfindingEntity": "",
 "Player": "",
-"PlayerOLD": "",
 "RichTextWavy": "",
 "Shaker": "",
 "State": "",
@@ -133,7 +127,6 @@ window/size/always_on_top=true
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
-window/stretch/aspect="keep_width"
 
 [importer_defaults]
 

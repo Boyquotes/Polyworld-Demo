@@ -21,9 +21,9 @@ func _ready():
 	
 	velocity = direction * speed
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	
-	velocity.y -= GRAVITY * delta
+	velocity.y -= GRAVITY * _delta
 
 	var collide = move_and_collide(velocity) as KinematicCollision3D
 

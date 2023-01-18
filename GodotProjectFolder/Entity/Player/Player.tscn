@@ -1,0 +1,110 @@
+[gd_scene load_steps=21 format=3 uid="uid://cc38w7ybkc85b"]
+
+[ext_resource type="Script" path="res://Entity/Player/Player.gd" id="1_qmea8"]
+[ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_dti1d"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateIdle.gd" id="3_d1ynk"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateRun.gd" id="4_puic8"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateInAir.gd" id="5_ykyoh"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateClimb.gd" id="6_qc5k3"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack1.gd" id="7_51isg"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack2.gd" id="8_aa0be"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack3.gd" id="9_bhvvh"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack4.gd" id="10_35iqv"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner.gd" id="11_51j4e"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateStunned.gd" id="12_f1m8k"]
+[ext_resource type="PackedScene" uid="uid://mkpspgj6byif" path="res://Models/CharacterModel.tscn" id="12_rnjkj"]
+[ext_resource type="PackedScene" path="res://UI/Inventory.tscn" id="13_2ihec"]
+[ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="14_iklt7"]
+[ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="15_prtxv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yk3vu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_btql4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5kqb7"]
+size = Vector3(2.24814, 1.518, 2.46)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mv10o"]
+bg_color = Color(0, 0.572549, 0.145098, 1)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_qmea8")
+move_speed = 15.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("2_dti1d")
+current_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_d1ynk")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_puic8")
+
+[node name="InAir" type="Node" parent="StateMachine"]
+script = ExtResource("5_ykyoh")
+
+[node name="Climb" type="Node" parent="StateMachine"]
+script = ExtResource("6_qc5k3")
+
+[node name="Attack1" type="Node" parent="StateMachine"]
+script = ExtResource("7_51isg")
+
+[node name="Attack2" type="Node" parent="StateMachine"]
+script = ExtResource("8_aa0be")
+
+[node name="Attack3" type="Node" parent="StateMachine"]
+script = ExtResource("9_bhvvh")
+
+[node name="Attack4" type="Node" parent="StateMachine"]
+script = ExtResource("10_35iqv")
+
+[node name="Partner" type="Node" parent="StateMachine"]
+script = ExtResource("11_51j4e")
+
+[node name="Stunned" type="Node" parent="StateMachine"]
+script = ExtResource("12_f1m8k")
+
+[node name="Model" parent="." instance=ExtResource("12_rnjkj")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_yk3vu")
+
+[node name="Inventory" parent="." instance=ExtResource("13_2ihec")]
+iv = ["burning fist", "fireball", "bomb"]
+
+[node name="Hurtbox" parent="." instance=ExtResource("14_iklt7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15227, 0)
+
+[node name="CollisionShape3d" parent="Hurtbox" index="0"]
+shape = SubResource("BoxShape3D_btql4")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.909923, 0)
+attenuation_model = 3
+max_polyphony = 5
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="Timer" type="Timer" parent="AudioStreamPlayer3D"]
+
+[node name="InteractBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.67119)
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractBox"]
+shape = SubResource("BoxShape3D_5kqb7")
+
+[node name="HealthBar" parent="." instance=ExtResource("15_prtxv")]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 168.0
+offset_bottom = 24.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_mv10o")
+is_static = true
+
+[connection signal="entity_died" from="." to="." method="_on_entity_died"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+
+[editable path="Hurtbox"]

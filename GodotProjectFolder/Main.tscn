@@ -1,19 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://je8o3ba2i5oe"]
+[gd_scene load_steps=9 format=3 uid="uid://deegjoqfscwve"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_ohqny"]
-[ext_resource type="Shader" path="res://Vignette.gdshader" id="2_774ge"]
-[ext_resource type="PackedScene" uid="uid://dctj4hq7wjib1" path="res://Worlds/FourthWorld.tscn" id="3_ivkmp"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_msvjc"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m3yjn"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3syqg"]
+[ext_resource type="Shader" path="res://Shaders/Vignette.gdshader" id="2_hq8l5"]
+[ext_resource type="PackedScene" uid="uid://cuxegb0qn1kvs" path="res://Worlds/FourthWorld.tscn" id="3_ivkmp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ty0ol"]
-shader = ExtResource("2_774ge")
+shader = ExtResource("2_hq8l5")
 shader_parameter/color = Color(0, 0, 0, 1)
-shader_parameter/scale = 0.75
+shader_parameter/scale = 1.0
+shader_parameter/border = null
 
 [sub_resource type="Animation" id="Animation_tmpnv"]
 resource_name = "Close"
@@ -57,7 +52,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.75]
+"values": [1.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_njwq4"]
@@ -72,67 +67,7 @@ script = ExtResource("1_ohqny")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
-[node name="HealthBar" type="ColorRect" parent="UILayer"]
-top_level = true
-material = SubResource("CanvasItemMaterial_msvjc")
-offset_left = 15.0
-offset_top = 15.0
-offset_right = 155.0
-offset_bottom = 25.0
-color = Color(0, 0.729412, 0.45098, 0.784314)
-
-[node name="CardHolder" type="ColorRect" parent="UILayer"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -110.0
-offset_top = -60.0
-offset_right = -15.0
-offset_bottom = -4.0
-grow_horizontal = 0
-grow_vertical = 0
-color = Color(0, 0, 0, 0.172549)
-
-[node name="CardR" type="ColorRect" parent="UILayer/CardHolder"]
-top_level = true
-material = SubResource("CanvasItemMaterial_m3yjn")
-layout_mode = 0
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -54.0
-offset_top = -53.0
-offset_right = -26.0
-offset_bottom = -11.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="Cooldown" type="Timer" parent="UILayer/CardHolder/CardR"]
-one_shot = true
-
-[node name="CardL" type="ColorRect" parent="UILayer/CardHolder"]
-top_level = true
-material = SubResource("CanvasItemMaterial_3syqg")
-layout_mode = 0
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -98.0
-offset_top = -53.0
-offset_right = -70.0
-offset_bottom = -11.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="Cooldown" type="Timer" parent="UILayer/CardHolder/CardL"]
-one_shot = true
-
 [node name="Vignette" type="ColorRect" parent="UILayer"]
-visible = false
 top_level = true
 material = SubResource("ShaderMaterial_ty0ol")
 anchors_preset = 15
@@ -144,6 +79,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/Vignette"]
+autoplay = "RESET"
 libraries = {
 "": SubResource("AnimationLibrary_njwq4")
 }

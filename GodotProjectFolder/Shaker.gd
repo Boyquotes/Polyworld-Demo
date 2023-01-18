@@ -18,8 +18,8 @@ func _ready():
 			child.queue_free()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+# Called every frame. '_delta' is the elapsed time since the previous frame.
+func _process(_delta):
 	if active:
 		if duration != -1:
 			duration -= 1

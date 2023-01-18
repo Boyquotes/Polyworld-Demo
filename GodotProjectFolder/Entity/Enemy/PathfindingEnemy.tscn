@@ -1,0 +1,98 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://Entity/Enemy/PathfindingEnemy.gd" id="1_7i3iw"]
+[ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="2_bwnuo"]
+[ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_ip005"]
+[ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateDetected.gd" id="3_ksixs"]
+[ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateWandering.gd" id="4_vphl8"]
+[ext_resource type="Script" path="res://Entity/Stunned.gd" id="5_6fvtl"]
+[ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateAlerted.gd" id="6_dufk3"]
+[ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="8_4ksgh"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_v5sbh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kh7gn"]
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xi4qo"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0.00392157, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_17rmk"]
+material = SubResource("StandardMaterial3D_xi4qo")
+radius = 0.534
+height = 2.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ngk21"]
+shading_mode = 0
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4qwv7"]
+material = SubResource("StandardMaterial3D_ngk21")
+radius = 0.534
+height = 2.05
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ltiw"]
+margin = 0.5
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulo86"]
+
+[node name="PathfindingEnemy" type="CharacterBody3D" groups=["enemies"]]
+collision_layer = 2
+script = ExtResource("1_7i3iw")
+can_jump = true
+should_avoid = false
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("2_ip005")
+current_state = NodePath("Wandering")
+
+[node name="Detected" type="Node" parent="StateMachine"]
+script = ExtResource("3_ksixs")
+
+[node name="Wandering" type="Node" parent="StateMachine"]
+script = ExtResource("4_vphl8")
+
+[node name="Stunned" type="Node" parent="StateMachine"]
+script = ExtResource("5_6fvtl")
+
+[node name="Alerted" type="Node" parent="StateMachine"]
+script = ExtResource("6_dufk3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_v5sbh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_kh7gn")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_17rmk")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_4qwv7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_0ltiw")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_max_distance = 8.0
+avoidance_enabled = true
+neighbor_distance = 10.0
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_bwnuo")]
+
+[node name="CollisionShape3d" parent="Hurtbox" index="0"]
+shape = SubResource("CapsuleShape3D_ulo86")
+
+[node name="StunTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HealthBar" parent="." instance=ExtResource("8_4ksgh")]
+
+[connection signal="entity_died" from="." to="." method="_on_entity_died"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+
+[editable path="Hurtbox"]

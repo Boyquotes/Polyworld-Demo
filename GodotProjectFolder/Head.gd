@@ -13,10 +13,8 @@ func _ready():
 	
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	
-	
+# Called every frame. '_delta' is the elapsed time since the previous frame.
+func _physics_process(_delta):
 	
 	var dir = get_parent().global_transform.basis.z
 	var dir_2d = Vector2(dir.x, dir.z)
