@@ -70,13 +70,22 @@ func _process(_delta):
 	
 	# Handle interaction
 	if Input.is_action_just_pressed("interact"):
-		var interact_box = get_node("InteractBox") as Area3D
+		var interact_box = get_node("InteractRegion") as Area3D
 		var overlapping_bodies = interact_box.get_overlapping_bodies()
+		
+		var nearest = null
+		var dist = 100
 		for body in overlapping_bodies:
 			if body == self:
-				break
-			if body.has_method("interact"):
-				body.interact()
+				continue
+			var current_dist = body.global_position.distance_to(global_position)
+			if current_dist < dist:
+				dist = current_dist
+				nearest = body
+		if nearest:
+			if nearest.has_method("interact"):
+				nearest.interact()
+	
 	
 	# Targeting stuff
 	
