@@ -178,7 +178,6 @@ size = Vector2(7.112, 7.186)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mse8a"]
 render_priority = -128
 shader = ExtResource("6_4xgu5")
-shader_parameter/is_inverted = false
 shader_parameter/palette_size = 256
 shader_parameter/palette = ExtResource("27_bk1ir")
 
@@ -502,8 +501,12 @@ target = NodePath("../Player")
 [node name="Camera3d" parent="CameraArm" index="0"]
 near = 10.0
 
+[node name="PocketCamera" parent="CameraArm" index="1"]
+offset_right = 484.0
+offset_bottom = -109.0
+
 [node name="Player" parent="." instance=ExtResource("10_skbcd")]
-transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 21.3725, -14.7415, 9.18849)
+transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 21.8656, -14.7415, 9.78429)
 
 [node name="PathfindingEnemy" parent="." instance=ExtResource("11_dwh2e")]
 transform = Transform3D(0.961482, 0, 0.274865, 0, 1, 0, -0.274865, 0, 0.961482, 0.424739, -0.484544, 5.27399)

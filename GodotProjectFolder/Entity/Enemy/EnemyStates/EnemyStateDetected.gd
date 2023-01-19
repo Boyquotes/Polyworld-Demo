@@ -31,7 +31,7 @@ func update(_delta):
 	# handle shooting
 	if is_instance_valid(enemy.player):
 		var rand = randi_range(0, 200)
-		if rand == 0:
+		if rand == 0 && enemy.is_instance_visible(enemy.player):
 			shoot()
 
 
@@ -54,6 +54,6 @@ func exit():
 func shoot():
 	var ball = load("res://Attacks/Fireball.tscn").instantiate()
 	ball.caster = enemy
-	ball.direction = enemy.global_position.direction_to(enemy.player.global_position)
+	ball.direction = enemy.global_position.direction_to(enemy.player.global_position + enemy.player.velocity * enemy.global_position.distance_to(enemy.player.global_position) * 0.05)
 	get_tree().root.add_child(ball)
 	ball.global_position = enemy.global_position

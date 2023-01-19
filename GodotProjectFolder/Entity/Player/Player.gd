@@ -110,6 +110,7 @@ func _process(_delta):
 		aim_target = null
 		aim_direction = Vector3(facing_dir_target.x, 0, facing_dir_target.y)
 	
+	# Target locking stuff
 	if target_locking:
 		aim_icon.global_position = lerp(global_position, aim_target.global_position, aim_icon_mover)
 		aim_icon_mover += _delta * 5
