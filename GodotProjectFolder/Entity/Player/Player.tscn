@@ -22,7 +22,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_btql4"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_46niy"]
-radius = 1.82284
+radius = 2.02914
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mv10o"]
 bg_color = Color(0, 0.572549, 0.145098, 1)
@@ -90,7 +90,7 @@ attenuation_filter_cutoff_hz = 20500.0
 [node name="Timer" type="Timer" parent="AudioStreamPlayer3D"]
 
 [node name="InteractRegion" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.67119)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.90256)
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractRegion"]

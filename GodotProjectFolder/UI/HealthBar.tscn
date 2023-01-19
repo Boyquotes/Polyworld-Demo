@@ -14,6 +14,7 @@ bg_color = Color(0.501961, 0.501961, 0.501961, 0.576471)
 bg_color = Color(1, 0.85098, 0.85098, 1)
 
 [node name="HealthBar" type="ProgressBar"]
+process_mode = 3
 offset_right = 40.0
 offset_bottom = 6.0
 size_flags_horizontal = 4

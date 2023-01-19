@@ -27,18 +27,33 @@ func update(_delta):
 	
 	if lost_counter <= 0:
 		state_machine.transition_to("Wandering")
+	
+	# handle shooting
+	if is_instance_valid(enemy.player):
+		var rand = randi_range(0, 200)
+		if rand == 0:
+			shoot()
 
 
 func physics_update(_delta):
 	
 	if is_instance_valid(enemy.player):
-		enemy.ai_move(_delta, enemy.player.global_position, 10.0, false, enemy.can_jump)
+		enemy.ai_move(_delta, enemy.player.global_position, 8.0, false, enemy.can_jump)
 		# Look at player if stopped
 		if enemy.velocity == Vector3.ZERO:
 			enemy.face_toward(enemy.player.global_position)
 	
 	enemy.update_facing(_delta)
+	
 
 
 func exit():
 	pass
+
+
+func shoot():
+	var ball = load("res://Attacks/Fireball.tscn").instantiate()
+	ball.caster = enemy
+	ball.direction = enemy.global_position.direction_to(enemy.player.global_position)
+	get_tree().root.add_child(ball)
+	ball.global_position = enemy.global_position

@@ -29,6 +29,9 @@ func _process(_delta):
 	
 	# Position the health bar
 	if !is_static:
-		position = get_viewport().get_camera_3d().unproject_position(get_parent().global_position)
+		position = get_viewport().get_camera_3d().unproject_position(get_parent().global_position + Vector3.UP * 1.75)
 		position -= size/2
-		position.y -= 30
+		
+		# For pocket camera healthbar functionality
+		#visible = !get_viewport().get_camera_3d().is_position_behind(get_parent().global_position)
+		

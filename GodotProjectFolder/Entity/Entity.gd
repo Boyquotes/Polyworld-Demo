@@ -63,11 +63,6 @@ func take_damage(dmg:=0):
 		healthbar.health = health
 
 
-func die():
-	# Currently just delete the entity on death
-	queue_free()
-
-
 # Recursively disable all children
 func disable(entity):
 	if entity == null:

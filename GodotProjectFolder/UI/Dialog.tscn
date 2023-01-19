@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dqxeytl2bewx8"]
+[gd_scene load_steps=10 format=3 uid="uid://dqxeytl2bewx8"]
 
 [ext_resource type="Script" path="res://UI/Dialog.gd" id="1_yhwjc"]
 [ext_resource type="FontFile" uid="uid://cacnxhnb6wexr" path="res://UI/Fonts/ApplePoke2.ttf" id="2_74xqi"]
 [ext_resource type="Script" path="res://UI/RichTextWavy.gd" id="3_1uflv"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://UI/TextArrowIcon.png" id="4_ot2fm"]
-[ext_resource type="Texture2D" uid="uid://dob2vxjjkc1ay" path="res://UI/TextboxTail.png" id="5_jkkgm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fakv3"]
 bg_color = Color(0.0666667, 0.0627451, 0.0901961, 1)
@@ -120,6 +119,7 @@ libraries = {
 }
 
 [node name="Tail" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
 texture_filter = 1
 layout_mode = 0
@@ -133,5 +133,5 @@ offset_right = 7.0
 offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("5_jkkgm")
+texture = ExtResource("4_ot2fm")
 stretch_mode = 3

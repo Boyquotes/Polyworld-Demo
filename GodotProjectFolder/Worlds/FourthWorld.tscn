@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cuxegb0qn1kvs"]
+[gd_scene load_steps=44 format=3 uid="uid://cuxegb0qn1kvs"]
 
 [ext_resource type="Texture2D" uid="uid://dr887bne2krjb" path="res://Textures/grass tuft.png" id="3_pidog"]
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="3_wbitg"]
@@ -6,11 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://bfcs1jd6r1rvv" path="res://Models/MattsHouse.tscn" id="5_6x1n7"]
 [ext_resource type="Script" path="res://Areas/KillPlane.gd" id="5_g3ovq"]
 [ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="6_4xgu5"]
-[ext_resource type="PackedScene" uid="uid://g8pf07v1tffl" path="res://UI/PocketCamera.tscn" id="8_ffe7a"]
-[ext_resource type="Script" path="res://Camera/CameraArm.gd" id="10_ktxvf"]
-[ext_resource type="PackedScene" uid="uid://c4ddxebb6ojgk" path="res://Entity/Player/Player.tscn" id="10_skbcd"]
+[ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="7_3307n"]
+[ext_resource type="PackedScene" uid="uid://cc38w7ybkc85b" path="res://Entity/Player/Player.tscn" id="10_skbcd"]
 [ext_resource type="PackedScene" path="res://Camera/CameraRegion.tscn" id="10_y8tlv"]
-[ext_resource type="PackedScene" path="res://Entity/Enemy/PathfindingEnemy.tscn" id="11_dwh2e"]
+[ext_resource type="PackedScene" uid="uid://d2ve7qxs5325o" path="res://Entity/Enemy/PathfindingEnemy.tscn" id="11_dwh2e"]
 [ext_resource type="PackedScene" path="res://Entity/Partner/Partner.tscn" id="14_eu6pb"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://UI/TextArrowIcon.png" id="14_m52e5"]
 [ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="17_gisj6"]
@@ -180,10 +179,6 @@ size = Vector2(7.112, 7.186)
 render_priority = -128
 shader = ExtResource("6_4xgu5")
 shader_parameter/is_inverted = false
-shader_parameter/depth_multiplier = 1.5
-shader_parameter/depth_addend = 0.0
-shader_parameter/transparency = 2.0
-shader_parameter/outline_color = Color(0.054902, 0.054902, 0.0627451, 1)
 shader_parameter/palette_size = 256
 shader_parameter/palette = ExtResource("27_bk1ir")
 
@@ -253,6 +248,7 @@ subdivide_depth = 2
 size = Vector3(4, 4, 4)
 
 [node name="FourthWorld" type="Node3D"]
+process_mode = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.556296, -0.719654, 0.415492, 0, 0.5, 0.866025, -0.830984, -0.481766, 0.278148, 0, 0, 0)
@@ -499,25 +495,18 @@ cast_shadow = 0
 mesh = SubResource("PointMesh_8qe46")
 skeleton = NodePath("../../NavigationRegion3D")
 
-[node name="CameraArm" type="Node3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(0.94049, 0.116226, -0.319328, 0, 0.939692, 0.34202, 0.339821, -0.321666, 0.883771, -3.6255, -2, 15.9946)
-script = ExtResource("10_ktxvf")
+[node name="CameraArm" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_3307n")]
+transform = Transform3D(1, 0, 0, 0, 0.939692, 0.34202, 0, -0.34202, 0.939692, 20.6637, -11.5848, 19.6838)
 target = NodePath("../Player")
 
-[node name="Camera3d" type="Camera3D" parent="CameraArm"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
-fov = 20.0
-far = 1000.0
-
-[node name="PocketCamera" parent="CameraArm" instance=ExtResource("8_ffe7a")]
-offset_right = 484.0
-offset_bottom = -109.0
+[node name="Camera3d" parent="CameraArm" index="0"]
+near = 10.0
 
 [node name="Player" parent="." instance=ExtResource("10_skbcd")]
-transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 22.0424, -14.7415, 9.17091)
+transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 21.3725, -14.7415, 9.18849)
 
 [node name="PathfindingEnemy" parent="." instance=ExtResource("11_dwh2e")]
-transform = Transform3D(-0.999976, 0, -0.00687657, 0, 1, 0, 0.00687657, 0, -0.999976, 0.424739, -0.484544, 5.27399)
+transform = Transform3D(0.961482, 0, 0.274865, 0, 1, 0, -0.274865, 0, 0.961482, 0.424739, -0.484544, 5.27399)
 should_avoid = true
 move_speed = 7.0
 move_accel = 40.0
@@ -525,7 +514,7 @@ move_decel = 30.0
 jump_force = 20.0
 
 [node name="PathfindingEnemy2" parent="." instance=ExtResource("11_dwh2e")]
-transform = Transform3D(-0.999976, 0, -0.00687657, 0, 1, 0, 0.00687657, 0, -0.999976, 20.7305, -6.58852, 5.27399)
+transform = Transform3D(-0.0475771, 0, -0.998867, 0, 1, 0, 0.998867, 0, -0.0475771, 20.7305, -6.58852, 5.27399)
 can_jump = false
 should_avoid = true
 move_speed = 7.0
@@ -534,7 +523,7 @@ move_decel = 30.0
 jump_force = 20.0
 
 [node name="PathfindingEnemy3" parent="." instance=ExtResource("11_dwh2e")]
-transform = Transform3D(-0.999976, 0, -0.00687657, 0, 1, 0, 0.00687657, 0, -0.999976, 20.7305, -14.1775, 17.1912)
+transform = Transform3D(0.992803, 0, 0.119756, 0, 1, 0, -0.119756, 0, 0.992803, 21.3842, -12.841, 11.0793)
 can_jump = false
 should_avoid = true
 move_speed = 7.0
@@ -557,10 +546,12 @@ skeleton = NodePath("../..")
 
 [node name="CloudPlane" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18.9608, 8.21198)
+visible = false
 mesh = SubResource("PlaneMesh_sfewr")
 
 [node name="CloudPlane2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1.19249e-08, 1.04251e-15, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, 1.19249e-08, 0, 15.8691, 8.21198)
+visible = false
 mesh = SubResource("PlaneMesh_sfewr")
 
 [node name="Partner" parent="." node_paths=PackedStringArray("leader") instance=ExtResource("14_eu6pb")]
@@ -579,4 +570,5 @@ shape = SubResource("BoxShape3D_14q1p")
 
 [editable path="Environment/CameraRegion"]
 [editable path="Environment/CameraRegion2"]
+[editable path="CameraArm"]
 [editable path="TransitionArea"]

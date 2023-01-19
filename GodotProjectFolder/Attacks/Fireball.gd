@@ -9,9 +9,9 @@ var caster
 
 const GRAVITY = 1.0
 
-var direction = Vector3.ZERO
-var velocity = Vector3.ZERO
-var contacted = false
+var direction := Vector3.ZERO
+var velocity := Vector3.ZERO
+var contacted := false
 
 
 func _ready():
@@ -61,18 +61,11 @@ func _on_timer_timeout():
 	contact()
 
 
-func _on_hitbox_area_entered(area):
-	pass
-
-
 func contact():
-	
 	contacted = true
 	var explosion = load("res://Attacks/Explosion.tscn").instantiate()
 	explosion.global_position = global_position
 	explosion.caster = caster
 	get_tree().root.add_child(explosion)
 	queue_free()
-	
-	
 

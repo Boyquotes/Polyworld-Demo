@@ -51,13 +51,15 @@ func is_instance_visible(instance):
 
 
 func _on_entity_died():
-	die()
+	queue_free()
 
 
 func _on_hurtbox_area_entered(hitbox : Hitbox):
 	if hitbox.caster != self:
 		if "contact" in hitbox.get_parent():
 			hitbox.get_parent().contact()
+		if hitbox.is_vessel:
+			return
 		take_damage(hitbox.damage)
 		var impact_angle = hitbox.global_position.direction_to(global_position)
 		velocity = Vector3(hitbox.push_force_horizontal * impact_angle.x, hitbox.push_force_vertical, hitbox.push_force_horizontal * impact_angle.z)

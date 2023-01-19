@@ -1841,6 +1841,7 @@ visible = false
 mesh = SubResource("PointMesh_td26v")
 
 [node name="Head" type="MeshInstance3D" parent="Armature/Skeleton3D/HeadAttachment"]
+process_mode = 3
 transform = Transform3D(0.984581, -0.1746, 0.0106824, 0.162189, 0.934056, 0.318162, -0.0655292, -0.311522, 0.947975, 0.0145582, 1.16127, 0.172114)
 mesh = SubResource("PointMesh_fm5nm")
 skeleton = NodePath("../..")

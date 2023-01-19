@@ -3,7 +3,7 @@ extends State
 
 var player : Player
 
-var stun_duration = 1
+var stun_duration = 0.4
 
 
 # Called when the node enters the scene tree for the first time.
@@ -14,7 +14,6 @@ func _ready():
 
 func enter():
 	player.velocity.y = 5
-	print("hurt")
 	
 
 
@@ -47,4 +46,4 @@ func physics_update(_delta):
 
 
 func exit():
-	print("exiting")
+	pass

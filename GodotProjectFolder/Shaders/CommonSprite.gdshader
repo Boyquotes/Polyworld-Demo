@@ -1,14 +1,10 @@
-// NOTE: Shader automatically converted from Godot Engine 4.0.beta7's StandardMaterial3D.
-
 shader_type spatial;
-render_mode blend_mix,depth_draw_always,cull_back;
+render_mode cull_back, blend_mix, depth_draw_always, unshaded;
+
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color,filter_nearest,repeat_disable;
 uniform float point_size : hint_range(0,128);
 uniform float roughness : hint_range(0,1);
-uniform sampler2D texture_metallic : hint_default_white,filter_nearest,repeat_disable;
-uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_roughness_r,filter_nearest,repeat_disable;
 uniform float specular;
 uniform float metallic;
 uniform vec3 uv1_scale;
@@ -16,8 +12,10 @@ uniform vec3 uv1_offset;
 uniform vec3 uv2_scale;
 uniform vec3 uv2_offset;
 
+global uniform float outline_depth_multiplier;
+global uniform float outline_transparency;
+global uniform vec4 outline_color;
 
-varying float z_dist;
 
 void vertex() {
 	POINT_SIZE=point_size;
@@ -38,8 +36,6 @@ void vertex() {
 		float scale = s / (w + max_size_thresh);
 		POINT_SIZE = point_size / scale;
 	}
-	
-	z_dist = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).z * -1.0;
 
 }
 
@@ -52,50 +48,48 @@ float get_linear_depth(vec2 screen_uv, mat4 inv_proj_matrix, float depth) {
 }
 
 
-
 void fragment() {
 	vec2 base_uv = UV;
 	vec4 albedo_tex = texture(texture_albedo,POINT_COORD);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
-	METALLIC = metallic_tex * metallic;
-	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
-	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
+	METALLIC = metallic;
+	NORMAL = -CAMERA_DIRECTION_WORLD;
+	ROUGHNESS = roughness;
 	SPECULAR = specular;
 	ALPHA *= albedo.a * albedo_tex.a;
 	if (ALPHA != 1.) {
 		discard;
 	}
 	
-	NORMAL = -CAMERA_DIRECTION_WORLD;
-	
 	//outline
 	vec2 vp = VIEWPORT_SIZE;
+	float depth = length(VERTEX) * 0.6;
 	
-	float depth_thresh = 1.5;
-	float depth = z_dist/2. + depth_thresh;
 	
-	//depth = get_linear_depth(SCREEN_UV, INV_PROJECTION_MATRIX, texture(DEPTH_TEXTURE, SCREEN_UV).r);
+	float behind_depth = get_linear_depth(SCREEN_UV, INV_PROJECTION_MATRIX, texture(DEPTH_TEXTURE, SCREEN_UV).r);
 	float depth_neighbor1 = get_linear_depth(SCREEN_UV, INV_PROJECTION_MATRIX, texture(DEPTH_TEXTURE, SCREEN_UV + vec2(1.0/vp.x,0)).r);
 	float depth_neighbor2 = get_linear_depth(SCREEN_UV, INV_PROJECTION_MATRIX, texture(DEPTH_TEXTURE, SCREEN_UV - vec2(1.0/vp.x,0)).r);
 	float depth_neighbor3 = get_linear_depth(SCREEN_UV, INV_PROJECTION_MATRIX, texture(DEPTH_TEXTURE, SCREEN_UV + vec2(0,1.0/vp.y)).r);
 	float depth_neighbor4 = get_linear_depth(SCREEN_UV, INV_PROJECTION_MATRIX, texture(DEPTH_TEXTURE, SCREEN_UV - vec2(0,1.0/vp.y)).r);
 	
-	if (depth_neighbor1 > depth) {
-		depth_neighbor1 = depth;
-	}if (depth_neighbor2 > depth) {
-		depth_neighbor2 = depth;
-	}if (depth_neighbor3 > depth) {
-		depth_neighbor3 = depth;
-	}if (depth_neighbor4 > depth) {
-		depth_neighbor4 = depth;
-	}
+	// Depth neighbors can't be further away than the sprite itself
+	depth_neighbor1 = min(depth, depth_neighbor1);
+	depth_neighbor2 = min(depth, depth_neighbor2);
+	depth_neighbor3 = min(depth, depth_neighbor3);
+	depth_neighbor4 = min(depth, depth_neighbor4);
 	
+	float levels = 2.0;
 	float diff = max(sqrt(depth)-sqrt(depth_neighbor1) + sqrt(depth)-sqrt(depth_neighbor2), sqrt(depth)-sqrt(depth_neighbor3) + sqrt(depth)-sqrt(depth_neighbor4));
+	//float diff = max(sqrt(behind_depth)-sqrt(depth_neighbor1) + sqrt(behind_depth)-sqrt(depth_neighbor2), sqrt(behind_depth)-sqrt(depth_neighbor3) + sqrt(behind_depth)-sqrt(depth_neighbor4));
+	//float diff = max(depth-depth_neighbor1 + depth-depth_neighbor2, depth-depth_neighbor3 + depth-depth_neighbor4);
+	float line_strength = round(clamp(diff * outline_depth_multiplier, 0.0, 1.0) * levels) / levels * outline_transparency;
 	
-	float line_strength = round(clamp(diff * 16., 0.0, 1.0) * 2.0);
-	ALBEDO = mix(ALBEDO, vec3(0.), clamp(line_strength, 0.,1.));
+	//	if (depth < min(min(depth_neighbor1, depth_neighbor2),min(depth_neighbor3, depth_neighbor4))) {
+	//		line_strength = 0.;
+	//	}
+	
+	ALBEDO = mix(ALBEDO, outline_color.rgb, clamp(line_strength, 0.,1.));
+	//ALBEDO = vec3(depth / 100.);
 	
 }
 

@@ -188,6 +188,7 @@ func update_aim_target(view_range):
 	# aim_direction = target_angle
 
 
+# TODO : improve / streamline ? the way stuns are handled for entities
 func stun(dur = 2):
 	$StateMachine/Stunned.stun_duration = dur
 	$StateMachine.transition_to("Stunned")
@@ -195,8 +196,16 @@ func stun(dur = 2):
 
 func _on_hurtbox_area_entered(hitbox : Hitbox):
 	if hitbox.caster != self:
+		if "contact" in hitbox.get_parent():
+			hitbox.get_parent().contact()
+		if hitbox.is_vessel:
+			return
 		take_damage(hitbox.damage)
+		var impact_angle = hitbox.global_position.direction_to(global_position)
+		velocity = Vector3(hitbox.push_force_horizontal * impact_angle.x, hitbox.push_force_vertical, hitbox.push_force_horizontal * impact_angle.z)
+		
+		stun(0.4)
 
 
 func _on_entity_died():
-	die()
+	queue_free()

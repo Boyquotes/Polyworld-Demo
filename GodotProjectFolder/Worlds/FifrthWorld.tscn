@@ -1,14 +1,12 @@
-[gd_scene load_steps=42 format=3 uid="uid://wjt3h1jx3cox"]
+[gd_scene load_steps=39 format=3 uid="uid://wjt3h1jx3cox"]
 
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="1_nrt0u"]
 [ext_resource type="PackedScene" uid="uid://d33ed6hypa5jv" path="res://Models/Tree.tscn" id="3_t4s8s"]
 [ext_resource type="Script" path="res://Areas/KillPlane.gd" id="4_tu8sc"]
-[ext_resource type="PackedScene" path="res://Camera/CameraRegion.tscn" id="5_8kh77"]
 [ext_resource type="Texture2D" uid="uid://dr887bne2krjb" path="res://Textures/grass tuft.png" id="6_fkiqy"]
 [ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="6_n20kc"]
-[ext_resource type="Script" path="res://Camera/CameraArm.gd" id="7_nt27p"]
-[ext_resource type="PackedScene" uid="uid://g8pf07v1tffl" path="res://UI/PocketCamera.tscn" id="8_hxeo7"]
-[ext_resource type="PackedScene" uid="uid://c4ddxebb6ojgk" path="res://Entity/Player/Player.tscn" id="10_c4snp"]
+[ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="6_xypca"]
+[ext_resource type="PackedScene" uid="uid://cc38w7ybkc85b" path="res://Entity/Player/Player.tscn" id="10_c4snp"]
 [ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="12_m37m8"]
 [ext_resource type="Texture2D" uid="uid://b4mav36hcn3cb" path="res://Textures/atari-8-bit-series-gtia-1x.png" id="13_5mtap"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://UI/TextArrowIcon.png" id="14_c28o3"]
@@ -48,9 +46,6 @@ uv1_world_triplanar = true
 texture_filter = 0
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qphd1"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_h1lg7"]
-size = Vector3(16.48, 2.229, 15.0914)
 
 [sub_resource type="Shader" id="Shader_g1mdt"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.0.beta7's StandardMaterial3D.
@@ -234,6 +229,7 @@ radius = 0.7
 height = 3.0
 
 [node name="FourthWorld" type="Node3D"]
+process_mode = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.556296, -0.719654, 0.415492, 0, 0.5, 0.866025, -0.830984, -0.481766, 0.278148, 0, 0, 0)
@@ -278,7 +274,7 @@ transform = Transform3D(0.535989, 0, 0.844225, 0, 1, 0, -0.844225, 0, 0.535989, 
 transform = Transform3D(0.710505, 0, -0.703692, 0, 1, 0, 0.703692, 0, 0.710505, 6.2421, -2.31798, -6.10853)
 
 [node name="Tree4" parent="Environment/NavigationRegion3D" instance=ExtResource("3_t4s8s")]
-transform = Transform3D(0.999976, 0, 0.00689399, 0, 1, 0, -0.00689399, 0, 0.999976, -0.184472, -2.31798, -4.63487)
+transform = Transform3D(-0.397901, 0, -0.917428, 0, 1, 0, 0.917428, 0, -0.397901, -0.184472, -2.31798, -4.63487)
 
 [node name="KillPlane" type="Area3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -37.5048, 8.23268)
@@ -288,21 +284,6 @@ script = ExtResource("4_tu8sc")
 [node name="CollisionShape3d" type="CollisionShape3D" parent="Environment/KillPlane"]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_qphd1")
-
-[node name="CameraRegion" parent="Environment" instance=ExtResource("5_8kh77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.65898, -5.64776, -0.401953)
-x_rotation = -0.262
-y_rotation = 1.571
-
-[node name="CollisionShape3D" parent="Environment/CameraRegion" index="0"]
-shape = SubResource("BoxShape3D_h1lg7")
-
-[node name="CameraRegion2" parent="Environment" instance=ExtResource("5_8kh77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.65898, -5.7089, 16.6332)
-
-[node name="CollisionShape3D" parent="Environment/CameraRegion2" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0305676, -0.657202)
-shape = SubResource("BoxShape3D_h1lg7")
 
 [node name="Grass" type="MultiMeshInstance3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01334, -1.97, -2.5)
@@ -328,19 +309,8 @@ file = "res://Worlds/FourthWorld.tscn"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.459179)
 shape = SubResource("BoxShape3D_kidb7")
 
-[node name="CameraArm" type="Node3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(0.94049, 0.116226, -0.319328, 0, 0.939692, 0.34202, 0.339821, -0.321666, 0.883771, -3.6255, -2, 15.9946)
-script = ExtResource("7_nt27p")
+[node name="CameraArm" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_xypca")]
 target = NodePath("../Player")
-
-[node name="Camera3d" type="Camera3D" parent="CameraArm"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
-fov = 20.0
-far = 1000.0
-
-[node name="PocketCamera" parent="CameraArm" instance=ExtResource("8_hxeo7")]
-offset_right = 484.0
-offset_bottom = -109.0
 
 [node name="Player" parent="." instance=ExtResource("10_c4snp")]
 transform = Transform3D(-4.4177e-08, 0, 1, 0, 1, 0, -1, 0, -4.4177e-08, -4.36129, -0.816236, -2.43025)
@@ -384,6 +354,4 @@ transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 
 [connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]
 
-[editable path="Environment/CameraRegion"]
-[editable path="Environment/CameraRegion2"]
 [editable path="Environment/TransitionArea"]

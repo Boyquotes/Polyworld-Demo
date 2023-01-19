@@ -3,14 +3,47 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	var scene = load("res://Worlds/FourthWorld.tscn").instantiate()
+	add_child(scene)
 
 
 # Called every frame. '_delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("reset"):
 		get_tree().reload_current_scene()
+	
+	
+	# MENU RELATED STUFF
+	
+	if Input.is_action_just_pressed("menu"):
+		get_tree().paused = !get_tree().paused
+	
+	var player = get_child(1).get_node("Player")
+	if is_instance_valid(player):
+		$UILayer/Menu.position = round(get_viewport().get_camera_3d().unproject_position(player.global_position) + Vector2(64,-32))
+	
+	# Menu stuff
+	if get_tree().paused:
+		$UILayer/Menu.visible = true
+		if Input.is_action_just_pressed("move_right"):
+			if $UILayer/Menu/LeftPanel.visible:
+				$UILayer/Menu/LeftPanel.visible = false
+			else:
+				$UILayer/Menu/RightPanel.visible = true
+				$UILayer/Menu/RightPanel/ItemList.grab_focus()
+		if Input.is_action_just_pressed("move_left"):
+			if $UILayer/Menu/RightPanel.visible:
+				$UILayer/Menu/RightPanel.visible = false
+			else:
+				$UILayer/Menu/LeftPanel.visible = true
+				$UILayer/Menu/LeftPanel/ItemList.grab_focus()
+
+	else:
+		pass
+		$UILayer/Menu.visible = false
+		$UILayer/Menu/LeftPanel.visible = false
+		$UILayer/Menu/RightPanel.visible = false
 
 
 func change_scene(scene_name : String):
