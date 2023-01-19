@@ -44,7 +44,6 @@ func physics_update(_delta):
 			enemy.face_toward(enemy.player.global_position)
 	
 	enemy.update_facing(_delta)
-	
 
 
 func exit():

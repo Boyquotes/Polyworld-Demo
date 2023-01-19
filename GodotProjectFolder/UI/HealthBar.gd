@@ -8,7 +8,7 @@ extends ProgressBar
 var health : int:
 	set(val):
 		value = val
-		diff_time = 50
+		diff_time = 0.5
 
 var max_health : int:
 	set(val):
@@ -21,10 +21,10 @@ var diff_time = 0
 # Called every frame. '_delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
-	diff_time -= 1
+	diff_time -= _delta
 	if diff_time <= 0:
 		diff_time = 0
-		$DifferenceBar.value = move_toward($DifferenceBar.value, value, 1)
+		$DifferenceBar.value = move_toward($DifferenceBar.value, value, 50 * _delta)
 		
 	
 	# Position the health bar
