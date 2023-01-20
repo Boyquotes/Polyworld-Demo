@@ -288,10 +288,6 @@ render_priority = 0
 shader = ExtResource("6_ajnyu")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/point_size = 32.0
-shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
@@ -335,10 +331,6 @@ render_priority = 0
 shader = ExtResource("6_ajnyu")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/point_size = 8.0
-shader_parameter/roughness = null
-shader_parameter/metallic_texture_channel = null
-shader_parameter/specular = null
-shader_parameter/metallic = null
 shader_parameter/uv1_scale = null
 shader_parameter/uv1_offset = null
 shader_parameter/uv2_scale = null
@@ -1840,7 +1832,7 @@ transform = Transform3D(1, -1.77636e-14, -1.42109e-13, -1.77636e-14, 1, 0, 0, 0,
 visible = false
 mesh = SubResource("PointMesh_td26v")
 
-[node name="Head" type="MeshInstance3D" parent="Armature/Skeleton3D/HeadAttachment"]
+[node name="s" type="MeshInstance3D" parent="Armature/Skeleton3D/HeadAttachment"]
 process_mode = 3
 transform = Transform3D(0.984581, -0.1746, 0.0106824, 0.162189, 0.934056, 0.318162, -0.0655292, -0.311522, 0.947975, 0.0145582, 1.16127, 0.172114)
 mesh = SubResource("PointMesh_fm5nm")

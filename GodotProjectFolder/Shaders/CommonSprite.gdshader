@@ -1,12 +1,9 @@
 shader_type spatial;
-render_mode cull_back, blend_mix, depth_draw_always, unshaded;
+render_mode blend_mix, depth_draw_always, cull_back, diffuse_lambert, specular_schlick_ggx, vertex_lighting;
 
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color,filter_nearest,repeat_disable;
 uniform float point_size : hint_range(0,128);
-uniform float roughness : hint_range(0,1);
-uniform float specular;
-uniform float metallic;
 uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;
 uniform vec3 uv2_scale;
@@ -21,8 +18,8 @@ void vertex() {
 	POINT_SIZE=point_size;
 	
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
-	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
-	MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+//	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
+//	MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
 	
 	// Perspective scale clamping (to reduce distortion from upscaling)
 	float s = -(MODELVIEW_MATRIX)[3].z / PROJECTION_MATRIX[0][0];
@@ -51,10 +48,7 @@ void fragment() {
 	vec2 base_uv = UV;
 	vec4 albedo_tex = texture(texture_albedo,POINT_COORD);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	METALLIC = metallic;
 	NORMAL = -CAMERA_DIRECTION_WORLD;
-	ROUGHNESS = roughness;
-	SPECULAR = specular;
 	ALPHA *= albedo.a * albedo_tex.a;
 	if (ALPHA != 1.) {
 		discard;
@@ -81,7 +75,6 @@ void fragment() {
 	float line_strength = round(clamp(diff * outline_depth_multiplier, 0.0, 1.0) * levels) / levels * outline_transparency;
 	
 	ALBEDO = mix(ALBEDO, outline_color.rgb, clamp(line_strength, 0.,1.));
-	//ALBEDO = vec3(depth / 200.);
 	
 }
 

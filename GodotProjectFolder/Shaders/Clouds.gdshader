@@ -18,8 +18,7 @@ void vertex() {
 
 
 float get_linear_depth(vec2 screen_uv, mat4 inv_proj_matrix, float depth) {
-	vec3 ndc = vec3(screen_uv, depth) * 2.0 - 1.0;
-	vec4 view = inv_proj_matrix * vec4(ndc, 1.0);
+	vec4 view = inv_proj_matrix * vec4(screen_uv * 2. - 1., depth, 1.0);
 	view.xyz /= view.w;
 	return -view.z;
 }
@@ -53,6 +52,5 @@ void fragment() {
 	float line_strength = round(clamp(diff * outline_depth_multiplier, 0.0, 1.0) * levels) / levels * outline_transparency;
 	
 	ALBEDO = mix(ALBEDO, outline_color.rgb, clamp(line_strength, 0.,1.));
-	//ALBEDO = vec3(depth / 200.);
 	
 }

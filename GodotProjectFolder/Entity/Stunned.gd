@@ -3,7 +3,7 @@ extends State
 
 var entity : Entity
 
-var stun_duration = 100
+var stun_duration = 0.75
 var stun_counter = stun_duration
 
 # Called when the node enters the scene tree for the first time.
@@ -23,7 +23,7 @@ func enter():
 
 
 func update(_delta):
-	stun_counter -= 1
+	stun_counter -= _delta
 	if stun_counter <= 0:
 		state_machine.transition_to("Detected")
 
@@ -32,7 +32,7 @@ func physics_update(_delta):
 	entity.velocity.y -= entity.GRAVITY * _delta
 	var hor_velocity = Vector2(entity.velocity.x, entity.velocity.z)
 	if entity.is_on_floor():
-		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, 0.25)
+		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, 20 * _delta)
 	entity.velocity.x = hor_velocity.x
 	entity.velocity.z = hor_velocity.y
 	entity.move_and_slide()
