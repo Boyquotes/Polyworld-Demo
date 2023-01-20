@@ -1,16 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://cc38w7ybkc85b"]
+[gd_scene load_steps=18 format=3 uid="uid://cc38w7ybkc85b"]
 
 [ext_resource type="Script" path="res://Entity/Player/Player.gd" id="1_qmea8"]
 [ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_dti1d"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateIdle.gd" id="3_d1ynk"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateRun.gd" id="4_puic8"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateInAir.gd" id="5_ykyoh"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateClimb.gd" id="6_qc5k3"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack1.gd" id="7_51isg"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack2.gd" id="8_aa0be"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack3.gd" id="9_bhvvh"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack4.gd" id="10_35iqv"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner.gd" id="11_51j4e"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrounded.gd" id="11_fhkm0"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateStunned.gd" id="12_f1m8k"]
 [ext_resource type="PackedScene" uid="uid://mkpspgj6byif" path="res://Models/CharacterModel.tscn" id="12_rnjkj"]
 [ext_resource type="PackedScene" path="res://UI/Inventory.tscn" id="13_2ihec"]
@@ -34,19 +31,19 @@ move_speed = 15.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("2_dti1d")
-current_state = NodePath("Idle")
+current_state = NodePath("Grounded")
 
-[node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("3_d1ynk")
-
-[node name="Run" type="Node" parent="StateMachine"]
-script = ExtResource("4_puic8")
+[node name="Grounded" type="Node" parent="StateMachine"]
+script = ExtResource("11_fhkm0")
 
 [node name="InAir" type="Node" parent="StateMachine"]
 script = ExtResource("5_ykyoh")
 
-[node name="Climb" type="Node" parent="StateMachine"]
-script = ExtResource("6_qc5k3")
+[node name="Stunned" type="Node" parent="StateMachine"]
+script = ExtResource("12_f1m8k")
+
+[node name="Partner" type="Node" parent="StateMachine"]
+script = ExtResource("11_51j4e")
 
 [node name="Attack1" type="Node" parent="StateMachine"]
 script = ExtResource("7_51isg")
@@ -56,15 +53,6 @@ script = ExtResource("8_aa0be")
 
 [node name="Attack3" type="Node" parent="StateMachine"]
 script = ExtResource("9_bhvvh")
-
-[node name="Attack4" type="Node" parent="StateMachine"]
-script = ExtResource("10_35iqv")
-
-[node name="Partner" type="Node" parent="StateMachine"]
-script = ExtResource("11_51j4e")
-
-[node name="Stunned" type="Node" parent="StateMachine"]
-script = ExtResource("12_f1m8k")
 
 [node name="Model" parent="." instance=ExtResource("12_rnjkj")]
 transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)

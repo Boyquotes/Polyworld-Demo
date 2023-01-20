@@ -26,7 +26,7 @@ func enter():
 	player.velocity = player.aim_direction * 60
 	
 	await get_tree().create_timer(0.2).timeout
-	state_machine.transition_to("Idle")
+	state_machine.transition_to("Grounded")
 
 
 func update(_delta):

@@ -126,6 +126,7 @@ func _process(_delta):
 
 
 func _physics_process(_delta):
+	
 	# Push rigidbodies out of the way
 #	for i in get_slide_collision_count():
 #		var col = get_slide_collision(i)
@@ -152,6 +153,8 @@ func update_aim_target(view_range):
 	
 	# Loop through hurtboxes
 	for n in get_tree().get_nodes_in_group("hurtboxes"):
+		
+		# Don't select your own hurtbox
 		if n != $Hurtbox:
 			
 			# Store information for current node in loop
@@ -172,9 +175,7 @@ func update_aim_target(view_range):
 				var result := space_state.intersect_ray(target_lock_param)
 				
 				if result:
-					# Collision at ray point
 					pass
-					
 				else:
 					# Current node in loop is a valid target
 					var current_dist = ppos.distance_to(npos)
@@ -186,7 +187,6 @@ func update_aim_target(view_range):
 						_target_angle = ppos.direction_to(npos)
 			
 	aim_target = target_node
-	# aim_direction = target_angle
 
 
 # TODO : improve / streamline ? the way stuns are handled for entities

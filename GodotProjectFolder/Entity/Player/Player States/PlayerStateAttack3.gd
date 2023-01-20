@@ -48,7 +48,7 @@ func physics_update(_delta):
 	
 	if attack_length <= 5:
 		if player.is_on_floor():
-			state_machine.transition_to("Idle")
+			state_machine.transition_to("Grounded")
 		else:
 			state_machine.transition_to("InAir")
 
