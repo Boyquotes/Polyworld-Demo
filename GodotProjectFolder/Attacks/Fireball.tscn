@@ -22,7 +22,6 @@ radius = 0.6
 [node name="Fireball" type="StaticBody3D"]
 collision_layer = 2
 script = ExtResource("1_hlqfe")
-speed = 0.4
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_cm847")

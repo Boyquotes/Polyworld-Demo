@@ -4,6 +4,7 @@ extends Node
 
 # CHANGE THIS TO USE AN ITEM DATATYPE INSTEAD OF STRING!!!
 @export var iv : Array[String]
+@export var gold := 0
 
 
 func _ready():

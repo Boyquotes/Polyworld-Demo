@@ -3,14 +3,11 @@ extends Node3D
 
 @export var speed = 0.5
 
-
 var caster
 
-
-var velocity = Vector3.ZERO
-var direction = Vector3.ZERO
-
-var contacted = false
+var velocity := Vector3.ZERO
+var direction := Vector3.ZERO
+var contacted := false
 
 
 # Called when the node enters the scene tree for the first time.

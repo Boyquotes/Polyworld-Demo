@@ -1,19 +1,20 @@
 extends StaticBody3D
 
 
-@export var speed = 0.0
+const GRAVITY = 1.0
 
+@export var speed = 0.4
 
 var caster
-
-
-const GRAVITY = 1.0
 
 var direction := Vector3.ZERO
 var velocity := Vector3.ZERO
 var contacted := false
 
 
+# TODO : make framerate independent
+
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	$Hitbox.caster = self.caster
 	global_position = caster.global_position
@@ -21,6 +22,8 @@ func _ready():
 	
 	velocity = direction * speed
 
+
+# Called every physics frame. '_delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
 	
 	velocity.y -= GRAVITY * _delta
@@ -31,11 +34,6 @@ func _physics_process(_delta):
 		
 		var collision_angle = collide.get_angle()
 		if collision_angle < PI/4: # floor collision
-			
-			#direction = direction.slerp(Vector2(best_targ.x, best_targ.y), 0.8)
-			# direction = best_targ
-			
-			#velocity = Vector3(direction.x, velocity.y, direction.y) * speed
 			
 			var hor_velocity = Vector3(direction.x, 0, direction.z).normalized() * speed
 			hor_velocity = hor_velocity.slide(collide.get_normal())
@@ -51,21 +49,23 @@ func _physics_process(_delta):
 			contact()
 			# or bounce (OPTIONAL)
 			var hor_velocity = Vector3(velocity.x, 0, velocity.z).normalized() * speed
-			hor_velocity = hor_velocity.bounce(Vector3(collide.get_normal().x, 0, collide.get_normal().z).normalized())
-			velocity.x = hor_velocity.x
-			velocity.y = 0
-			velocity.z = hor_velocity.z
+			velocity = hor_velocity.bounce(Vector3(collide.get_normal().x, 0, collide.get_normal().z).normalized())
 
 
+# Called when the attack times out.
 func _on_timer_timeout():
 	contact()
 
 
+# Response to making contact.
 func contact():
+	
 	contacted = true
+	
 	var explosion = load("res://Attacks/Explosion.tscn").instantiate()
 	explosion.global_position = global_position
 	explosion.caster = caster
 	get_tree().root.add_child(explosion)
+	
 	queue_free()
 

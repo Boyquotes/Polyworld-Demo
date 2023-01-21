@@ -3,6 +3,11 @@ extends State
 
 var player : Player
 
+var state_name = "Grabber"
+
+
+# TODO probably relegate the mana cost information to the Attack resource associated with this
+var mana_cost := 5
 var stored_velocity : Vector3
 
 
@@ -17,6 +22,14 @@ func enter():
 	# Store initial velocity
 	stored_velocity = player.velocity
 	
+	# Attempt to use mana, and return if there isn't enough
+	if !player.decrease_mana(mana_cost):
+		if player.is_on_floor():
+			state_machine.transition_to("Grounded")
+		else:
+			state_machine.transition_to("InAir")
+		return
+	
 	# Rotate toward target
 	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
 	
@@ -27,11 +40,11 @@ func enter():
 	await get_tree().create_timer(0.2).timeout
 	
 	# Spawn attack
-	var ball = load("res://Attacks/Fireball.tscn").instantiate()
-	ball.caster = player
-	ball.direction = player.aim_direction
-	get_tree().root.add_child(ball)
-	ball.global_position = player.global_position
+	var grabber = load("res://Attacks/Grabber.tscn").instantiate()
+	grabber.caster = player
+	grabber.direction = player.aim_direction
+	get_tree().root.add_child(grabber)
+	grabber.global_position = player.global_position
 	
 	# Wait a second
 	await get_tree().create_timer(0.05).timeout

@@ -5,19 +5,34 @@ extends Entity
 const JUMP_BUFFER := 0.075
 const COYOTE_TIME := 0.075
 
-@export var climb_speed = 5.0
+@export var max_mana := 40
 
-var input_dir := Vector2.ZERO
+var mana := max_mana:
+	set(val):
+		val = clamp(val, 0, max_mana)
+		mana = val
+
+# Input handling
+var input_dir := Vector2.ZERO:
+	set(vec):
+		if vec == Vector2.ZERO:
+			input_dir = Vector2.ZERO
+			relative_input_dir = Vector2.ZERO
+		else:
+			input_dir = vec.normalized()
+			relative_input_dir = vec.rotated(-cam.global_rotation.y).normalized()
 var relative_input_dir := Vector2.ZERO
+var input_enabled = true
 
+# TODO : possibly make this an argument that can be passed thru the state machine ?
 var can_hold_jump = false
 
+# Aim and targeting
 var aim_target : Node3D
-var aim_direction : Vector3
-
-var target_locking = false
+var aim_direction := Vector3(facing_dir_target.x, 0, facing_dir_target.y)
+var target_locking := false
 var target_lock_range = 25
-
+var target_lock_param := PhysicsRayQueryParameters3D.new()
 var aim_icon_mover = 0:
 	set(amt):
 		amt = clamp(amt, 0, 1)
@@ -28,13 +43,19 @@ var aim_icon_mover = 0:
 		aim_icon_mover = amt
 var old_aim_icon_pos = Vector3.ZERO
 
+# Immunity
+var is_immune := false:
+	set(val):
+		if val:
+			$Hurtbox.set_deferred("Monitoring", false)
+		else:
+			$Hurtbox.set_deferred("Monitoring", true)
+
 
 @onready var cam = get_viewport().get_camera_3d() as Camera3D
 @onready var anim = $Model/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
-@onready var aim_icon = get_parent().get_node("AimIcon") as Node3D
-
-@onready var target_lock_param := PhysicsRayQueryParameters3D.new()
+@onready var aim_icon = $PositionBreak/AimIcon as Node3D
 
 var partner_activation_position = Vector3.ZERO
 var partner_activation_time = 0.0
@@ -45,6 +66,11 @@ func _ready():
 
 
 func _process(_delta):
+	
+	# Handle UI labels
+	$GoldLabel.text = "$" + str($Inventory.gold)
+	$PrimaryLabel.text = $StateMachine/Primary.state_name
+	$SecondaryLabel.text = $StateMachine/Secondary.state_name
 	
 	# Handle partner activation
 	var partner = get_parent().get_node("Partner")
@@ -61,12 +87,11 @@ func _process(_delta):
 		partner.rotation.y = rotation.y
 	else:
 		partner.is_being_called = false
-		partner_activation_time = 0.0
+		partner_activation_time = 0.0 
 	
 	# Get the input direction
-	input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
-	# Get the input direction relative to the camera
-	relative_input_dir = input_dir.rotated(-cam.global_rotation.y).normalized()
+	if input_enabled:
+		input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
 	
 	# Handle interaction
 	if Input.is_action_just_pressed("interact"):
@@ -189,6 +214,24 @@ func update_aim_target(view_range):
 	aim_target = target_node
 
 
+# Returns true if there is enough mana, false if not
+func decrease_mana(amt:=0) -> bool:
+	
+	# Check if there is enough mana, and if so, subtract
+	if mana - amt < 0:
+		return false
+	
+	mana -= amt
+	
+	# Update mana bar
+	var manabar = get_node("ManaBar")
+	if manabar:
+		manabar.max_health = max_mana
+		manabar.health = mana
+	
+	return true
+
+
 # TODO : improve / streamline ? the way stuns are handled for entities
 func stun(dur = 2):
 	$StateMachine/Stunned.stun_duration = dur
@@ -199,14 +242,25 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 	if hitbox.caster != self:
 		if "contact" in hitbox.get_parent():
 			hitbox.get_parent().contact()
+			
 		if hitbox.is_vessel:
 			return
+			
 		take_damage(hitbox.damage)
+		
 		var impact_angle = hitbox.global_position.direction_to(global_position)
+		if "direction" in hitbox.get_parent():
+			impact_angle = hitbox.get_parent().direction
 		velocity = Vector3(hitbox.push_force_horizontal * impact_angle.x, hitbox.push_force_vertical, hitbox.push_force_horizontal * impact_angle.z)
 		
 		stun(0.4)
+		
+		if is_instance_valid(hitbox.caster):
+			var caster_iv = hitbox.caster.get_node("Inventory") as Inventory
+			if caster_iv:
+				caster_iv.gold += 10
 
 
+# TODO : pass through who killed the entity as an argument in the signal
 func _on_entity_died():
 	queue_free()

@@ -1,9 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://j0gmob3ayhaj"]
+[gd_scene load_steps=6 format=3 uid="uid://j0gmob3ayhaj"]
 
 [ext_resource type="Script" path="res://Areas/TransitionArea.gd" id="1_rhuls"]
+[ext_resource type="Texture2D" uid="uid://ba5udvpqmc8xq" path="res://Textures/DebugArrow.png" id="2_18enw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_45lns"]
-size = Vector3(1, 2.83134, 3.4559)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8bqin"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("2_18enw")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_23msc"]
+material = SubResource("StandardMaterial3D_8bqin")
 
 [node name="TransitionArea" type="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.208187, 0)
@@ -13,5 +25,10 @@ file = "res://SecondWorld.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_45lns")
+
+[node name="Arrow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+visible = false
+mesh = SubResource("PlaneMesh_23msc")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

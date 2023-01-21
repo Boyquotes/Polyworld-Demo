@@ -11,7 +11,8 @@ func _ready():
 
 
 func enter():
-	pass
+	player.get_node("Model").position.y += 0.75
+	player.get_node("Model").rotation.x = PI/5
 
 
 func update(_delta):
@@ -20,7 +21,7 @@ func update(_delta):
 
 func physics_update(_delta):
 	
-	player.anim.play("idle") #riding animation
+	player.anim.play("frontflip") #riding animation
 	
 	var vert_velocity = player.velocity.y
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
@@ -31,7 +32,7 @@ func physics_update(_delta):
 	#player.partner.get_node("Hitbox").set_deferred("monitorable", true)
 	
 	# If there is input, accelerate towards run speed
-	if player.input_dir:
+	if player.relative_input_dir:
 		# Accelerate towards run speed
 		# PUT THE ACTUAL SPEED VALUES AND STATS AND ALL OF THAT INSIDE THE PARTNER
 		hor_velocity = hor_velocity.move_toward(
@@ -71,5 +72,7 @@ func physics_update(_delta):
 
 
 func exit():
-	pass
+	player.get_node("Model").position.y -= 0.75
+	player.get_node("Model").rotation.x = 0
+	#player.partner
 

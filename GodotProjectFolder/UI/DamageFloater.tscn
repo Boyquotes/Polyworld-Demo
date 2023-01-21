@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://sf21v4mix5xv"]
 
 [ext_resource type="FontFile" uid="uid://baqfhf4mhve20" path="res://UI/Fonts/verysmall.ttf" id="1_35tva"]
 [ext_resource type="Script" path="res://UI/DamageFloater.gd" id="1_mht7i"]

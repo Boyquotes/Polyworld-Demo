@@ -1,17 +1,18 @@
-[gd_scene load_steps=18 format=3 uid="uid://cc38w7ybkc85b"]
+[gd_scene load_steps=22 format=3 uid="uid://crnlfdu8xctcu"]
 
 [ext_resource type="Script" path="res://Entity/Player/Player.gd" id="1_qmea8"]
 [ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_dti1d"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateInAir.gd" id="5_ykyoh"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack1.gd" id="7_51isg"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack2.gd" id="8_aa0be"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateAttack3.gd" id="9_bhvvh"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateRestore.gd" id="7_shl0a"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrabber.gd" id="8_2we1h"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner.gd" id="11_51j4e"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrounded.gd" id="11_fhkm0"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateStunned.gd" id="12_f1m8k"]
 [ext_resource type="PackedScene" uid="uid://mkpspgj6byif" path="res://Models/CharacterModel.tscn" id="12_rnjkj"]
-[ext_resource type="PackedScene" path="res://UI/Inventory.tscn" id="13_2ihec"]
+[ext_resource type="FontFile" uid="uid://cacnxhnb6wexr" path="res://UI/Fonts/ApplePoke2.ttf" id="13_nxc3v"]
+[ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://UI/TextArrowIcon.png" id="13_xeyd0"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="14_iklt7"]
+[ext_resource type="Script" path="res://UI/Inventory.gd" id="14_msqyj"]
 [ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="15_prtxv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yk3vu"]
@@ -23,6 +24,21 @@ radius = 2.02914
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mv10o"]
 bg_color = Color(0, 0.572549, 0.145098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vo5c"]
+bg_color = Color(0, 0.156863, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g01dm"]
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = ExtResource("13_xeyd0")
+texture_filter = 0
+use_point_size = true
+point_size = 16.0
+
+[sub_resource type="PointMesh" id="PointMesh_jujnn"]
+material = SubResource("StandardMaterial3D_g01dm")
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -45,23 +61,17 @@ script = ExtResource("12_f1m8k")
 [node name="Partner" type="Node" parent="StateMachine"]
 script = ExtResource("11_51j4e")
 
-[node name="Attack1" type="Node" parent="StateMachine"]
-script = ExtResource("7_51isg")
+[node name="Primary" type="Node" parent="StateMachine"]
+script = ExtResource("7_shl0a")
 
-[node name="Attack2" type="Node" parent="StateMachine"]
-script = ExtResource("8_aa0be")
-
-[node name="Attack3" type="Node" parent="StateMachine"]
-script = ExtResource("9_bhvvh")
+[node name="Secondary" type="Node" parent="StateMachine"]
+script = ExtResource("8_2we1h")
 
 [node name="Model" parent="." instance=ExtResource("12_rnjkj")]
 transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)
 
 [node name="CollisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_yk3vu")
-
-[node name="Inventory" parent="." instance=ExtResource("13_2ihec")]
-iv = ["burning fist", "fireball", "bomb"]
 
 [node name="Hurtbox" parent="." instance=ExtResource("14_iklt7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15227, 0)
@@ -91,6 +101,80 @@ offset_right = 168.0
 offset_bottom = 24.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_mv10o")
 is_static = true
+
+[node name="ManaBar" parent="." instance=ExtResource("15_prtxv")]
+offset_left = 8.0
+offset_top = 28.0
+offset_right = 168.0
+offset_bottom = 36.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_5vo5c")
+is_static = true
+
+[node name="GoldLabel" type="Label" parent="."]
+texture_filter = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -57.0
+offset_top = 11.0
+offset_right = -17.0
+offset_bottom = 34.0
+grow_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_nxc3v")
+text = "$999"
+horizontal_alignment = 2
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("14_msqyj")
+
+[node name="PositionBreak" type="Node" parent="."]
+
+[node name="AimIcon" type="Node3D" parent="PositionBreak"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PositionBreak/AimIcon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("PointMesh_jujnn")
+skeleton = NodePath("../../../..")
+
+[node name="PrimaryLabel" type="Label" parent="."]
+texture_filter = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -49.0
+offset_right = -14.0
+offset_bottom = -26.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_nxc3v")
+text = "Primary"
+horizontal_alignment = 2
+
+[node name="SecondaryLabel" type="Label" parent="."]
+texture_filter = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -101.0
+offset_top = -28.0
+offset_right = -14.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_nxc3v")
+text = "Secondary"
+horizontal_alignment = 2
 
 [connection signal="entity_died" from="." to="." method="_on_entity_died"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

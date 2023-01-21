@@ -32,6 +32,3 @@ func _process(_delta):
 		position = get_viewport().get_camera_3d().unproject_position(get_parent().global_position + Vector3.UP * 1.75)
 		position -= size/2
 		
-		# For pocket camera healthbar functionality
-		#visible = !get_viewport().get_camera_3d().is_position_behind(get_parent().global_position)
-		

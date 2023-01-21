@@ -22,16 +22,12 @@ var health := max_health:
 			val = 0
 			emit_signal("entity_died")
 		health = val
-	get:
-		return health
 
 var facing_dir := Vector2.DOWN
 @onready var facing_dir_target := Vector2(basis.z.x, basis.z.z):
 	set(val):
 		if val != Vector2.ZERO:
 			facing_dir_target = val.normalized()
-	get:
-		return facing_dir_target
 
 
 func face_toward(dest):
@@ -46,7 +42,9 @@ func update_facing(_delta):
 	rotation.y = -facing_dir.angle() + PI/2
 
 
+# TODO : possibly add stun as another parameter, 0 would mean there is no stun
 func take_damage(dmg:=0):
+	
 	# Instantiate damage floater
 	var floater = load("res://UI/DamageFloater.tscn").instantiate()
 	floater.text = str(dmg)
@@ -55,6 +53,25 @@ func take_damage(dmg:=0):
 	
 	# Decrease health
 	health -= dmg
+	
+	# Update health bar
+	var healthbar = get_node("HealthBar")
+	if healthbar:
+		healthbar.max_health = max_health
+		healthbar.health = health
+
+
+func heal(amt:=0):
+	
+	# Instantiate damage floater
+	var floater = load("res://UI/DamageFloater.tscn").instantiate()
+	floater.text = str(amt)
+	floater.label_settings.font_color = Color.GREEN
+	floater.hit_position = global_position
+	get_tree().root.get_child(0).add_child(floater)
+	
+	# Decrease health
+	health += amt
 	
 	# Update health bar
 	var healthbar = get_node("HealthBar")

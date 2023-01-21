@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d2ve7qxs5325o"]
+[gd_scene load_steps=18 format=3 uid="uid://d2ve7qxs5325o"]
 
 [ext_resource type="Script" path="res://Entity/Enemy/PathfindingEnemy.gd" id="1_7i3iw"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="2_bwnuo"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Entity/Stunned.gd" id="5_6fvtl"]
 [ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateAlerted.gd" id="6_dufk3"]
 [ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="8_4ksgh"]
+[ext_resource type="Script" path="res://UI/Inventory.gd" id="9_jwflf"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_v5sbh"]
 
@@ -91,6 +92,9 @@ shape = SubResource("CapsuleShape3D_ulo86")
 one_shot = true
 
 [node name="HealthBar" parent="." instance=ExtResource("8_4ksgh")]
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("9_jwflf")
 
 [connection signal="entity_died" from="." to="." method="_on_entity_died"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

@@ -56,7 +56,7 @@ func physics_update(_delta):
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
 	
 	# Adjust velocity if there is movement input
-	if player.input_dir:
+	if player.relative_input_dir:
 		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.air_accel * _delta)
 		player.velocity.x = hor_velocity.x
 		player.velocity.z = hor_velocity.y
@@ -90,15 +90,14 @@ func physics_update(_delta):
 			state_machine.transition_to("Grounded")
 			return
 	
-	# Handle state transitions
+	# Handle attacking
 	if Input.is_action_just_pressed("primary"):
-		state_machine.transition_to("Attack1")
+		#player.attempt_attack("Primary")
+		state_machine.transition_to("Primary")
 		return
 	if Input.is_action_just_pressed("secondary"):
-		state_machine.transition_to("Attack2")
-		return
-	if Input.is_action_just_pressed("tertiary"):
-		state_machine.transition_to("Attack3")
+		#player.attempt_attack("Secondary")
+		state_machine.transition_to("Secondary")
 		return
 
 

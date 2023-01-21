@@ -28,7 +28,7 @@ void fragment() {
 	ALBEDO = albedo.rgb;
 	ALPHA = round(texture(texture_albedo, UV + vec2(TIME * 0.01) + texture(texture_albedo2, UV - vec2(TIME * 0.005)).r).r * 10.) / 10.;
 	
-	ALPHA *= (1. - distance(UV, vec2(0.5)) * 2.) * 2.;
+	ALPHA *= (1. - distance(UV, vec2(0.5)) * 2.) * 4.;
 	ALPHA = clamp(ALPHA, 0., 1.);
 	
 	//outline
