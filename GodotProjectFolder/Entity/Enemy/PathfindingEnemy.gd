@@ -42,6 +42,3 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 		
 		$StateMachine.transition_to("Stunned")
 		
-		var caster_iv = hitbox.caster.get_node("Inventory") as Inventory
-		if caster_iv:
-			caster_iv.gold += 10

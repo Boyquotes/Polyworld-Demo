@@ -363,7 +363,7 @@ skeleton = NodePath("../../NavigationRegion3D")
 
 [node name="TransitionArea" parent="Environment" instance=ExtResource("17_gisj6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.0949, -14.0835, 4.92217)
-file = "res://Worlds/FifrthWorld.tscn"
+file = "res://Worlds/FifthWorld.tscn"
 
 [node name="CollisionShape3D" parent="Environment/TransitionArea" index="0"]
 shape = SubResource("BoxShape3D_14q1p")
@@ -373,10 +373,6 @@ target = NodePath("../Player")
 
 [node name="Camera3d" parent="CameraArm" index="0"]
 near = 10.0
-
-[node name="PocketCamera" parent="CameraArm" index="1"]
-offset_right = 4.0
-offset_bottom = -379.0
 
 [node name="Player" parent="." instance=ExtResource("10_skbcd")]
 transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, -7.21162, -0.384947, 2.65032)

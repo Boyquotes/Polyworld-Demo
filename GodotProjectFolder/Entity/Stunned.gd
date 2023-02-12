@@ -17,8 +17,8 @@ func enter():
 	stun_counter = stun_duration
 	entity.get_node("HealthBar").visible = true
 	
-	entity.get_node("MeshInstance3D2").visible = false
-	entity.get_node("MeshInstance3D3").visible = true
+	entity.get_node("Red").visible = false
+	entity.get_node("Yellow").visible = true
 	entity.get_node("HealthBar").visible = true
 
 

@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://UI/DamageFloater.gd" id="1_mht7i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_670ut"]
+resource_local_to_scene = true
 font = ExtResource("1_35tva")
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)

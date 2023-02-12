@@ -3,7 +3,7 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var scene = load("res://Worlds/FourthWorld.tscn").instantiate()
+	var scene = load("res://Worlds/BattleWorld.tscn").instantiate()
 	add_child(scene)
 
 

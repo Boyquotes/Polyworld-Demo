@@ -21,9 +21,11 @@ var health := max_health:
 		if val <= 0: 
 			val = 0
 			emit_signal("entity_died")
+		if val >= max_health:
+			val = max_health
 		health = val
 
-var facing_dir := Vector2.DOWN
+@onready var facing_dir := Vector2(basis.z.x, basis.z.z)
 @onready var facing_dir_target := Vector2(basis.z.x, basis.z.z):
 	set(val):
 		if val != Vector2.ZERO:
@@ -97,14 +99,14 @@ func is_instance_visible(instance):
 	var space_state =get_world_3d().direct_space_state
 	var result := space_state.intersect_ray(param)
 	
-	var angle_difference = abs(ppos2d.direction_to(npos2d).angle_to(facing_dir_target.normalized()))
+	var angle_difference = abs(ppos2d.direction_to(npos2d).angle_to(facing_dir.normalized()))
 	
 	if ppos.distance_to(npos) < 20:
 		if result:
 			# collision at ray point
 			return false
 		else:
-			if angle_difference < PI/3:
+			if angle_difference < PI/4:
 				return true
 		return false
 

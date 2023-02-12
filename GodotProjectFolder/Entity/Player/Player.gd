@@ -5,7 +5,7 @@ extends Entity
 const JUMP_BUFFER := 0.075
 const COYOTE_TIME := 0.075
 
-@export var max_mana := 40
+@export var max_mana := 200
 
 var mana := max_mana:
 	set(val):
@@ -50,6 +50,7 @@ var is_immune := false:
 			$Hurtbox.set_deferred("Monitoring", false)
 		else:
 			$Hurtbox.set_deferred("Monitoring", true)
+		is_immune = val
 
 
 @onready var cam = get_viewport().get_camera_3d() as Camera3D
@@ -72,22 +73,25 @@ func _process(_delta):
 	$PrimaryLabel.text = $StateMachine/Primary.state_name
 	$SecondaryLabel.text = $StateMachine/Secondary.state_name
 	
+	if Input.is_action_just_pressed("special"):
+		$StateMachine.transition_to("Dodge")
+	
 	# Handle partner activation
-	var partner = get_parent().get_node("Partner")
-	if Input.is_action_pressed("special"):
-		partner.is_being_called = true
-		if Input.is_action_just_pressed("special"):
-			partner_activation_time = 0.0
-			partner_activation_position = partner.global_position
-		partner_activation_time += _delta * 2
-		if partner_activation_time >= 0.5:
-			partner_activation_time = 1.0
-			$StateMachine.transition_to("Partner")
-		partner.global_position = partner.global_position.lerp(global_position, partner_activation_time)
-		partner.rotation.y = rotation.y
-	else:
-		partner.is_being_called = false
-		partner_activation_time = 0.0 
+#	var partner = get_parent().get_node("Partner")
+#	if Input.is_action_pressed("special"):
+#		partner.is_being_called = true
+#		if Input.is_action_just_pressed("special"):
+#			partner_activation_time = 0.0
+#			partner_activation_position = partner.global_position
+#		partner_activation_time += _delta * 2
+#		if partner_activation_time >= 0.5:
+#			partner_activation_time = 1.0
+#			$StateMachine.transition_to("Partner")
+#		partner.global_position = partner.global_position.lerp(global_position, partner_activation_time)
+#		partner.rotation.y = rotation.y
+#	else:
+#		partner.is_being_called = false
+#		partner_activation_time = 0.0 
 	
 	# Get the input direction
 	if input_enabled:
@@ -110,9 +114,6 @@ func _process(_delta):
 		if nearest:
 			if nearest.has_method("interact"):
 				nearest.interact()
-	
-	
-	# Targeting stuff
 	
 	# Update aim and aim icon, store results in aim_target and aim_direction
 	if Input.is_action_just_pressed("target_lock"):
@@ -148,6 +149,10 @@ func _process(_delta):
 	
 	# Update facing direction
 	update_facing(_delta)
+	
+	# TODO: make this cleaner
+	if $StateMachine.current_state != $StateMachine/Stunned:
+		Engine.time_scale = move_toward(Engine.time_scale, 1, 0.02)
 
 
 func _physics_process(_delta):
@@ -238,14 +243,44 @@ func stun(dur = 2):
 	$StateMachine.transition_to("Stunned")
 
 
+func damage_boost(dur = 2):
+	is_immune = true
+	
+	# Define the blink lambda function
+	var blink = func():
+		visible = !visible
+	
+	# Make the player blink during damage boost
+	var blink_timer = Timer.new()
+	blink_timer.connect("timeout", blink)
+	add_child(blink_timer)
+	blink_timer.one_shot = false
+	blink_timer.wait_time = 0.05
+	blink_timer.start()
+
+	# Set the duration of the damage boost
+	var invuln_timer = get_tree().create_timer(dur)
+	await invuln_timer.timeout
+	if is_instance_valid(self):
+		is_immune = false
+		blink_timer.stop()
+		blink_timer.queue_free()
+		visible = true
+
+
 func _on_hurtbox_area_entered(hitbox : Hitbox):
-	if hitbox.caster != self:
+	if hitbox.caster != self && !is_immune:
 		if "contact" in hitbox.get_parent():
 			hitbox.get_parent().contact()
 			
 		if hitbox.is_vessel:
 			return
-			
+		
+		is_immune = true
+		
+		# TODO: Change the way this is done
+		Engine.time_scale= 0.2
+		
 		take_damage(hitbox.damage)
 		
 		var impact_angle = hitbox.global_position.direction_to(global_position)
@@ -253,12 +288,8 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 			impact_angle = hitbox.get_parent().direction
 		velocity = Vector3(hitbox.push_force_horizontal * impact_angle.x, hitbox.push_force_vertical, hitbox.push_force_horizontal * impact_angle.z)
 		
-		stun(0.4)
+		stun(0.1)
 		
-		if is_instance_valid(hitbox.caster):
-			var caster_iv = hitbox.caster.get_node("Inventory") as Inventory
-			if caster_iv:
-				caster_iv.gold += 10
 
 
 # TODO : pass through who killed the entity as an argument in the signal

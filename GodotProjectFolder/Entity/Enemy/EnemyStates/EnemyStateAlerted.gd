@@ -3,8 +3,10 @@ extends State
 
 var enemy : Entity
 
-var lost_duration = 400
-var lost_counter = lost_duration
+
+var surprise_duration = 0.4
+var surprise_counter = surprise_duration
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,23 +16,25 @@ func _ready():
 
 func enter():
 	enemy.move_speed = 7
-	enemy.get_node("MeshInstance3D2").visible = false
-	enemy.get_node("MeshInstance3D3").visible = true
+	enemy.get_node("Red").visible = false
+	enemy.get_node("Yellow").visible = false
 	enemy.get_node("HealthBar").visible = true
+	
+	enemy.velocity.y = enemy.jump_force / 2
+	surprise_counter = surprise_duration
 
 
 func update(_delta):
-	if enemy.is_instance_visible(enemy.player):
-		lost_counter = lost_duration
-	else:
-		lost_counter -= 1
+	surprise_counter -= _delta
+	if surprise_counter <= 0:
+		state_machine.transition_to("Detected")
 	
-	if lost_counter <= 0:
-		state_machine.transition_to("Wandering")
+	if is_instance_valid(enemy.player):
+		enemy.face_toward(enemy.player.global_position)
 
 
 func physics_update(_delta):
-	enemy.ai_move(_delta, enemy.player.global_position, 1.0, false, enemy.can_jump)
+	enemy.ai_move(_delta, enemy.global_position, 1.0, false, enemy.can_jump)
 	enemy.update_facing(_delta)
 
 

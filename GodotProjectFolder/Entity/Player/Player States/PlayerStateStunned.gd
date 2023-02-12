@@ -43,4 +43,4 @@ func physics_update(_delta):
 
 
 func exit():
-	pass
+	player.damage_boost()

@@ -42,7 +42,10 @@ margin = 0.5
 collision_layer = 2
 script = ExtResource("1_7i3iw")
 can_jump = true
-should_avoid = false
+move_speed = 7.0
+move_accel = 40.0
+move_decel = 30.0
+jump_force = 20.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("2_ip005")
@@ -60,18 +63,18 @@ script = ExtResource("5_6fvtl")
 [node name="Alerted" type="Node" parent="StateMachine"]
 script = ExtResource("6_dufk3")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Model" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_v5sbh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 mesh = SubResource("BoxMesh_kh7gn")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="Red" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("CapsuleMesh_17rmk")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+[node name="Yellow" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("CapsuleMesh_4qwv7")
 

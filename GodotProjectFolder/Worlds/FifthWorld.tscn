@@ -1,19 +1,19 @@
 [gd_scene load_steps=38 format=3 uid="uid://wjt3h1jx3cox"]
 
-[ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="1_nrt0u"]
-[ext_resource type="PackedScene" uid="uid://d33ed6hypa5jv" path="res://Models/Tree.tscn" id="3_t4s8s"]
-[ext_resource type="Script" path="res://Areas/KillPlane.gd" id="4_tu8sc"]
-[ext_resource type="Shader" path="res://Shaders/WavySprite.gdshader" id="5_rv3ot"]
-[ext_resource type="Texture2D" uid="uid://dr887bne2krjb" path="res://Textures/grass tuft.png" id="6_fkiqy"]
-[ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="6_n20kc"]
-[ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="6_xypca"]
-[ext_resource type="PackedScene" uid="uid://crnlfdu8xctcu" path="res://Entity/Player/Player.tscn" id="10_c4snp"]
-[ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="12_m37m8"]
-[ext_resource type="Texture2D" uid="uid://b4mav36hcn3cb" path="res://Textures/atari-8-bit-series-gtia-1x.png" id="13_5mtap"]
-[ext_resource type="Shader" path="res://Shaders/Clouds.gdshader" id="15_2q0yr"]
-[ext_resource type="PackedScene" uid="uid://ddw6484xkeyqr" path="res://Models/Nate.tscn" id="15_ofkr2"]
-[ext_resource type="Script" path="res://Entity/NPC/NPC.gd" id="16_iuowk"]
-[ext_resource type="PackedScene" path="res://Entity/Partner/Partner.tscn" id="16_noq22"]
+[ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="1_4aamq"]
+[ext_resource type="PackedScene" uid="uid://d33ed6hypa5jv" path="res://Models/Tree.tscn" id="2_sop1k"]
+[ext_resource type="Script" path="res://Areas/KillPlane.gd" id="3_oickg"]
+[ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="4_i2tr7"]
+[ext_resource type="Shader" path="res://Shaders/WavySprite.gdshader" id="5_1732f"]
+[ext_resource type="Texture2D" uid="uid://dr887bne2krjb" path="res://Textures/grass tuft.png" id="6_i61m3"]
+[ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="7_47fpu"]
+[ext_resource type="PackedScene" uid="uid://crnlfdu8xctcu" path="res://Entity/Player/Player.tscn" id="8_vf3q7"]
+[ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="9_r2bav"]
+[ext_resource type="Texture2D" uid="uid://b4mav36hcn3cb" path="res://Textures/atari-8-bit-series-gtia-1x.png" id="10_jkd0m"]
+[ext_resource type="Shader" path="res://Shaders/Clouds.gdshader" id="11_5p4ai"]
+[ext_resource type="PackedScene" path="res://Entity/Partner/Partner.tscn" id="12_dg7sl"]
+[ext_resource type="Script" path="res://Entity/NPC/NPC.gd" id="13_7uen8"]
+[ext_resource type="PackedScene" uid="uid://ddw6484xkeyqr" path="res://Models/Nate.tscn" id="14_ey67h"]
 
 [sub_resource type="Environment" id="Environment_oscer"]
 background_mode = 1
@@ -37,7 +37,7 @@ agent_radius = 1.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqdx7"]
 shading_mode = 2
 diffuse_mode = 1
-albedo_texture = ExtResource("1_nrt0u")
+albedo_texture = ExtResource("1_4aamq")
 metallic_specular = 0.0
 uv1_scale = Vector3(0.125, 0.125, 0.125)
 uv1_offset = Vector3(0.125, 0.125, 0.125)
@@ -52,7 +52,7 @@ size = Vector3(4, 4, 4)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_earcl"]
 render_priority = 0
-shader = ExtResource("5_rv3ot")
+shader = ExtResource("5_1732f")
 shader_parameter/albedo = Color(0.219608, 0.631373, 0.254902, 1)
 shader_parameter/point_size = 32.0
 shader_parameter/specular = 0.0
@@ -60,7 +60,7 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = null
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = null
-shader_parameter/texture_albedo = ExtResource("6_fkiqy")
+shader_parameter/texture_albedo = ExtResource("6_i61m3")
 
 [sub_resource type="PointMesh" id="PointMesh_8qe46"]
 material = SubResource("ShaderMaterial_earcl")
@@ -85,7 +85,7 @@ size = Vector2(24.806, 16.388)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1pb3r"]
 render_priority = 0
-shader = ExtResource("5_rv3ot")
+shader = ExtResource("5_1732f")
 shader_parameter/albedo = Color(0.219608, 0.631373, 0.254902, 1)
 shader_parameter/point_size = 32.0
 shader_parameter/specular = 0.0
@@ -93,16 +93,16 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = null
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = null
-shader_parameter/texture_albedo = ExtResource("6_fkiqy")
+shader_parameter/texture_albedo = ExtResource("6_i61m3")
 
 [sub_resource type="PointMesh" id="PointMesh_5ridw"]
 material = SubResource("ShaderMaterial_1pb3r")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mse8a"]
 render_priority = -128
-shader = ExtResource("12_m37m8")
+shader = ExtResource("9_r2bav")
 shader_parameter/palette_size = 256
-shader_parameter/palette = ExtResource("13_5mtap")
+shader_parameter/palette = ExtResource("10_jkd0m")
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
 material = SubResource("ShaderMaterial_mse8a")
@@ -143,7 +143,7 @@ noise = SubResource("FastNoiseLite_3vsvl")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fdkfx"]
 render_priority = 0
-shader = ExtResource("15_2q0yr")
+shader = ExtResource("11_5p4ai")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_albedo = SubResource("NoiseTexture2D_dkrot")
 shader_parameter/texture_albedo2 = SubResource("NoiseTexture2D_6kb0i")
@@ -194,31 +194,31 @@ use_collision = true
 size = Vector3(5, 4, 4)
 material = SubResource("StandardMaterial3D_oqdx7")
 
-[node name="Tree" parent="Environment/NavigationRegion3D" instance=ExtResource("3_t4s8s")]
+[node name="Tree" parent="Environment/NavigationRegion3D" instance=ExtResource("2_sop1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7147, -2.31798, -6.47886)
 
-[node name="Tree2" parent="Environment/NavigationRegion3D" instance=ExtResource("3_t4s8s")]
+[node name="Tree2" parent="Environment/NavigationRegion3D" instance=ExtResource("2_sop1k")]
 transform = Transform3D(0.535989, 0, 0.844225, 0, 1, 0, -0.844225, 0, 0.535989, 4.18968, -2.31798, -7.05187)
 
-[node name="Tree3" parent="Environment/NavigationRegion3D" instance=ExtResource("3_t4s8s")]
+[node name="Tree3" parent="Environment/NavigationRegion3D" instance=ExtResource("2_sop1k")]
 transform = Transform3D(0.710505, 0, -0.703692, 0, 1, 0, 0.703692, 0, 0.710505, 11.9297, -2.31798, -8.11957)
 
-[node name="Tree4" parent="Environment/NavigationRegion3D" instance=ExtResource("3_t4s8s")]
+[node name="Tree4" parent="Environment/NavigationRegion3D" instance=ExtResource("2_sop1k")]
 transform = Transform3D(-0.397901, 0, -0.917428, 0, 1, 0, 0.917428, 0, -0.397901, 0.524745, -2.31798, -4.96626)
 
-[node name="Tree5" parent="Environment/NavigationRegion3D" instance=ExtResource("3_t4s8s")]
+[node name="Tree5" parent="Environment/NavigationRegion3D" instance=ExtResource("2_sop1k")]
 transform = Transform3D(-0.958293, 0, -0.285788, 0, 1, 0, 0.285788, 0, -0.958293, 9.21446, -2.31798, -5.06002)
 
 [node name="KillPlane" type="Area3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -37.5048, 8.23268)
 collision_mask = 3
-script = ExtResource("4_tu8sc")
+script = ExtResource("3_oickg")
 
 [node name="CollisionShape3d" type="CollisionShape3D" parent="Environment/KillPlane"]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_qphd1")
 
-[node name="TransitionArea" parent="Environment" instance=ExtResource("6_n20kc")]
+[node name="TransitionArea" parent="Environment" instance=ExtResource("4_i2tr7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.24266, -0.408234, -2.60959)
 file = "res://Worlds/FourthWorld.tscn"
 
@@ -241,10 +241,10 @@ cast_shadow = 0
 mesh = SubResource("PointMesh_5ridw")
 skeleton = NodePath("../../NavigationRegion3D")
 
-[node name="CameraArm" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_xypca")]
+[node name="CameraArm" parent="." node_paths=PackedStringArray("target") instance=ExtResource("7_47fpu")]
 target = NodePath("../Player")
 
-[node name="Player" parent="." instance=ExtResource("10_c4snp")]
+[node name="Player" parent="." instance=ExtResource("8_vf3q7")]
 transform = Transform3D(-4.4177e-08, 0, 1, 0, 1, 0, -1, 0, -4.4177e-08, -4.36129, -0.816236, -2.43025)
 
 [node name="Outline" type="MeshInstance3D" parent="."]
@@ -261,20 +261,20 @@ mesh = SubResource("PlaneMesh_sfewr")
 transform = Transform3D(-1.19249e-08, 1.04251e-15, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, 1.19249e-08, 0, 15.8691, 8.21198)
 mesh = SubResource("PlaneMesh_sfewr")
 
-[node name="Partner" parent="." node_paths=PackedStringArray("leader") instance=ExtResource("16_noq22")]
+[node name="Partner" parent="." node_paths=PackedStringArray("leader") instance=ExtResource("12_dg7sl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27742, -0.323857, 1.63979)
 leader = NodePath("../Player")
 
 [node name="NPC" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.74396, -1.86723, -3.73549)
 collision_layer = 2
-script = ExtResource("16_iuowk")
+script = ExtResource("13_7uen8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPC"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("CapsuleShape3D_70wsq")
 
-[node name="Nate" parent="NPC" instance=ExtResource("15_ofkr2")]
+[node name="Nate" parent="NPC" instance=ExtResource("14_ey67h")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 
 [connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]

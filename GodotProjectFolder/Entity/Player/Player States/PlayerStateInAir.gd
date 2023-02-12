@@ -78,6 +78,7 @@ func physics_update(_delta):
 		player.can_hold_jump = false
 		
 		# Handle fall damage
+		# TODO: make this a function that all entities have
 		if last_vel <= -45.0:
 			player.take_damage(-last_vel * 0.25)
 		

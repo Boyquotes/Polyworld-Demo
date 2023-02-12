@@ -1,10 +1,12 @@
-[gd_scene load_steps=22 format=3 uid="uid://crnlfdu8xctcu"]
+[gd_scene load_steps=24 format=3 uid="uid://crnlfdu8xctcu"]
 
 [ext_resource type="Script" path="res://Entity/Player/Player.gd" id="1_qmea8"]
 [ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_dti1d"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateInAir.gd" id="5_ykyoh"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateRestore.gd" id="7_shl0a"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrabber.gd" id="8_2we1h"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateBlock.gd" id="9_6y1mk"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateDodge.gd" id="10_3io3g"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner.gd" id="11_51j4e"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrounded.gd" id="11_fhkm0"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateStunned.gd" id="12_f1m8k"]
@@ -66,6 +68,12 @@ script = ExtResource("7_shl0a")
 
 [node name="Secondary" type="Node" parent="StateMachine"]
 script = ExtResource("8_2we1h")
+
+[node name="Block" type="Node" parent="StateMachine"]
+script = ExtResource("9_6y1mk")
+
+[node name="Dodge" type="Node" parent="StateMachine"]
+script = ExtResource("10_3io3g")
 
 [node name="Model" parent="." instance=ExtResource("12_rnjkj")]
 transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)

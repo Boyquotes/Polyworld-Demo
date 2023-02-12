@@ -14,8 +14,8 @@ func _ready():
 
 func enter():
 	enemy.move_speed = 9
-	enemy.get_node("MeshInstance3D2").visible = true
-	enemy.get_node("MeshInstance3D3").visible = false
+	enemy.get_node("Red").visible = true
+	enemy.get_node("Yellow").visible = false
 	enemy.get_node("HealthBar").visible = true
 
 
@@ -38,7 +38,7 @@ func update(_delta):
 func physics_update(_delta):
 	
 	if is_instance_valid(enemy.player):
-		enemy.ai_move(_delta, enemy.player.global_position, 8.0, false, enemy.can_jump)
+		enemy.ai_move(_delta, enemy.player.global_position, 12.0, false, enemy.can_jump)
 		# Look at player if stopped
 		if enemy.velocity == Vector3.ZERO:
 			enemy.face_toward(enemy.player.global_position)
