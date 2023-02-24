@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://db1kybbohaicv"]
 
 [ext_resource type="Script" path="res://Entity/Partner/Partner.gd" id="1_xfgan"]
+[ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="2_grkkk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytivq"]
 shading_mode = 2
@@ -21,13 +22,17 @@ move_speed = 10.0
 jump_force = 25.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+cast_shadow = 0
 mesh = SubResource("BoxMesh_78isx")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0.5)
+cast_shadow = 0
 mesh = SubResource("BoxMesh_78isx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_5bdni")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="Shadow" parent="." instance=ExtResource("2_grkkk")]

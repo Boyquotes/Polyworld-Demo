@@ -1,15 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://dfflt4jb6dncg"]
+[gd_scene load_steps=17 format=3 uid="uid://dfflt4jb6dncg"]
 
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="1_8t5jk"]
 [ext_resource type="PackedScene" uid="uid://bfcs1jd6r1rvv" path="res://Models/MattsHouse.tscn" id="2_b0tiv"]
 [ext_resource type="Script" path="res://Areas/KillPlane.gd" id="4_jk3vi"]
 [ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="8_s747q"]
 [ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="9_4nqsr"]
+[ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="9_q4kjt"]
 [ext_resource type="PackedScene" uid="uid://crnlfdu8xctcu" path="res://Entity/Player/Player.tscn" id="10_ovgir"]
 [ext_resource type="PackedScene" uid="uid://d2ve7qxs5325o" path="res://Entity/Enemy/PathfindingEnemy.tscn" id="11_mrd0e"]
-[ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="12_wpm2s"]
-[ext_resource type="Texture2D" uid="uid://b4mav36hcn3cb" path="res://Textures/atari-8-bit-series-gtia-1x.png" id="13_jqmjv"]
-[ext_resource type="PackedScene" path="res://Entity/Partner/Partner.tscn" id="15_8u6cl"]
+[ext_resource type="PackedScene" uid="uid://db1kybbohaicv" path="res://Entity/Partner/Partner.tscn" id="15_8u6cl"]
 
 [sub_resource type="Environment" id="Environment_24hwn"]
 background_mode = 1
@@ -39,20 +38,22 @@ uv1_offset = Vector3(0.125, 0.125, 0.125)
 uv1_triplanar = true
 uv1_world_triplanar = true
 texture_filter = 0
+distance_fade_mode = 2
+distance_fade_min_distance = 220.0
+distance_fade_max_distance = 150.0
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qphd1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_14q1p"]
 size = Vector3(4, 4, 4)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mse8a"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mv6we"]
 render_priority = -128
-shader = ExtResource("12_wpm2s")
-shader_parameter/palette_size = 256
-shader_parameter/palette = ExtResource("13_jqmjv")
+shader = ExtResource("9_q4kjt")
+shader_parameter/palette_size = 16
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
-material = SubResource("ShaderMaterial_mse8a")
+material = SubResource("ShaderMaterial_mv6we")
 size = Vector2(2, 2)
 
 [node name="FourthWorld" type="Node3D"]
@@ -60,6 +61,7 @@ process_mode = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.556296, -0.719654, 0.415492, 0, 0.5, 0.866025, -0.830984, -0.481766, 0.278148, 0, 0, 0)
+shadow_enabled = true
 directional_shadow_max_distance = 300.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -105,21 +107,19 @@ target = NodePath("../Player")
 [node name="Camera3d" parent="CameraArm" index="0"]
 near = 10.0
 
-[node name="PocketCamera" parent="CameraArm" index="1"]
-offset_right = 4.0
-offset_bottom = -379.0
-
 [node name="Player" parent="." instance=ExtResource("10_ovgir")]
-transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, -7.21162, -0.384947, 2.65032)
+transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, -8.73354, 1.87005, -1.12639)
 
 [node name="Partner" parent="." node_paths=PackedStringArray("leader") instance=ExtResource("15_8u6cl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27742, -0.323857, 1.63979)
 leader = NodePath("../Player")
 
 [node name="PathfindingEnemy" parent="." instance=ExtResource("11_mrd0e")]
-transform = Transform3D(0.619327, 0, 0.785132, 0, 1, 0, -0.785132, 0, 0.619327, 27.505, -0.125824, -12.1705)
+transform = Transform3D(0.97105, 0, -0.238873, 0, 1, 0, 0.238873, 0, 0.97105, 27.505, -0.125824, -12.1705)
+can_jump = false
 
 [node name="Outline" type="MeshInstance3D" parent="."]
+cast_shadow = 0
 extra_cull_margin = 10000.0
 ignore_occlusion_culling = true
 mesh = SubResource("QuadMesh_x0ohu")

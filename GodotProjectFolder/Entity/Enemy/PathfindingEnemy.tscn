@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d2ve7qxs5325o"]
+[gd_scene load_steps=22 format=3 uid="uid://d2ve7qxs5325o"]
 
 [ext_resource type="Script" path="res://Entity/Enemy/PathfindingEnemy.gd" id="1_7i3iw"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="2_bwnuo"]
@@ -7,8 +7,10 @@
 [ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateWandering.gd" id="4_vphl8"]
 [ext_resource type="Script" path="res://Entity/Stunned.gd" id="5_6fvtl"]
 [ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateAlerted.gd" id="6_dufk3"]
+[ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateAttacking.gd" id="7_3knj0"]
 [ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="8_4ksgh"]
 [ext_resource type="Script" path="res://UI/Inventory.gd" id="9_jwflf"]
+[ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="11_v8aqd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_v5sbh"]
 
@@ -30,6 +32,15 @@ albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4qwv7"]
 material = SubResource("StandardMaterial3D_ngk21")
+radius = 0.534
+height = 2.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q6t33"]
+shading_mode = 0
+albedo_color = Color(0.235294, 0.235294, 0.235294, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_e4vpc"]
+material = SubResource("StandardMaterial3D_q6t33")
 radius = 0.534
 height = 2.05
 
@@ -63,20 +74,45 @@ script = ExtResource("5_6fvtl")
 [node name="Alerted" type="Node" parent="StateMachine"]
 script = ExtResource("6_dufk3")
 
+[node name="Attacking" type="Node" parent="StateMachine"]
+script = ExtResource("7_3knj0")
+
 [node name="Model" type="MeshInstance3D" parent="."]
+cast_shadow = 0
 mesh = SubResource("CapsuleMesh_v5sbh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+cast_shadow = 0
 mesh = SubResource("BoxMesh_kh7gn")
 
 [node name="Red" type="MeshInstance3D" parent="."]
 visible = false
+cast_shadow = 0
 mesh = SubResource("CapsuleMesh_17rmk")
 
 [node name="Yellow" type="MeshInstance3D" parent="."]
 visible = false
+cast_shadow = 0
 mesh = SubResource("CapsuleMesh_4qwv7")
+
+[node name="Gray" type="MeshInstance3D" parent="."]
+visible = false
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_e4vpc")
+skeleton = NodePath("../Yellow")
+
+[node name="AttackingIcon" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24483, 0)
+visible = false
+pixel_size = 0.001
+billboard = 1
+fixed_size = true
+alpha_cut = 1
+texture_filter = 0
+text = "!"
+font_size = 10
+outline_size = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_0ltiw")
@@ -98,6 +134,8 @@ one_shot = true
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("9_jwflf")
+
+[node name="Shadow" parent="." instance=ExtResource("11_v8aqd")]
 
 [connection signal="entity_died" from="." to="." method="_on_entity_died"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

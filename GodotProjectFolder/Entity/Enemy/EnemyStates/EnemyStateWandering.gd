@@ -35,7 +35,7 @@ func update(_delta):
 			movement_counter = move_duration + randf_range(-50, 50)
 			
 			var rand_position = Vector3(randf_range(-5, 5), 0, randf_range(-5, 5))
-			enemy.agent.set_target_location(enemy.global_position + rand_position)
+			enemy.agent.target_position = enemy.global_position + rand_position
 			
 		else:
 			movement_counter = stand_duration + randf_range(-50, 50)
@@ -59,7 +59,7 @@ func update(_delta):
 func physics_update(_delta):
 	if move:
 		if enemy.agent.is_target_reachable():
-			enemy.ai_move(_delta, enemy.agent.target_location, 3.0, false, false, false, 100.0)
+			enemy.ai_move(_delta, enemy.agent.target_position, 3.0, false, false, false, 100.0)
 	else:
 		var hor_velocity = Vector2(enemy.velocity.x, enemy.velocity.z)
 		var vert_velocity = enemy.velocity.y

@@ -6,6 +6,9 @@ shading_mode = 2
 diffuse_mode = 1
 albedo_color = Color(0.972549, 1, 0.509804, 1)
 metallic_specular = 0.0
+distance_fade_mode = 2
+distance_fade_min_distance = 220.0
+distance_fade_max_distance = 150.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yekgl"]
 resource_name = "Material"
@@ -53,6 +56,9 @@ shading_mode = 2
 diffuse_mode = 1
 albedo_color = Color(0.858824, 0.960784, 1, 1)
 metallic_specular = 0.0
+distance_fade_mode = 2
+distance_fade_min_distance = 220.0
+distance_fade_max_distance = 150.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_f81o8"]
 _surfaces = [{

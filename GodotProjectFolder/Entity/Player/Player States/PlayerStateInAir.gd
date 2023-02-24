@@ -14,6 +14,7 @@ func _ready():
 
 
 func enter():
+	$"../../Sprite3D2/AnimationPlayer".play("jump")
 	if not player.can_hold_jump:
 		set_coyote_time()
 
@@ -65,9 +66,11 @@ func physics_update(_delta):
 		player.facing_dir_target = player.relative_input_dir
 	
 	# Store velocity prior to moving
-	var last_vel = player.velocity.y
-	
-	player.move_and_slide()
+	var last_speed = player.velocity.length()
+	if player.move_and_slide():
+		# Handle fall damage
+		if  last_speed - player.velocity.length() > 40:
+			player.take_damage(last_speed * 0.2)
 	
 	# Handle landing
 	if player.is_on_floor():
@@ -76,11 +79,6 @@ func physics_update(_delta):
 		player.s_player.play()
 		
 		player.can_hold_jump = false
-		
-		# Handle fall damage
-		# TODO: make this a function that all entities have
-		if last_vel <= -45.0:
-			player.take_damage(-last_vel * 0.25)
 		
 		# Handle jumping if in buffer
 		if in_jump_buffer:

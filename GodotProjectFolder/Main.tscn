@@ -7,7 +7,7 @@
 shader = ExtResource("2_hq8l5")
 shader_parameter/color = Color(0, 0, 0, 1)
 shader_parameter/scale = 1.0
-shader_parameter/border = null
+shader_parameter/border = false
 
 [sub_resource type="Animation" id="Animation_tmpnv"]
 resource_name = "Close"
@@ -131,10 +131,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-item_count = 3
+item_count = 4
 item_0/text = "Fireball"
 item_1/text = "Grabber"
 item_2/text = "Restore"
+item_3/text = "Missile"
 
 [node name="LeftPanel" type="Panel" parent="UILayer/Menu"]
 layout_mode = 0

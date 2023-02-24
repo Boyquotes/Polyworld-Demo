@@ -406,12 +406,15 @@ mesh = SubResource("ArrayMesh_ql1fu")
 skin = SubResource("Skin_0okk2")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(1, -7.10543e-15, 2.38419e-07, 9.97133e-09, 0.999125, -0.0418228, -2.3821e-07, 0.0418228, 0.999125, -5.36997e-15, 0.490866, 0.203093)
+transform = Transform3D(1, 2.62901e-13, 2.38418e-07, 9.97116e-09, 0.999125, -0.0418233, -2.3821e-07, 0.0418233, 0.999125, 2.41328e-14, 0.490865, 0.203093)
 bone_name = "head"
 bone_idx = 2
 
 [node name="Sprite3D" type="Sprite3D" parent="Armature/Skeleton3D/BoneAttachment3D"]
 transform = Transform3D(0.35, 6.66134e-16, 0, -3.10862e-15, 0.35, -1.86265e-09, -7.10543e-14, -3.72529e-09, 0.35, -7.49486e-08, 0.479146, 0.314357)
+pixel_size = 0.0001
+fixed_size = true
+texture_filter = 0
 texture = ExtResource("1_stye7")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

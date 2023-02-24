@@ -5,7 +5,7 @@ var player : Player
 
 var state_name = "Block"
 
-var block_timer = 1.0
+var last_speed = 0
 
 
 # TODO probably relegate the mana cost information to the Attack resource associated with this
@@ -19,11 +19,11 @@ func _ready():
 
 
 func enter():
-	block_timer = 1.0
+	player.block_multiplier = 1
 
 
 func update(_delta):
-	player.face_toward(player.aim_target.global_position)
+	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
 	player.update_facing(_delta)
 
 
@@ -32,17 +32,29 @@ func physics_update(_delta):
 	# Play correct animation
 	player.anim.play("cast2")
 	
-	block_timer -= _delta
+	# TODO : put this in a setter in Entity ?
+	player.block_multiplier -= _delta
+	if player.block_multiplier <= 0.2:
+		player.block_multiplier = 0.2
 	
 	# Add the gravity
 	player.velocity.y -= player.GRAVITY * _delta
 	
 	# Slow down the player
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-	hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.move_decel * _delta)
+	if player.is_on_floor():
+		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed * 0.3, player.move_accel * _delta)
+
 	player.velocity.x = hor_velocity.x
 	player.velocity.z = hor_velocity.y
-	player.move_and_slide()
+	last_speed = player.velocity.length()
+	if player.move_and_slide():
+		if player.velocity.length() - last_speed < -30.0:
+			player.take_damage(last_speed * 0.25)
+	
+	if Input.is_action_just_pressed("jump"):
+		state_machine.transition_to("Dodge")
+		return
 	
 	# Handle key release
 	if !Input.is_action_pressed("special"):
@@ -52,7 +64,8 @@ func physics_update(_delta):
 		else:
 			state_machine.transition_to("InAir")
 		return
+		
 
 func exit():
-	pass
+	player.block_multiplier = 0
 

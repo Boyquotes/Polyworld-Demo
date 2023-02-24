@@ -5,7 +5,7 @@ var player : Player
 
 var state_name = "Block"
 
-var dodge_duration = 0.1
+var dodge_duration = 0.05
 var dodge_timer = dodge_duration
 
 var dodge_direction = Vector2.ZERO
@@ -24,13 +24,14 @@ func _ready():
 func enter():
 	player.is_immune = true
 	dodge_timer = dodge_duration
+	
+	# Rotate toward target
+	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
+	
 	if player.input_dir:
 		dodge_direction = player.input_dir
 	else:
 		dodge_direction = player.facing_dir_target
-	
-	# Rotate toward target
-	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
 
 
 func update(_delta):
@@ -53,9 +54,13 @@ func physics_update(_delta):
 	player.move_and_slide()
 	
 	dodge_timer -= _delta
-	
+
 	# Handle transitions
 	if dodge_timer <= 0:
+		if Input.is_action_pressed("special"):
+			state_machine.transition_to("Block")
+		return
+		
 		# Return to standard state
 		if player.is_on_floor():
 			state_machine.transition_to("Grounded")
@@ -65,7 +70,7 @@ func physics_update(_delta):
 
 func exit():
 	player.is_immune = false
-	player.velocity.x = 0
-	player.velocity.y = 0
-	player.velocity.z = 0
+	player.velocity.x *= 0.25
+	player.velocity.y *= 0.25
+	player.velocity.z *= 0.25
 

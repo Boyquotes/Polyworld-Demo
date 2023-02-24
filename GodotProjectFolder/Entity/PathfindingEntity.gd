@@ -24,7 +24,7 @@ func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distanc
 	vert_velocity -= GRAVITY * _delta
 	
 	# Set the destination as the target location
-	agent.set_target_location(destination)
+	agent.target_position = destination
 	
 	var destination_2d = Vector2(destination.x, destination.z)
 	var current_pos = global_transform.origin
@@ -35,9 +35,10 @@ func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distanc
 	
 	if direct_distance_2d > min_range:
 		if is_on_floor():
-			var next_location = agent.get_next_location()
+			
+			var next_location = agent.get_next_path_position()
 			var next_location_2d = Vector2(next_location.x, next_location.z)
-			var final_location = agent.get_final_location()
+			var final_location = agent.get_final_position()
 			var path_length = 0
 			
 			# if final location is closer to destination than your current distance to destination,
@@ -51,6 +52,7 @@ func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distanc
 			# If it has made it as close as possible to its destination, or if the path is much further 
 			# than the direct distance, just jump in the target's direction instead of pathfinding
 			if at_end_of_path || path_length > direct_distance * shortcut_bias:
+				# TODO : figure out a way to account for destinations that are unreachable in general. Such as off the edge of a cliff
 				direction = current_pos_2d.direction_to(destination_2d)
 				if can_hop: #maybe move this out of the outer if statement to help if entity is stuck while pathfinding ?
 					if (at_end_of_path && destination.y > current_pos.y + jump_thresh) || always_hop || is_on_wall():

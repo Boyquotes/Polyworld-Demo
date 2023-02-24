@@ -73,25 +73,25 @@ func _process(_delta):
 	$PrimaryLabel.text = $StateMachine/Primary.state_name
 	$SecondaryLabel.text = $StateMachine/Secondary.state_name
 	
-	if Input.is_action_just_pressed("special"):
-		$StateMachine.transition_to("Dodge")
+	#if Input.is_action_just_pressed("special"):
+	#	$StateMachine.transition_to("Block")
 	
 	# Handle partner activation
-#	var partner = get_parent().get_node("Partner")
-#	if Input.is_action_pressed("special"):
-#		partner.is_being_called = true
-#		if Input.is_action_just_pressed("special"):
-#			partner_activation_time = 0.0
-#			partner_activation_position = partner.global_position
-#		partner_activation_time += _delta * 2
-#		if partner_activation_time >= 0.5:
-#			partner_activation_time = 1.0
-#			$StateMachine.transition_to("Partner")
-#		partner.global_position = partner.global_position.lerp(global_position, partner_activation_time)
-#		partner.rotation.y = rotation.y
-#	else:
-#		partner.is_being_called = false
-#		partner_activation_time = 0.0 
+	var partner = get_parent().get_node("Partner")
+	if Input.is_action_pressed("special"):
+		partner.is_being_called = true
+		if Input.is_action_just_pressed("special"):
+			partner_activation_time = 0.0
+			partner_activation_position = partner.global_position
+		partner_activation_time += _delta * 2
+		if partner_activation_time >= 0.5:
+			partner_activation_time = 1.0
+			$StateMachine.transition_to("Partner")
+		partner.global_position = partner.global_position.lerp(global_position, partner_activation_time)
+		partner.rotation.y = rotation.y
+	else:
+		partner.is_being_called = false
+		partner_activation_time = 0.0 
 	
 	# Get the input direction
 	if input_enabled:
@@ -149,6 +149,11 @@ func _process(_delta):
 	
 	# Update facing direction
 	update_facing(_delta)
+	
+	# Set animation based on facing relative to camera
+	var relative_facing = facing_dir.rotated(cam.get_parent().rotation.y)
+	$Sprite3D/AnimationTree.set("parameters/Idle/blend_position", Vector2(relative_facing.x, -relative_facing.y))
+	$Sprite3D/AnimationTree.set("parameters/Run/blend_position", Vector2(relative_facing.x, -relative_facing.y))
 	
 	# TODO: make this cleaner
 	if $StateMachine.current_state != $StateMachine/Stunned:
@@ -257,7 +262,7 @@ func damage_boost(dur = 2):
 	blink_timer.one_shot = false
 	blink_timer.wait_time = 0.05
 	blink_timer.start()
-
+	
 	# Set the duration of the damage boost
 	var invuln_timer = get_tree().create_timer(dur)
 	await invuln_timer.timeout
@@ -276,8 +281,6 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 		if hitbox.is_vessel:
 			return
 		
-		is_immune = true
-		
 		# TODO: Change the way this is done
 		Engine.time_scale= 0.2
 		
@@ -288,7 +291,9 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 			impact_angle = hitbox.get_parent().direction
 		velocity = Vector3(hitbox.push_force_horizontal * impact_angle.x, hitbox.push_force_vertical, hitbox.push_force_horizontal * impact_angle.z)
 		
-		stun(0.1)
+		# do some kind of "if not blocking"
+		if block_multiplier == 0:
+			stun(0.1)
 		
 
 

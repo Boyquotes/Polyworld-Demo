@@ -2,27 +2,26 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hvp1i1a7eemo"
-path.s3tc="res://.godot/imported/TextArrowIcon.png-117b5927dd52cf8cd369a93d36715793.s3tc.ctex"
+uid="uid://6ybntpvq1trl"
+path="res://.godot/imported/cirlce_16.png-9c51a10423e49bbebb351e0c8f361ece.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/TextArrowIcon.png"
-dest_files=["res://.godot/imported/TextArrowIcon.png-117b5927dd52cf8cd369a93d36715793.s3tc.ctex"]
+source_file="res://Textures/cirlce_16.png"
+dest_files=["res://.godot/imported/cirlce_16.png-9c51a10423e49bbebb351e0c8f361ece.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

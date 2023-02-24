@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://wjt3h1jx3cox"]
+[gd_scene load_steps=34 format=3 uid="uid://wjt3h1jx3cox"]
 
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="1_4aamq"]
 [ext_resource type="PackedScene" uid="uid://d33ed6hypa5jv" path="res://Models/Tree.tscn" id="2_sop1k"]
@@ -9,11 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="7_47fpu"]
 [ext_resource type="PackedScene" uid="uid://crnlfdu8xctcu" path="res://Entity/Player/Player.tscn" id="8_vf3q7"]
 [ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="9_r2bav"]
-[ext_resource type="Texture2D" uid="uid://b4mav36hcn3cb" path="res://Textures/atari-8-bit-series-gtia-1x.png" id="10_jkd0m"]
 [ext_resource type="Shader" path="res://Shaders/Clouds.gdshader" id="11_5p4ai"]
-[ext_resource type="PackedScene" path="res://Entity/Partner/Partner.tscn" id="12_dg7sl"]
+[ext_resource type="PackedScene" uid="uid://db1kybbohaicv" path="res://Entity/Partner/Partner.tscn" id="12_dg7sl"]
 [ext_resource type="Script" path="res://Entity/NPC/NPC.gd" id="13_7uen8"]
 [ext_resource type="PackedScene" uid="uid://ddw6484xkeyqr" path="res://Models/Nate.tscn" id="14_ey67h"]
+[ext_resource type="Shader" path="res://Shaders/Outline2.gdshader" id="14_incyl"]
 
 [sub_resource type="Environment" id="Environment_oscer"]
 background_mode = 1
@@ -101,52 +101,15 @@ material = SubResource("ShaderMaterial_1pb3r")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mse8a"]
 render_priority = -128
 shader = ExtResource("9_r2bav")
-shader_parameter/palette_size = 256
-shader_parameter/palette = ExtResource("10_jkd0m")
+shader_parameter/palette_size = 16
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
 material = SubResource("ShaderMaterial_mse8a")
 size = Vector2(2, 2)
 
-[sub_resource type="Gradient" id="Gradient_jy5mq"]
-offsets = PackedFloat32Array(0.625, 0.693182)
-colors = PackedColorArray(0, 0, 0, 1, 0.666667, 0.666667, 0.666667, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_sejp1"]
-noise_type = 3
-frequency = 0.001
-fractal_octaves = 10
-fractal_gain = 0.6
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dkrot"]
-width = 2048
-height = 2048
-generate_mipmaps = false
-seamless = true
-color_ramp = SubResource("Gradient_jy5mq")
-noise = SubResource("FastNoiseLite_sejp1")
-
-[sub_resource type="Gradient" id="Gradient_f8686"]
-colors = PackedColorArray(0, 0, 0, 1, 0.182292, 0.182292, 0.182292, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_3vsvl"]
-noise_type = 3
-frequency = 0.005
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6kb0i"]
-width = 2048
-height = 2048
-generate_mipmaps = false
-seamless = true
-color_ramp = SubResource("Gradient_f8686")
-noise = SubResource("FastNoiseLite_3vsvl")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fdkfx"]
 render_priority = 0
 shader = ExtResource("11_5p4ai")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = SubResource("NoiseTexture2D_dkrot")
-shader_parameter/texture_albedo2 = SubResource("NoiseTexture2D_6kb0i")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_sfewr"]
 material = SubResource("ShaderMaterial_fdkfx")
@@ -157,6 +120,21 @@ subdivide_depth = 2
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_70wsq"]
 radius = 0.7
 height = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4o0fc"]
+render_priority = -128
+shader = ExtResource("14_incyl")
+shader_parameter/is_inverted = false
+shader_parameter/depth_multiplier = 0.1
+shader_parameter/depth_addend = 0.0
+shader_parameter/transparency = 0.75
+shader_parameter/outline_color = Vector4(0, 0, 0, 0.9)
+shader_parameter/depth_pow = 5.0
+shader_parameter/line_width = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_wmokg"]
+material = SubResource("ShaderMaterial_4o0fc")
+size = Vector2(2, 2)
 
 [node name="FourthWorld" type="Node3D"]
 process_mode = 1
@@ -248,6 +226,7 @@ target = NodePath("../Player")
 transform = Transform3D(-4.4177e-08, 0, 1, 0, 1, 0, -1, 0, -4.4177e-08, -4.36129, -0.816236, -2.43025)
 
 [node name="Outline" type="MeshInstance3D" parent="."]
+visible = false
 extra_cull_margin = 10000.0
 ignore_occlusion_culling = true
 mesh = SubResource("QuadMesh_x0ohu")
@@ -276,6 +255,13 @@ shape = SubResource("CapsuleShape3D_70wsq")
 
 [node name="Nate" parent="NPC" instance=ExtResource("14_ey67h")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+
+[node name="Outline2" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+extra_cull_margin = 10000.0
+ignore_occlusion_culling = true
+mesh = SubResource("QuadMesh_wmokg")
+skeleton = NodePath("../..")
 
 [connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]
 

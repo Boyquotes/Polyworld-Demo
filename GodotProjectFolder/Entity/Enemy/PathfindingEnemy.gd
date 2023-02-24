@@ -13,14 +13,6 @@ func _ready():
 	player = get_parent().get_node("Player") as Player
 
 
-func _process(_delta):
-	pass
-
-
-func _physics_process(_delta):
-	pass
-
-
 func _on_entity_died():
 	queue_free()
 
