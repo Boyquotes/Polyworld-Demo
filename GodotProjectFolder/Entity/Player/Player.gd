@@ -150,11 +150,6 @@ func _process(_delta):
 	# Update facing direction
 	update_facing(_delta)
 	
-	# Set animation based on facing relative to camera
-	var relative_facing = facing_dir.rotated(cam.get_parent().rotation.y)
-	$Sprite3D/AnimationTree.set("parameters/Idle/blend_position", Vector2(relative_facing.x, -relative_facing.y))
-	$Sprite3D/AnimationTree.set("parameters/Run/blend_position", Vector2(relative_facing.x, -relative_facing.y))
-	
 	# TODO: make this cleaner
 	if $StateMachine.current_state != $StateMachine/Stunned:
 		Engine.time_scale = move_toward(Engine.time_scale, 1, 0.02)

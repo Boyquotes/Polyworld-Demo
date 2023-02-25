@@ -18,7 +18,7 @@ var is_pov = false
 
 var default_fov = 10
 var default_distance = 85
-var default_rotation = Vector3(-PI/8, 0, 0)
+var default_rotation = Vector3(-PI/9, 0, 0)
 var default_near = 30.0
 
 var rotation_target = default_rotation

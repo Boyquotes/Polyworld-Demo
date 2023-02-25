@@ -77,9 +77,9 @@ func exit():
 
 
 func jump():
-	player.s_player.stream = load("res://Sounds/jumpsound3.wav")
-	player.s_player.pitch_scale = randf_range(0.8, 1.2)
-	player.s_player.play()
+	#player.s_player.stream = load("res://Sounds/jumpsound3.wav")
+	#player.s_player.pitch_scale = randf_range(0.8, 1.2)
+	#player.s_player.play()
 	
 	player.velocity.y = player.jump_force
 	player.can_hold_jump = true

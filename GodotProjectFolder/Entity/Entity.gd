@@ -12,7 +12,7 @@ const GRAVITY := 70.0
 @export var move_accel := 70.0
 @export var move_decel := 50.0 # 50 #replace this with a friction float that is multiplied with and stored in velocity depending on the group the colliding floor is in
 @export var air_accel := 25.0
-@export var turn_speed := 11.0
+@export var turn_speed := 14.0
 @export var jump_force := 15.0
 @export var mass := 1.0
 
