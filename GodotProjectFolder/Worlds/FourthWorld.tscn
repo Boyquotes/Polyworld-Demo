@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cuxegb0qn1kvs"]
+[gd_scene load_steps=34 format=3 uid="uid://cuxegb0qn1kvs"]
 
 [ext_resource type="Texture2D" uid="uid://dr887bne2krjb" path="res://Textures/grass tuft.png" id="3_pidog"]
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="3_wbitg"]
@@ -11,7 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://crnlfdu8xctcu" path="res://Entity/Player/Player.tscn" id="10_skbcd"]
 [ext_resource type="PackedScene" path="res://Camera/CameraRegion.tscn" id="10_y8tlv"]
 [ext_resource type="PackedScene" uid="uid://d2ve7qxs5325o" path="res://Entity/Enemy/PathfindingEnemy.tscn" id="11_dwh2e"]
-[ext_resource type="PackedScene" path="res://Entity/Partner/Partner.tscn" id="14_eu6pb"]
+[ext_resource type="PackedScene" uid="uid://db1kybbohaicv" path="res://Entity/Partner/Partner.tscn" id="14_eu6pb"]
+[ext_resource type="AudioStream" uid="uid://dyjbpx2etv2sn" path="res://Sounds/Music/spirit_shop_01.wav" id="16_f6q80"]
 [ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="17_gisj6"]
 [ext_resource type="Shader" path="res://Shaders/Clouds.gdshader" id="18_vftqk"]
 [ext_resource type="Texture2D" uid="uid://b4mav36hcn3cb" path="res://Textures/atari-8-bit-series-gtia-1x.png" id="27_bk1ir"]
@@ -111,45 +112,9 @@ shader_parameter/palette = ExtResource("27_bk1ir")
 material = SubResource("ShaderMaterial_mse8a")
 size = Vector2(2, 2)
 
-[sub_resource type="Gradient" id="Gradient_jy5mq"]
-offsets = PackedFloat32Array(0.625, 0.693182)
-colors = PackedColorArray(0, 0, 0, 1, 0.666667, 0.666667, 0.666667, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_sejp1"]
-noise_type = 3
-frequency = 0.001
-fractal_octaves = 10
-fractal_gain = 0.6
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dkrot"]
-width = 2048
-height = 2048
-generate_mipmaps = false
-seamless = true
-color_ramp = SubResource("Gradient_jy5mq")
-noise = SubResource("FastNoiseLite_sejp1")
-
-[sub_resource type="Gradient" id="Gradient_f8686"]
-colors = PackedColorArray(0, 0, 0, 1, 0.182292, 0.182292, 0.182292, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_3vsvl"]
-noise_type = 3
-frequency = 0.005
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6kb0i"]
-width = 2048
-height = 2048
-generate_mipmaps = false
-seamless = true
-color_ramp = SubResource("Gradient_f8686")
-noise = SubResource("FastNoiseLite_3vsvl")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fdkfx"]
 render_priority = 0
 shader = ExtResource("18_vftqk")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = SubResource("NoiseTexture2D_dkrot")
-shader_parameter/texture_albedo2 = SubResource("NoiseTexture2D_6kb0i")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_sfewr"]
 material = SubResource("ShaderMaterial_fdkfx")
@@ -374,34 +339,23 @@ target = NodePath("../Player")
 [node name="Camera3d" parent="CameraArm" index="0"]
 near = 10.0
 
+[node name="PocketCamera" parent="CameraArm" index="1"]
+offset_right = 4.0
+offset_bottom = -379.0
+
 [node name="Player" parent="." instance=ExtResource("10_skbcd")]
 transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, -7.21162, -0.384947, 2.65032)
 
 [node name="PathfindingEnemy" parent="." instance=ExtResource("11_dwh2e")]
 transform = Transform3D(0.961482, 0, 0.274865, 0, 1, 0, -0.274865, 0, 0.961482, 0.424739, -0.484544, 5.27399)
-should_avoid = true
-move_speed = 7.0
-move_accel = 40.0
-move_decel = 30.0
-jump_force = 20.0
 
 [node name="PathfindingEnemy2" parent="." instance=ExtResource("11_dwh2e")]
 transform = Transform3D(-0.0475771, 0, -0.998867, 0, 1, 0, 0.998867, 0, -0.0475771, 20.7305, -6.58852, 5.27399)
 can_jump = false
-should_avoid = true
-move_speed = 7.0
-move_accel = 40.0
-move_decel = 30.0
-jump_force = 20.0
 
 [node name="PathfindingEnemy3" parent="." instance=ExtResource("11_dwh2e")]
 transform = Transform3D(0.992803, 0, 0.119756, 0, 1, 0, -0.119756, 0, 0.992803, 21.3842, -12.841, 11.0793)
 can_jump = false
-should_avoid = true
-move_speed = 7.0
-move_accel = 40.0
-move_decel = 30.0
-jump_force = 20.0
 
 [node name="Outline" type="MeshInstance3D" parent="."]
 extra_cull_margin = 10000.0
@@ -420,6 +374,11 @@ mesh = SubResource("PlaneMesh_sfewr")
 [node name="Partner" parent="." node_paths=PackedStringArray("leader") instance=ExtResource("14_eu6pb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27742, -0.323857, 1.63979)
 leader = NodePath("../Player")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("16_f6q80")
+autoplay = true
 
 [connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]
 

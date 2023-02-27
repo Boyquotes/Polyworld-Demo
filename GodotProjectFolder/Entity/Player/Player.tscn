@@ -81,7 +81,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [2]
+"values": [5]
 }
 tracks/1/type = "audio"
 tracks/1/imported = false
@@ -149,7 +149,7 @@ _data = {
 radius = 2.02914
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mv10o"]
-bg_color = Color(0, 0.572549, 0.145098, 1)
+bg_color = Color(1, 0.117647, 0.231373, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vo5c"]
 bg_color = Color(0, 0.156863, 1, 1)
@@ -211,11 +211,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.167957, 0)
 material_override = SubResource("ShaderMaterial_vfqkj")
 pixel_size = 0.05
 texture = ExtResource("14_n5wuy")
-hframes = 6
+hframes = 8
 vframes = 6
+frame = 5
 script = ExtResource("15_1jijy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D2"]
+speed_scale = 0.8
 libraries = {
 "": SubResource("AnimationLibrary_ohsp6")
 }

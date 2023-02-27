@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://wjt3h1jx3cox"]
+[gd_scene load_steps=35 format=3 uid="uid://wjt3h1jx3cox"]
 
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="1_4aamq"]
 [ext_resource type="PackedScene" uid="uid://d33ed6hypa5jv" path="res://Models/Tree.tscn" id="2_sop1k"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Entity/NPC/NPC.gd" id="13_7uen8"]
 [ext_resource type="PackedScene" uid="uid://ddw6484xkeyqr" path="res://Models/Nate.tscn" id="14_ey67h"]
 [ext_resource type="Shader" path="res://Shaders/Outline2.gdshader" id="14_incyl"]
+[ext_resource type="AudioStream" uid="uid://c6tjwq2fbekuw" path="res://Sounds/Music/mushroom_song_01.wav" id="15_dji6j"]
 
 [sub_resource type="Environment" id="Environment_oscer"]
 background_mode = 1
@@ -226,7 +227,6 @@ target = NodePath("../Player")
 transform = Transform3D(-4.4177e-08, 0, 1, 0, 1, 0, -1, 0, -4.4177e-08, -4.36129, -0.816236, -2.43025)
 
 [node name="Outline" type="MeshInstance3D" parent="."]
-visible = false
 extra_cull_margin = 10000.0
 ignore_occlusion_culling = true
 mesh = SubResource("QuadMesh_x0ohu")
@@ -234,10 +234,12 @@ skeleton = NodePath("../..")
 
 [node name="CloudPlane" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18.9608, 8.21198)
+visible = false
 mesh = SubResource("PlaneMesh_sfewr")
 
 [node name="CloudPlane2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1.19249e-08, 1.04251e-15, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, 1.19249e-08, 0, 15.8691, 8.21198)
+visible = false
 mesh = SubResource("PlaneMesh_sfewr")
 
 [node name="Partner" parent="." node_paths=PackedStringArray("leader") instance=ExtResource("12_dg7sl")]
@@ -257,11 +259,17 @@ shape = SubResource("CapsuleShape3D_70wsq")
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 
 [node name="Outline2" type="MeshInstance3D" parent="."]
+visible = false
 cast_shadow = 0
 extra_cull_margin = 10000.0
 ignore_occlusion_culling = true
 mesh = SubResource("QuadMesh_wmokg")
 skeleton = NodePath("../..")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("15_dji6j")
+autoplay = true
 
 [connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]
 
