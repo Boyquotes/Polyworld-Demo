@@ -33,4 +33,15 @@ func _physics_process(_delta):
 	update_facing(_delta)
 	
 	
-
+func interact():
+	var player = get_parent().get_node("Player")
+	face_toward(player.global_position)
+	player.interacting = true
+	var tb = load("res://UI/Dialog.tscn").instantiate()
+	tb.speaker = self
+	tb.offset = -40
+	tb.text = "[wavy]hello...[/wavy]
+	Sorry,_ is there a problem?"
+	get_parent().add_child(tb)
+	await tb.finished
+	player.interacting = false

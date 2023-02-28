@@ -16,9 +16,9 @@ var offset = Vector3.ZERO
 
 var is_pov = false
 
-var default_fov = 10
-var default_distance = 85
-var default_rotation = Vector3(-PI/9, 0, 0)
+var default_fov = 12
+var default_distance = 75
+var default_rotation = Vector3(-PI/8, 0, 0)
 var default_near = 30.0
 
 var rotation_target = default_rotation
@@ -84,7 +84,7 @@ func _physics_process(_delta):
 	hor_position = lerp(hor_position, (target_hor_position + other_target_hor_position)/2 + Vector2(offset.x, offset.z), 0.2)
 	global_position.x = hor_position.x
 	global_position.z = hor_position.y
-	global_position.y = lerp(global_position.y, (target_vert_position + other_target_vert_position)/2 + offset.y, 0.1)
+	global_position.y = lerp(global_position.y, (target_vert_position + other_target_vert_position)/2 + offset.y, 0.1) + 0.1
 	
 	# Lerp camera to target rotation
 	if rotation_phase < 1:

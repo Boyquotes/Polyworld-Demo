@@ -31,7 +31,6 @@ func interact():
 		var player = get_parent().get_node("Player")
 		face_toward(player.global_position)
 		
-		
 		if interaction_id == 0:
 			tb = load("res://UI/Dialog.tscn").instantiate()
 			tb.speaker = self

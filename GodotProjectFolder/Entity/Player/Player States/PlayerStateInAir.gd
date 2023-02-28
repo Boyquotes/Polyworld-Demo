@@ -25,15 +25,29 @@ func update(_delta):
 
 func physics_update(_delta):
 	
+	# Initialize horizontal velocity
+	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
+	
 	if not Input.is_action_pressed("jump"):
 		player.can_hold_jump = false
 	
-	# TODO : fix this to better detect if jumping or not
+	# TODO : fix this to better detect if jumping or not, such as passing it thru as a parameter into the state
 	elif Input.is_action_just_pressed("jump"):
-		set_jump_buffer()
-		if in_coyote_time and player.velocity.y <= 1:
-			jump()
-			return
+		# WALL JUMP STUFF
+		if player.is_on_wall_only():
+			var wall_normal = player.get_wall_normal()
+			var hor_wall_normal = Vector2(wall_normal.x, wall_normal.z).normalized()
+			hor_velocity = hor_wall_normal * 15 + hor_velocity
+			player.velocity.x = hor_velocity.x
+			player.velocity.z = hor_velocity.y
+			player.velocity.y = player.jump_force * 1.2
+			player.facing_dir_target = hor_velocity.normalized()
+		##
+		else:
+			set_jump_buffer()
+			if in_coyote_time and player.velocity.y <= 1:
+				jump()
+				return
 	
 	# Ascending
 	if player.velocity.y >= 0:
@@ -52,9 +66,6 @@ func physics_update(_delta):
 		
 		# Add gravity to velocity
 		player.velocity.y -= player.GRAVITY * _delta
-	
-	# Initialize horizontal velocity
-	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
 	
 	# Adjust velocity if there is movement input
 	if player.relative_input_dir:
@@ -91,11 +102,9 @@ func physics_update(_delta):
 	
 	# Handle attacking
 	if Input.is_action_just_pressed("primary"):
-		#player.attempt_attack("Primary")
 		state_machine.transition_to("Primary")
 		return
 	if Input.is_action_just_pressed("secondary"):
-		#player.attempt_attack("Secondary")
 		state_machine.transition_to("Secondary")
 		return
 

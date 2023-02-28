@@ -14,7 +14,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 0.40214, 0, 1, 0.744792, 0.100039, 0, 1
 gradient = SubResource("Gradient_2f5p1")
 
 [sub_resource type="Curve" id="Curve_e36f0"]
-_data = [Vector2(0, 0), 0.0, 16.471, 0, 0, Vector2(0.1787, 1), -1.01045, -1.01045, 0, 0, Vector2(1, 0.15), -0.110829, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 16.471, 0, 0, Vector2(0.1787, 1), -1.01045, -1.01045, 0, 0, Vector2(1, 0.119784), -0.110829, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_i113c"]

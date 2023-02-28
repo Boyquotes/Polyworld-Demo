@@ -52,6 +52,8 @@ var is_immune := false:
 			$Hurtbox.set_deferred("Monitoring", true)
 		is_immune = val
 
+var interacting := false
+
 
 @onready var cam = get_viewport().get_camera_3d() as Camera3D
 @onready var anim = $Model/AnimationPlayer as AnimationPlayer
@@ -99,21 +101,23 @@ func _process(_delta):
 	
 	# Handle interaction
 	if Input.is_action_just_pressed("interact"):
-		var interact_box = get_node("InteractRegion") as Area3D
-		var overlapping_bodies = interact_box.get_overlapping_bodies()
-		
-		var nearest = null
-		var dist = 100
-		for body in overlapping_bodies:
-			if body == self:
-				continue
-			var current_dist = body.global_position.distance_to(global_position)
-			if current_dist < dist:
-				dist = current_dist
-				nearest = body
-		if nearest:
-			if nearest.has_method("interact"):
-				nearest.interact()
+		if !interacting:
+			var interact_box = get_node("InteractRegion") as Area3D
+			var overlapping_bodies = interact_box.get_overlapping_bodies()
+			
+			var nearest = null
+			var dist = 100
+			for body in overlapping_bodies:
+				if body == self:
+					continue
+				var current_dist = body.global_position.distance_to(global_position)
+				if current_dist < dist:
+					dist = current_dist
+					nearest = body
+			if nearest:
+				if nearest.has_method("interact"):
+					nearest.interact()
+					face_toward(nearest.global_position)
 	
 	# Update aim and aim icon, store results in aim_target and aim_direction
 	if Input.is_action_just_pressed("target_lock"):

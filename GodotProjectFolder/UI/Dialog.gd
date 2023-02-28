@@ -2,7 +2,7 @@ extends Control
 class_name Dialog
 
 
-@export var typing_rate = 0.15
+@export var typing_rate = 25
 
 
 # TEMPORARY
@@ -95,10 +95,10 @@ func _process(_delta):
 			visible_chars += 4
 		else:
 			if !pause_array.has(int(visible_chars)):
-				visible_chars += typing_rate
+				visible_chars += typing_rate * _delta
 			else:
 				var pause_amount = 6
-				visible_chars += typing_rate / (pause_amount * pause_array.count(int(visible_chars)))
+				visible_chars += typing_rate / (pause_amount * pause_array.count(int(visible_chars))) * _delta
 			
 		if visible_chars >= textlabel.get_total_character_count():
 			visible_chars = textlabel.get_total_character_count()

@@ -1,7 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://db1kybbohaicv"]
+[gd_scene load_steps=17 format=3 uid="uid://db1kybbohaicv"]
 
 [ext_resource type="Script" path="res://Entity/Partner/Partner.gd" id="1_xfgan"]
 [ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="2_grkkk"]
+[ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="3_h25nm"]
+[ext_resource type="Texture2D" uid="uid://dk8deutypac4v" path="res://Entity/Player/suitman sprites 2.png" id="4_42u5j"]
+[ext_resource type="Script" path="res://SpriteOrientation.gd" id="5_gni7h"]
+[ext_resource type="AudioStream" uid="uid://cxbos8pxe2jgq" path="res://Sounds/jumpsound2.wav" id="6_1amsx"]
+[ext_resource type="AudioStream" uid="uid://cmkhnabtu7n2t" path="res://Sounds/footstep0.wav" id="7_ovks0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytivq"]
 shading_mode = 2
@@ -14,6 +19,124 @@ material = SubResource("StandardMaterial3D_ytivq")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5bdni"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nsy0n"]
+render_priority = 0
+shader = ExtResource("3_h25nm")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = null
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("4_42u5j")
+
+[sub_resource type="Animation" id="Animation_wmpun"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:x_coord")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_u4b01"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:x_coord")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ojpmy"]
+resource_name = "jump"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:x_coord")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AudioStreamPlayer3D2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.5788,
+"start_offset": 0.0088,
+"stream": ExtResource("6_1amsx")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_a5htk"]
+resource_name = "run"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:x_coord")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AudioStreamPlayer3D2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.512,
+"start_offset": 0.037,
+"stream": ExtResource("7_ovks0")
+}, {
+"end_offset": 0.512,
+"start_offset": 0.037,
+"stream": ExtResource("7_ovks0")
+}],
+"times": PackedFloat32Array(0, 0.2)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ohsp6"]
+_data = {
+"RESET": SubResource("Animation_wmpun"),
+"idle": SubResource("Animation_u4b01"),
+"jump": SubResource("Animation_ojpmy"),
+"run": SubResource("Animation_a5htk")
+}
+
 [node name="Partner" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1_xfgan")
@@ -22,11 +145,13 @@ move_speed = 10.0
 jump_force = 25.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 cast_shadow = 0
 mesh = SubResource("BoxMesh_78isx")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("BoxMesh_78isx")
 
@@ -36,3 +161,19 @@ shape = SubResource("CapsuleShape3D_5bdni")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [node name="Shadow" parent="." instance=ExtResource("2_grkkk")]
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.167957, 0)
+material_override = SubResource("ShaderMaterial_nsy0n")
+pixel_size = 0.05
+texture = ExtResource("4_42u5j")
+hframes = 8
+vframes = 6
+frame = 5
+script = ExtResource("5_gni7h")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D2"]
+speed_scale = 0.8
+libraries = {
+"": SubResource("AnimationLibrary_ohsp6")
+}

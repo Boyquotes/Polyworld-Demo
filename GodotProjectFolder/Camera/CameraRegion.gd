@@ -2,7 +2,7 @@ class_name CameraRegion
 extends Area3D
 
 
-@export var x_rotation = -PI/9
+@export var x_rotation = -PI/8
 @export var y_rotation = 0.0
 
 @onready var camera_arm = get_viewport().get_camera_3d().get_parent() as CameraArm
