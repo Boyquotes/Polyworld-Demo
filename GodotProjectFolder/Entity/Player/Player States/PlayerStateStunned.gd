@@ -28,7 +28,7 @@ func update(_delta):
 
 func physics_update(_delta):
 	
-	player.anim.play("hurt")
+	#player.anim.play("hurt")
 	
 	# Add the gravity
 	player.velocity.y -= player.GRAVITY * _delta

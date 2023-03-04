@@ -13,7 +13,6 @@ func _ready():
 
 
 func _process(_delta):
-	#attacking(player)
 	pass
 
 

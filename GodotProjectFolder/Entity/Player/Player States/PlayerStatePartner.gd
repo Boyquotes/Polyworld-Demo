@@ -21,7 +21,7 @@ func update(_delta):
 
 func physics_update(_delta):
 	
-	player.anim.play("frontflip") #riding animation
+	#player.anim.play("frontflip") #riding animation
 	
 	var vert_velocity = player.velocity.y
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)

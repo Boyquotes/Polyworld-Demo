@@ -29,7 +29,7 @@ func enter():
 	player.velocity.z += player.facing_dir_target.y * 2
 	
 	# Play correct animation
-	player.anim.play("thrust", 0)
+	#player.anim.play("thrust", 0)
 	
 	# Spawn attack
 	var hitbox = load("res://Hitboxes and Hurtboxes/Hitbox.tscn").instantiate() as Hitbox

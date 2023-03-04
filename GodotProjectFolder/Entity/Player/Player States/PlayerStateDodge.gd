@@ -41,7 +41,7 @@ func update(_delta):
 func physics_update(_delta):
 	
 	# Play correct animation
-	player.anim.play("cast2")
+	#player.anim.play("cast2")
 	
 	# Add the gravity
 	player.velocity.y -= player.GRAVITY * _delta
@@ -59,7 +59,7 @@ func physics_update(_delta):
 	if dodge_timer <= 0:
 		if Input.is_action_pressed("special"):
 			state_machine.transition_to("Block")
-		return
+			return
 		
 		# Return to standard state
 		if player.is_on_floor():

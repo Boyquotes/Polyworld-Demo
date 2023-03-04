@@ -28,10 +28,9 @@ func physics_update(_delta):
 	
 	# Running
 	if player.relative_input_dir:
-		$"../../Sprite3D2/AnimationPlayer".play("run")
+		player.anim.play("run")
 		
 		if abs(hor_velocity.angle_to(player.relative_input_dir)) < PI/2:
-			$"../../Sprite3D2".frame_coords.x = 3
 			hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.move_accel * _delta)
 		else:
 			hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.move_accel * 3 * _delta)
@@ -41,7 +40,7 @@ func physics_update(_delta):
 		
 	# Idle
 	else:
-		$"../../Sprite3D2/AnimationPlayer".play("idle")
+		player.anim.play("idle")
 		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.move_decel * _delta)
 	
 	# Apply movement

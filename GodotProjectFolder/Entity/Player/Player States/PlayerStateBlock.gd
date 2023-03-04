@@ -30,7 +30,7 @@ func update(_delta):
 func physics_update(_delta):
 	
 	# Play correct animation
-	player.anim.play("cast2")
+	#player.anim.play("cast2")
 	
 	# TODO : put this in a setter in Entity ?
 	player.block_multiplier -= _delta

@@ -64,7 +64,7 @@ func update(_delta):
 func physics_update(_delta):
 	
 	# Play correct animation
-	player.anim.play("cast2")
+	#player.anim.play("cast2")
 	
 	# Slow down the player
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)

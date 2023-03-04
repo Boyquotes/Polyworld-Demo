@@ -3,14 +3,16 @@
 [ext_resource type="Texture2D" uid="uid://f6fdyjkuus7r" path="res://Textures/Shadow3.png" id="1_w7r0u"]
 [ext_resource type="Script" path="res://Shadow.gd" id="2_i8sf7"]
 
-[node name="Shadow" type="Decal"]
-size = Vector3(1.75, 40, 1.75)
+[node name="Shadow" type="Node3D"]
+script = ExtResource("2_i8sf7")
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+size = Vector3(1.75, 10, 1.75)
 texture_albedo = ExtResource("1_w7r0u")
 normal_fade = 0.5
-upper_fade = 1e+06
-lower_fade = 1e-05
-cull_mask = 1048573
-script = ExtResource("2_i8sf7")
+upper_fade = 1e-05
+lower_fade = 0.1
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -40, 0)

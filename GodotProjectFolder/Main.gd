@@ -13,9 +13,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("reset"):
 		get_tree().reload_current_scene()
 	
-	
 	# MENU RELATED STUFF
-	
 	if Input.is_action_just_pressed("menu"):
 		get_tree().paused = !get_tree().paused
 	
@@ -55,7 +53,7 @@ func _process(_delta):
 		$UILayer/Menu/RightPanel.visible = false
 
 
-func change_scene(scene_name : String):
+func change_scene(scene_name : String, exit_id = -1):
 	
 	var vignette = $UILayer/Vignette as ColorRect
 	var vignette_anim = $UILayer/Vignette/AnimationPlayer as AnimationPlayer
@@ -74,13 +72,23 @@ func change_scene(scene_name : String):
 	var scene = load(scene_name).instantiate()
 	add_child(scene)
 	
-	vignette = $UILayer/Vignette as ColorRect
-	vignette_anim = $UILayer/Vignette/AnimationPlayer as AnimationPlayer
 	cam = get_viewport().get_camera_3d()
 	player = get_child(1).get_node("Player")
-	cam.get_parent().global_position = player.global_position
+	
+	# TODO : this system is so messy. I need to optimize scene transitions
+	if exit_id != -1:
+		var transition_areas = get_tree().get_nodes_in_group("transition_areas")
+		for area in transition_areas:
+			if area.id == exit_id:
+				area.entering = true
+				player.global_position = area.spawn_position
+				#cam.get_parent().following = false
+				#cam.get_parent().global_position = area.exit_position
+				cam.get_parent().global_position = player.global_position
+	else:
+		player.global_position = Vector3(0,0,0)
+		cam.get_parent().global_position = player.global_position
+	
 	vignette.position = cam.unproject_position(player.global_position) - vignette.size / 2
 	vignette.position = vignette.position.clamp(-vignette.size / 2 + Vector2(16, 16), vignette.size / 2 - Vector2(16, 16))
-	await get_tree().create_timer(0.4).timeout
-	
 	vignette_anim.play("Open")

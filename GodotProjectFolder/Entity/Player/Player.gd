@@ -56,30 +56,30 @@ var interacting := false
 
 
 @onready var cam = get_viewport().get_camera_3d() as Camera3D
-@onready var anim = $Model/AnimationPlayer as AnimationPlayer
+@onready var anim = $Sprite3D/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 @onready var aim_icon = $PositionBreak/AimIcon as Node3D
 
+var partner : Partner
 var partner_activation_position = Vector3.ZERO
 var partner_activation_time = 0.0
 
 
 func _ready():
-	pass
+	partner = load("res://Entity/Partner/Partner.tscn").instantiate()
+	get_parent().add_child.call_deferred(partner)
+	partner.global_position = global_position - basis.z * 3
+	partner.leader = self
 
 
 func _process(_delta):
-	
+	#print(get_parent().find_child("Partner"))
 	# Handle UI labels
 	$GoldLabel.text = "$" + str($Inventory.gold)
 	$PrimaryLabel.text = $StateMachine/Primary.state_name
 	$SecondaryLabel.text = $StateMachine/Secondary.state_name
 	
-	#if Input.is_action_just_pressed("special"):
-	#	$StateMachine.transition_to("Block")
-	
 	# Handle partner activation
-	var partner = get_parent().get_node("Partner")
 	if Input.is_action_pressed("special"):
 		partner.is_being_called = true
 		if Input.is_action_just_pressed("special"):
@@ -99,6 +99,7 @@ func _process(_delta):
 	if input_enabled:
 		input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
 	
+	# TODO : make interaction checks constant for popups overhead ? like an A button appearing above interactables ?
 	# Handle interaction
 	if Input.is_action_just_pressed("interact"):
 		if !interacting:
@@ -242,7 +243,7 @@ func decrease_mana(amt:=0) -> bool:
 
 
 # TODO : improve / streamline ? the way stuns are handled for entities
-func stun(dur = 2):
+func stun(dur = 2.0):
 	$StateMachine/Stunned.stun_duration = dur
 	$StateMachine.transition_to("Stunned")
 

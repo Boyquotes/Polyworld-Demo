@@ -206,8 +206,8 @@ visible = false
 [node name="CollisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_yk3vu")
 
-[node name="Sprite3D2" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.167957, 0)
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 material_override = SubResource("ShaderMaterial_vfqkj")
 pixel_size = 0.05
 texture = ExtResource("14_n5wuy")
@@ -216,7 +216,7 @@ vframes = 6
 frame = 5
 script = ExtResource("15_1jijy")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D"]
 speed_scale = 0.8
 libraries = {
 "": SubResource("AnimationLibrary_ohsp6")

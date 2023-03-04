@@ -14,7 +14,7 @@ func _ready():
 
 
 func enter():
-	$"../../Sprite3D2/AnimationPlayer".play("jump")
+	player.anim.play("jump")
 	if not player.can_hold_jump:
 		set_coyote_time()
 
@@ -51,7 +51,7 @@ func physics_update(_delta):
 	
 	# Ascending
 	if player.velocity.y >= 0:
-		player.anim.play("inair_up")
+		#player.anim.play("inair_up")
 		
 		# Add gravity to velocity based on if holding jump
 		if player.can_hold_jump:
@@ -61,7 +61,7 @@ func physics_update(_delta):
 	
 	# Descending
 	else:
-		player.anim.play("inair_down")
+		#player.anim.play("inair_down")
 		player.can_hold_jump = false
 		
 		# Add gravity to velocity

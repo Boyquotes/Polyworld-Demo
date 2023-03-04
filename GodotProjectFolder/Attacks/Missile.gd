@@ -40,9 +40,9 @@ func contact():
 	contacted = true
 	
 	var explosion = load("res://Attacks/Explosion.tscn").instantiate()
-	explosion.global_position = global_position
 	explosion.caster = caster
 	get_tree().root.add_child(explosion)
+	explosion.global_position = global_position
 	
 	$Hitbox.set_deferred("monitorable", false)
 	$GPUParticles3D.emitting = false

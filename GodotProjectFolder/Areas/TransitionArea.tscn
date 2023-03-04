@@ -17,8 +17,7 @@ texture_repeat = false
 [sub_resource type="PlaneMesh" id="PlaneMesh_23msc"]
 material = SubResource("StandardMaterial3D_8bqin")
 
-[node name="TransitionArea" type="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.208187, 0)
+[node name="TransitionArea" type="Area3D" groups=["transition_areas"]]
 collision_mask = 2
 script = ExtResource("1_rhuls")
 file = "res://SecondWorld.tscn"
@@ -32,3 +31,4 @@ visible = false
 mesh = SubResource("PlaneMesh_23msc")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -84,7 +84,7 @@ func _physics_process(_delta):
 	hor_position = lerp(hor_position, (target_hor_position + other_target_hor_position)/2 + Vector2(offset.x, offset.z), 0.2)
 	global_position.x = hor_position.x
 	global_position.z = hor_position.y
-	global_position.y = lerp(global_position.y, (target_vert_position + other_target_vert_position)/2 + offset.y, 0.1) + 0.1
+	global_position.y = lerp(global_position.y, (target_vert_position + other_target_vert_position)/2 + offset.y, 0.1) + 0.2
 	
 	# Lerp camera to target rotation
 	if rotation_phase < 1:

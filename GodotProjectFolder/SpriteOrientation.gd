@@ -34,7 +34,7 @@ func _physics_process(_delta):
 		flip_h = true
 	
 	if is_rotating_clockwise:
-		if frame_coords.y > 0 and frame_coords.y < vframes-1:
+		if frame_coords.y > 0:
 			flip_h = !flip_h
 	
 	frame_coords.x = x_coord

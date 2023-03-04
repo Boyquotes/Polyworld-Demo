@@ -54,8 +54,8 @@ func _process(_delta):
 		border_width = 0.0
 		text_height = 0.0
 	
-	textbox.size.y = move_toward(textbox.size.y, text_height + border_width + 2, 2)
-	textbox.position.y = move_toward(textbox.position.y, -text_height - border_width - 2, 2)
+	textbox.size.y = move_toward(textbox.size.y, text_height + border_width + 2, 150 * _delta)
+	textbox.position.y = move_toward(textbox.position.y, -text_height - border_width - 2, 150 * _delta)
 	
 	if textbox.size.y == text_height + border_width + 2:
 		if closing:
