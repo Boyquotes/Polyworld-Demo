@@ -15,7 +15,22 @@ func enter():
 
 
 func update(_delta):
-	pass
+	
+	# Handle partner activation
+	if Input.is_action_pressed("special"):
+		player.partner.is_being_called = true
+		if Input.is_action_just_pressed("special"):
+			player.partner_activation_time = 0.0
+			player.partner_activation_position = player.partner.global_position
+		player.partner_activation_time += _delta * 2
+		if player.partner_activation_time >= 0.5:
+			player.partner_activation_time = 1.0
+			state_machine.transition_to("Partner")
+		player.partner.global_position = player.partner.global_position.lerp(player.global_position, player.partner_activation_time)
+		player.partner.rotation.y = player.rotation.y
+	else:
+		player.partner.is_being_called = false
+		player.partner_activation_time = 0.0 
 
 
 func physics_update(_delta):

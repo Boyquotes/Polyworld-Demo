@@ -18,6 +18,7 @@ func _on_entity_died():
 
 
 func _on_hurtbox_area_entered(hitbox : Hitbox):
+	
 	if hitbox.caster != self:
 		if "contact" in hitbox.get_parent():
 			hitbox.get_parent().contact()

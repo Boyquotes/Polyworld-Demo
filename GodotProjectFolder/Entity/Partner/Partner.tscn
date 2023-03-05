@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://db1kybbohaicv"]
+[gd_scene load_steps=19 format=3 uid="uid://db1kybbohaicv"]
 
 [ext_resource type="Script" path="res://Entity/Partner/Partner.gd" id="1_xfgan"]
 [ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="2_grkkk"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://SpriteOrientation.gd" id="5_gni7h"]
 [ext_resource type="AudioStream" uid="uid://cxbos8pxe2jgq" path="res://Sounds/jumpsound2.wav" id="6_1amsx"]
 [ext_resource type="AudioStream" uid="uid://cmkhnabtu7n2t" path="res://Sounds/footstep0.wav" id="7_ovks0"]
+[ext_resource type="PackedScene" uid="uid://cqta3h2r0tx1d" path="res://Hitboxes and Hurtboxes/Hitbox.tscn" id="8_e57vd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytivq"]
 shading_mode = 2
@@ -137,6 +138,9 @@ _data = {
 "run": SubResource("Animation_a5htk")
 }
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_dfxx1"]
+radius = 1.2
+
 [node name="Partner" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1_xfgan")
@@ -145,13 +149,11 @@ move_speed = 10.0
 jump_force = 25.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
 cast_shadow = 0
 mesh = SubResource("BoxMesh_78isx")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("BoxMesh_78isx")
 
@@ -164,6 +166,7 @@ shape = SubResource("CapsuleShape3D_5bdni")
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+visible = false
 material_override = SubResource("ShaderMaterial_nsy0n")
 pixel_size = 0.05
 texture = ExtResource("4_42u5j")
@@ -177,3 +180,14 @@ speed_scale = 0.8
 libraries = {
 "": SubResource("AnimationLibrary_ohsp6")
 }
+
+[node name="Hitbox" parent="." instance=ExtResource("8_e57vd")]
+monitorable = false
+damage = 12
+push_force_horizontal = 10.0
+push_force_vertical = 12.0
+
+[node name="CollisionShape3d" parent="Hitbox" index="0"]
+shape = SubResource("SphereShape3D_dfxx1")
+
+[editable path="Hitbox"]

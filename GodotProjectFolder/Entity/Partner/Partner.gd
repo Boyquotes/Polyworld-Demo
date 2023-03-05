@@ -23,7 +23,7 @@ func _physics_process(_delta):
 	else:
 		if is_instance_valid(leader):
 			ai_move(_delta, leader.global_position, 3.0, true)
-			if global_position.distance_to(leader.global_position) > 15:
+			if global_position.distance_to(leader.global_position) > 12:
 				global_position = leader.global_position + Vector3.UP * 5
 		else:
 			# If the leader is invalid, stop moving (but still apply gravity)
@@ -44,3 +44,10 @@ func interact():
 	get_parent().add_child(tb)
 	await tb.finished
 	player.interacting = false
+
+
+func contact():
+	var explosion = load("res://Attacks/Explosion.tscn").instantiate()
+	explosion.global_position = global_position
+	explosion.caster = leader
+	get_tree().root.add_child(explosion)

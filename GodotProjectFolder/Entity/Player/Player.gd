@@ -46,10 +46,7 @@ var old_aim_icon_pos = Vector3.ZERO
 # Immunity
 var is_immune := false:
 	set(val):
-		if val:
-			$Hurtbox.set_deferred("Monitoring", false)
-		else:
-			$Hurtbox.set_deferred("Monitoring", true)
+		$Hurtbox.set_deferred("Monitoring", !val)
 		is_immune = val
 
 var interacting := false
@@ -68,32 +65,16 @@ var partner_activation_time = 0.0
 func _ready():
 	partner = load("res://Entity/Partner/Partner.tscn").instantiate()
 	get_parent().add_child.call_deferred(partner)
-	partner.global_position = global_position - basis.z * 3
+	partner.global_position = global_position - basis.z * 2
 	partner.leader = self
+	partner.get_node("Hitbox").caster = self
 
 
 func _process(_delta):
-	#print(get_parent().find_child("Partner"))
 	# Handle UI labels
 	$GoldLabel.text = "$" + str($Inventory.gold)
 	$PrimaryLabel.text = $StateMachine/Primary.state_name
 	$SecondaryLabel.text = $StateMachine/Secondary.state_name
-	
-	# Handle partner activation
-	if Input.is_action_pressed("special"):
-		partner.is_being_called = true
-		if Input.is_action_just_pressed("special"):
-			partner_activation_time = 0.0
-			partner_activation_position = partner.global_position
-		partner_activation_time += _delta * 2
-		if partner_activation_time >= 0.5:
-			partner_activation_time = 1.0
-			$StateMachine.transition_to("Partner")
-		partner.global_position = partner.global_position.lerp(global_position, partner_activation_time)
-		partner.rotation.y = rotation.y
-	else:
-		partner.is_being_called = false
-		partner_activation_time = 0.0 
 	
 	# Get the input direction
 	if input_enabled:

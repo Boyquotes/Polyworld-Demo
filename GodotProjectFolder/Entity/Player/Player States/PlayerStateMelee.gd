@@ -44,8 +44,6 @@ func enter():
 	get_tree().root.add_child(hitbox)
 	hitbox.global_position = player.global_position + player.basis.z
 	
-	print(hitbox.global_position)
-	
 	# Wait a second
 	await get_tree().create_timer(0.2).timeout
 	

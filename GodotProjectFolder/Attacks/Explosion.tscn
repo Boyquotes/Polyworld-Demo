@@ -71,7 +71,7 @@ script = ExtResource("1_bm8pk")
 
 [node name="Hitbox" parent="." instance=ExtResource("2_c2nc6")]
 lag_caster = false
-damage = 10.0
+damage = 10
 push_force_horizontal = 10.0
 push_force_vertical = 10.0
 can_burn = true

@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://Areas/KillPlane.gd" id="4_jk3vi"]
 [ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="8_s747q"]
 [ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="9_4nqsr"]
+[ext_resource type="AudioStream" uid="uid://bwucyavifaxt" path="res://Sounds/Music/strange_world_01.wav" id="9_bdyle"]
 [ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="9_q4kjt"]
-[ext_resource type="AudioStream" uid="uid://n8geq2j2j51p" path="res://Sounds/Music/theres_a_waterfall_nearby_01.wav" id="10_kar3u"]
 [ext_resource type="PackedScene" uid="uid://crnlfdu8xctcu" path="res://Entity/Player/Player.tscn" id="10_ovgir"]
 [ext_resource type="PackedScene" path="res://Camera/CameraRegion.tscn" id="11_brvpj"]
 [ext_resource type="PackedScene" uid="uid://d2ve7qxs5325o" path="res://Entity/Enemy/PathfindingEnemy.tscn" id="11_mrd0e"]
@@ -177,7 +177,6 @@ transform = Transform3D(0.97105, 0, -0.238873, 0, 1, 0, 0.238873, 0, 0.97105, 28
 can_jump = false
 
 [node name="Outline" type="MeshInstance3D" parent="."]
-visible = false
 cast_shadow = 0
 extra_cull_margin = 10000.0
 ignore_occlusion_culling = true
@@ -186,7 +185,7 @@ skeleton = NodePath("../..")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-stream = ExtResource("10_kar3u")
+stream = ExtResource("9_bdyle")
 autoplay = true
 
 [node name="CameraRegion" parent="." instance=ExtResource("11_brvpj")]

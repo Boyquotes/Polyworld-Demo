@@ -1,17 +1,16 @@
-[gd_scene load_steps=36 format=3 uid="uid://crnlfdu8xctcu"]
+[gd_scene load_steps=35 format=3 uid="uid://crnlfdu8xctcu"]
 
 [ext_resource type="Script" path="res://Entity/Player/Player.gd" id="1_qmea8"]
 [ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_dti1d"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateInAir.gd" id="5_ykyoh"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner2.gd" id="6_p1c2g"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateMissile.gd" id="7_bmusr"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrabber.gd" id="8_2we1h"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateBlock.gd" id="9_6y1mk"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateDodge.gd" id="10_3io3g"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner.gd" id="11_51j4e"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrounded.gd" id="11_fhkm0"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateStunned.gd" id="12_f1m8k"]
 [ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="12_lorah"]
-[ext_resource type="PackedScene" uid="uid://mkpspgj6byif" path="res://Models/CharacterModel.tscn" id="12_rnjkj"]
 [ext_resource type="FontFile" uid="uid://cacnxhnb6wexr" path="res://UI/Fonts/ApplePoke2.ttf" id="13_nxc3v"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://UI/TextArrowIcon.png" id="13_xeyd0"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="14_iklt7"]
@@ -185,7 +184,7 @@ script = ExtResource("5_ykyoh")
 script = ExtResource("12_f1m8k")
 
 [node name="Partner" type="Node" parent="StateMachine"]
-script = ExtResource("11_51j4e")
+script = ExtResource("6_p1c2g")
 
 [node name="Primary" type="Node" parent="StateMachine"]
 script = ExtResource("7_bmusr")
@@ -198,10 +197,6 @@ script = ExtResource("9_6y1mk")
 
 [node name="Dodge" type="Node" parent="StateMachine"]
 script = ExtResource("10_3io3g")
-
-[node name="Model" parent="." instance=ExtResource("12_rnjkj")]
-transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, -0.25, 0)
-visible = false
 
 [node name="CollisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_yk3vu")

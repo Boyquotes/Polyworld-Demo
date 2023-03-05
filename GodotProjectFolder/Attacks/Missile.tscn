@@ -87,6 +87,7 @@ shape = SubResource("SphereShape3D_mriuh")
 [node name="Hitbox" parent="." instance=ExtResource("3_lfol3")]
 lag_caster = false
 is_vessel = true
+damage = 8
 push_force_horizontal = 3.0
 push_force_vertical = 4.0
 can_burn = true
