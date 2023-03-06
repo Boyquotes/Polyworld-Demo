@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode blend_mix, depth_draw_always, cull_back, unshaded, specular_disabled, vertex_lighting;
+render_mode blend_mix, depth_draw_always, cull_back, specular_disabled, vertex_lighting;
 
 uniform sampler2D DEPTH_TEXTURE : hint_depth_texture, filter_linear_mipmap;
 

@@ -31,18 +31,18 @@ func physics_update(_delta):
 	var vert_velocity = player.velocity.y
 	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
 	
-	var partner_speed = player.move_speed * 1.3
-	var partner_accel = player.move_accel * 0.3
+	var partner_speed = player.move_speed * 1.2
+	var partner_accel = player.move_accel * 0.6
 	
 	# If there is input, accelerate towards run speed
 	if player.relative_input_dir:
 		# Set facing direction based on run direction
 		player.facing_dir_target = player.relative_input_dir
-	
-		hor_velocity = hor_velocity.move_toward(
-			player.facing_dir.normalized() * partner_speed, partner_accel)
 	else:
 		player.facing_dir_target = player.facing_dir
+	
+	hor_velocity = hor_velocity.move_toward(
+		player.facing_dir.normalized() * partner_speed, partner_accel * _delta)
 	
 	if player.is_on_floor():
 		fuel = 1

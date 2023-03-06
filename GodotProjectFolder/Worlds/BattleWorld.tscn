@@ -1,26 +1,32 @@
-[gd_scene load_steps=21 format=3 uid="uid://dfflt4jb6dncg"]
+[gd_scene load_steps=27 format=3 uid="uid://dfflt4jb6dncg"]
 
 [ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="1_8t5jk"]
 [ext_resource type="PackedScene" uid="uid://bfcs1jd6r1rvv" path="res://Models/MattsHouse.tscn" id="2_b0tiv"]
 [ext_resource type="Script" path="res://Areas/KillPlane.gd" id="4_jk3vi"]
+[ext_resource type="Shader" path="res://Shaders/Outline2.gdshader" id="8_cqfl8"]
 [ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="8_s747q"]
 [ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="9_4nqsr"]
 [ext_resource type="AudioStream" uid="uid://bwucyavifaxt" path="res://Sounds/Music/strange_world_01.wav" id="9_bdyle"]
-[ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="9_q4kjt"]
 [ext_resource type="PackedScene" uid="uid://crnlfdu8xctcu" path="res://Entity/Player/Player.tscn" id="10_ovgir"]
+[ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="11_8ku8q"]
 [ext_resource type="PackedScene" path="res://Camera/CameraRegion.tscn" id="11_brvpj"]
 [ext_resource type="PackedScene" uid="uid://d2ve7qxs5325o" path="res://Entity/Enemy/PathfindingEnemy.tscn" id="11_mrd0e"]
+[ext_resource type="Texture2D" uid="uid://cj7inwy4d24g7" path="res://Entity/NPC/quilt guy.png" id="12_qbh6s"]
+[ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="13_ac2f7"]
+[ext_resource type="Texture2D" uid="uid://bn6i2io7n5wky" path="res://Entity/NPC/dotguy.png" id="14_noj5u"]
 
 [sub_resource type="Environment" id="Environment_24hwn"]
 background_mode = 1
 background_color = Color(0.172549, 0.282353, 0.490196, 1)
 background_canvas_max_layer = 1
 ambient_light_source = 2
-ambient_light_color = Color(0.470588, 0.470588, 0.470588, 1)
+ambient_light_color = Color(0.462745, 0.462745, 0.462745, 1)
 fog_light_color = Color(0.85098, 0.909804, 1, 1)
 fog_light_energy = 2.28
 fog_sun_scatter = 3.71
 fog_density = 0.007
+adjustment_enabled = true
+adjustment_saturation = 1.2
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_cq3md"]
 vertices = PackedVector3Array(-8.75, 16.2, -19, -15, 16.2, -19, -15, 16.2, -9, -8.75, 16.2, -9, 10.25, 16.2, -9, 10.25, 16.2, -19, 3.75, 16.2, -19, 3.75, 16.2, -9, -2.5, 16.2, -19, -8.75, 16.2, -19, -8.75, 16.2, -9, -2.5, 16.2, -9, -2.5, 16.2, -9, 3.75, 16.2, -9, 3.75, 16.2, -19, -2.5, 16.2, -19, 13, 16.2, -8.25, 13, 16.2, -6.25, 19, 16.2, -6.25, 19, 16.2, -8.25, 19.75, 16.2, -9, 21.75, 16.2, -9, 21.75, 16.2, -19, 12.25, 16.2, -9, 13, 16.2, -8.25, 19, 16.2, -8.25, 19.75, 16.2, -9, 21.75, 16.2, -19, 10.25, 16.2, -19, 10.25, 16.2, -19, 10.25, 16.2, -9, 12.25, 16.2, -9, 28.75, 16.2, -19, 21.75, 16.2, -19, 21.75, 16.2, -9, 28.75, 16.2, -9, 43, 16.2, -19, 36, 16.2, -19, 36, 16.2, -9, 43, 16.2, -9, 43, 16.2, -9, 50.25, 16.2, -9, 50.25, 16.2, -19, 43, 16.2, -19, 36, 16.2, -19, 28.75, 16.2, -19, 28.75, 16.2, -9, 36, 16.2, -9, 45, -1.8, -7.5, 45, -1.8, -19, 43.25, -1.8, -19, 43.25, -1.8, -7.5, 36, -1.8, 15, 43.5, -1.8, 15, 51, -1.8, 4, 42.5, -1.8, -6.75, 31.75, -1.8, -6.75, 21.25, -1.8, 4, 45.75, -1.8, -6.75, 45, -1.8, -7.5, 43.25, -1.8, -7.5, 42.5, -1.8, -6.75, 51, -1.8, 4, 31.75, -1.8, -6.75, 21.25, -1.8, -6.75, 21.25, -1.8, 4, 51, -1.8, 4, 51, -1.8, -6.75, 45.75, -1.8, -6.75, 21.25, -1.8, 4, 21.25, -1.8, 15, 28.5, -1.8, 15, 43.5, -1.8, 15, 51, -1.8, 15, 51, -1.8, 4, 21.25, -1.8, 4, 28.5, -1.8, 15, 36, -1.8, 15, 53, 16.2, -8.25, 53, 16.2, -6.25, 59, 16.2, -6.25, 52.25, 16.2, -9, 53, 16.2, -8.25, 59, 16.2, -6.25, 59, 16.2, -12.75, 50.25, 16.2, -9, 52.25, 16.2, -9, 59, 16.2, -12.75, 59, 16.2, -19, 50.25, 16.2, -19, -14.75, -1.8, -18.75, -14.75, -1.8, -9, -8, -1.8, -9, -8, -1.8, -18.75, 13, -1.8, -9, 20, -1.8, -9, 20, -1.8, -18.75, 13, -1.8, -18.75, 34, -1.8, -9, 41, -1.8, -9, 41, -1.8, -18.75, 34, -1.8, -18.75, -1, -1.8, -18.75, -8, -1.8, -18.75, -8, -1.8, -9, -1, -1.8, -9, 27, -1.8, -9, 34, -1.8, -9, 34, -1.8, -18.75, 27, -1.8, -18.75, 6, -1.8, -18.75, -1, -1.8, -18.75, -1, -1.8, -9, 6, -1.8, -9, 20, -1.8, -9, 27, -1.8, -9, 27, -1.8, -18.75, 20, -1.8, -18.75, 13, -1.8, -18.75, 6, -1.8, -18.75, 6, -1.8, -9, 13, -1.8, -9, 47.25, -1.8, -18.75, 47.25, -1.8, -9, 59, -1.8, -9, 59, -1.8, -18.75, 5.25, 4.2, -16.75, 5.25, 4.2, -9, 16, 4.2, -9, 16, 4.2, -16.75, 16, 4.2, -9, 27, 4.2, -9, 27, 4.2, -16.75, 16, 4.2, -16.75, -15, -1.8, -6.75, -15, -1.8, -2.25, -13.25, -1.8, -3.5, -15, -1.8, -6.75, -13.25, -1.8, -3.5, -6, -1.8, -6.5, 1.25, -1.8, -2.25, 1.5, -1.8, -0.75, 11, -1.8, -0.75, 11, -1.8, -6.75, -1, -1.8, -6.75, 1.25, -1.8, -2.25, 11, -1.8, -0.75, 13.25, -1.8, 4, 13.25, -1.8, 14.75, 19, -1.8, 14.75, 19, -1.8, 4, 19, -1.8, 4, 19, -1.8, -6.75, 13.25, -1.8, -6.75, 13.25, -1.8, 4, 53.25, -1.8, 4, 53.25, -1.8, 14.75, 59, -1.8, 14.75, 59, -1.8, 4, 59, -1.8, 4, 59, -1.8, -6.75, 53.25, -1.8, -6.75, 53.25, -1.8, 4, 0, 3.7, -1, -0.5, 3.6, -2.5, -1.25, 4.3, -1.75, 0, 3.7, -1, -1.25, 4.3, -1.75, -2.75, 5.3, -1.5, -9, 4.4, 3.25, -7.71429, 3.7, 2.64286, -6.42857, 3.7, 2.03572, -3.85714, 5.6, 0.821428, -2.57143, 5.6, 0.214285, -3.79167, 6, -0.708334, -6.91667, 3.5, 1.66667, -7.95833, 3.8, 2.45833, -4, 5.4, -4, -2, 3.8, -5.25, -2.25, 3.6, -6.5, -6.75, 5.6, -5, -5.375, 6, -4.5, -5.625, 5.9, -5.375, -2.75, 5.3, -1.5, -4, 5.6, -3.25, -6.75, 5.6, -5, -13.5, 3.5, -1.75, -11.25, 3.4, 3.75, -9, 4.4, 3.25, -7.95833, 3.8, 2.45833, -6.91667, 3.5, 1.66667, -3.79167, 6, -0.708334, -4.91667, 5.9, -3.83333, -5.83333, 5.9, -4.41667, -9.45, 3.4, -3.7, -10.8, 4, -3.05, -12.15, 4.2, -2.4, -8.50498, 3.5, -2.00303, -8.47992, 3.4, -0.498091, -10.0249, 4.4, 0.984871, -5.48495, 5.5, -1.98105, -4, 5.6, -3.25, -4, 5.4, -4, -6.75, 5.6, -5, -5.83333, 5.9, -4.41667, -4.91667, 5.9, -3.83333, -5.375, 6, -4.5, 19, 16.2, -6.25, 13, 16.2, -6.25, 13, 16.2, 4.25, 19, 16.2, 4.25, 13, 16.2, 4.25, 13, 16.2, 15, 19, 16.2, 15, 19, 16.2, 4.25, 59, 16.2, -6.25, 53, 16.2, -6.25, 53, 16.2, 4.25, 59, 16.2, 4.25, 53, 16.2, 4.25, 53, 16.2, 15, 59, 16.2, 15, 59, 16.2, 4.25, -3.5, -1.8, -5.25, -12.25, -1.8, -1.25, -10.75, -1.8, 2.5, -10, -1.8, 2.5, -1.25, -1.8, -1.5, -2.75, -1.8, -5.25, -2, -1.8, 1.5, -3.25, -1.8, 1.5, -3.75, -1.8, 2.25, -3.75, -1.8, 2.25, -6.5, -1.8, 3.25, -7, -1.8, 4, -11.75, -1.8, 5.25, -15, -1.8, -1, -15, -1.8, 7, -10, -1.8, 5.25, -11.75, -1.8, 5.25, -15, -1.8, 7, -15, -1.8, 15, -8.5, -1.8, 15, -2, -1.8, 1.5, -3.75, -1.8, 2.25, -7, -1.8, 4, 0.75, -1.8, 0.25, -2, -1.8, 1.5, -7, -1.8, 4, 11, -1.8, -0.75, 1.5, -1.8, -0.75, 0.75, -1.8, 0.25, -7, -1.8, 4, -10, -1.8, 5.25, -8.5, -1.8, 15, -2, -1.8, 15, 11, -1.8, 7, 11, -1.8, -0.75, 0.75, -1.8, 0.25, -7, -1.8, 4, -2, -1.8, 15, 4.5, -1.8, 15, 4.5, -1.8, 15, 11, -1.8, 15, 11, -1.8, 7)
@@ -54,8 +60,14 @@ size = Vector3(4, 4, 6)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mv6we"]
 render_priority = -128
-shader = ExtResource("9_q4kjt")
-shader_parameter/palette_size = 16
+shader = ExtResource("8_cqfl8")
+shader_parameter/is_inverted = false
+shader_parameter/depth_multiplier = 1.0
+shader_parameter/depth_addend = 0.0
+shader_parameter/transparency = 0.75
+shader_parameter/outline_color = Vector4(0, 0, 0, 1)
+shader_parameter/depth_pow = 5.0
+shader_parameter/line_width = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
 material = SubResource("ShaderMaterial_mv6we")
@@ -67,13 +79,40 @@ size = Vector3(30, 10, 8.92409)
 [sub_resource type="BoxShape3D" id="BoxShape3D_n8wt8"]
 size = Vector3(67.012, 3.11018, 23.2861)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ul1o"]
+render_priority = 0
+shader = ExtResource("11_8ku8q")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("12_qbh6s")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fhdfk"]
+render_priority = 0
+shader = ExtResource("11_8ku8q")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("14_noj5u")
+
 [node name="BattleWorld" type="Node3D"]
 process_mode = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.556296, -0.719654, 0.415492, 0, 0.5, 0.866025, -0.830984, -0.481766, 0.278148, 0, 0, 0)
+transform = Transform3D(0.556296, -0.719653, 0.415492, 0, 0.5, 0.866026, -0.830984, -0.481767, 0.278148, 0, 0, 0)
 shadow_enabled = true
+shadow_bias = 0.05
+shadow_blur = 0.4
+directional_shadow_mode = 0
+directional_shadow_split_2 = 0.4
 directional_shadow_max_distance = 300.0
+directional_shadow_pancake_size = 0.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_24hwn")
@@ -187,6 +226,7 @@ skeleton = NodePath("../..")
 process_mode = 3
 stream = ExtResource("9_bdyle")
 autoplay = true
+max_polyphony = 5
 
 [node name="CameraRegion" parent="." instance=ExtResource("11_brvpj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.3448, 6.71216, -12.8967)
@@ -202,6 +242,88 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.3448, 6.71216, 2.09993)
 [node name="CollisionShape3D" parent="CameraRegion2" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.99209, -6.58355, 1.61418)
 shape = SubResource("BoxShape3D_n8wt8")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.4296, 4.72119, -15.0157)
+material_override = SubResource("ShaderMaterial_6ul1o")
+pixel_size = 0.05
+texture = ExtResource("12_qbh6s")
+
+[node name="Shadow" parent="Sprite3D" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4994, 4.72119, -13.7233)
+material_override = SubResource("ShaderMaterial_6ul1o")
+flip_h = true
+pixel_size = 0.05
+texture = ExtResource("12_qbh6s")
+
+[node name="Shadow" parent="Sprite3D2" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D3" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6655, 4.72119, -12.4537)
+material_override = SubResource("ShaderMaterial_6ul1o")
+flip_h = true
+pixel_size = 0.05
+texture = ExtResource("12_qbh6s")
+
+[node name="Shadow" parent="Sprite3D3" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D4" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.537, 4.72119, -15.8807)
+material_override = SubResource("ShaderMaterial_6ul1o")
+pixel_size = 0.05
+texture = ExtResource("12_qbh6s")
+
+[node name="Shadow" parent="Sprite3D4" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D5" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6285, 4.72119, -11.666)
+material_override = SubResource("ShaderMaterial_6ul1o")
+pixel_size = 0.05
+texture = ExtResource("12_qbh6s")
+
+[node name="Shadow" parent="Sprite3D5" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D6" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.21701, -1.13785, 3.61821)
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_noj5u")
+
+[node name="Shadow" parent="Sprite3D6" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D7" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.88158, -1.13785, 6.57771)
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_noj5u")
+
+[node name="Shadow" parent="Sprite3D7" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D8" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.06883, -1.13785, -4.65645)
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_noj5u")
+
+[node name="Shadow" parent="Sprite3D8" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D9" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.38394, -1.13785, -4.3313)
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_noj5u")
+
+[node name="Shadow" parent="Sprite3D9" instance=ExtResource("13_ac2f7")]
+
+[node name="Sprite3D10" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.69529, -1.13785, 9.99015)
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_noj5u")
+
+[node name="Shadow" parent="Sprite3D10" instance=ExtResource("13_ac2f7")]
 
 [connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]
 

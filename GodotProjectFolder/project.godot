@@ -175,17 +175,18 @@ reset={
 
 [rendering]
 
+lights_and_shadows/directional_shadow/size=8192
 shading/overrides/force_lambert_over_burley=true
 
 [shader_globals]
 
 outline_depth_multiplier={
 "type": "float",
-"value": 15.0
+"value": 6.0
 }
 outline_transparency={
 "type": "float",
-"value": 2.0
+"value": 1.5
 }
 outline_color={
 "type": "color",

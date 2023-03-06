@@ -6,6 +6,16 @@ var player : Player
 var in_jump_buffer = false
 var in_coyote_time = false
 
+var wall_sliding = false
+var wall_normal = Vector3.UP:
+	set(val):
+		wall_normal_2d = Vector2(val.x, val.z).normalized()
+		wall_normal = val
+var wall_normal_2d = Vector2.UP
+var wall_slide_fuel = 1.0:
+	set(val):
+		wall_slide_fuel = clamp(val, 0, 1)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +27,7 @@ func enter():
 	player.anim.play("jump")
 	if not player.can_hold_jump:
 		set_coyote_time()
+	wall_slide_fuel = 1.0
 
 
 func update(_delta):
@@ -49,14 +60,15 @@ func physics_update(_delta):
 	# TODO : fix this to better detect if jumping or not, such as passing it thru as a parameter into the state
 	elif Input.is_action_just_pressed("jump"):
 		# WALL JUMP STUFF
-		if player.is_on_wall_only():
-			var wall_normal = player.get_wall_normal()
-			var hor_wall_normal = Vector2(wall_normal.x, wall_normal.z).normalized()
-			hor_velocity = hor_wall_normal * 15 + hor_velocity
+		if wall_sliding:
+			wall_sliding = false
+			hor_velocity = wall_normal_2d * 15 + hor_velocity
 			player.velocity.x = hor_velocity.x
 			player.velocity.z = hor_velocity.y
 			player.velocity.y = player.jump_force * 1.2
 			player.facing_dir_target = hor_velocity.normalized()
+			player.anim.play("jump", 0)
+			
 		##
 		else:
 			set_jump_buffer()
@@ -98,6 +110,19 @@ func physics_update(_delta):
 		if  last_speed - player.velocity.length() > 40:
 			player.take_damage(last_speed * 0.2)
 	
+	if wall_sliding:
+		wall_slide_fuel -= 0.05
+		player.velocity.y *= 1.0 - wall_slide_fuel * 0.5
+		var wall_angle = player.facing_dir_target.dot(wall_normal_2d)
+		if wall_angle >= 0.1:
+			wall_sliding = false
+	elif wall_slide_fuel > 0 && player.is_on_wall():
+		wall_normal = player.get_wall_normal()
+		var wall_angle = hor_velocity.dot(wall_normal_2d)
+		if wall_angle < -0.25:
+			wall_sliding = true
+	
+	
 	# Handle landing
 	if player.is_on_floor():
 		player.s_player.stream = load("res://Sounds/landing.wav")
@@ -125,7 +150,7 @@ func physics_update(_delta):
 
 
 func exit():
-	pass
+	wall_sliding = false
 
 
 func jump():

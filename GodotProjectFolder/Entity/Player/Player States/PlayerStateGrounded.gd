@@ -63,6 +63,9 @@ func physics_update(_delta):
 	player.velocity.z = hor_velocity.y
 	player.move_and_slide()
 	
+	#print(player.velocity.length() / player.move_speed)
+	#player.anim.speed_scale = pow(player.velocity.length() / player.move_speed, 2)
+	
 	# Check if still grounded, and transition states if not
 	if player.is_on_floor():
 		
@@ -94,6 +97,8 @@ func jump():
 	#player.s_player.stream = load("res://Sounds/jumpsound3.wav")
 	#player.s_player.pitch_scale = randf_range(0.8, 1.2)
 	#player.s_player.play()
+	
+	player.anim.speed_scale = 1
 	
 	player.velocity.y = player.jump_force
 	player.can_hold_jump = true
