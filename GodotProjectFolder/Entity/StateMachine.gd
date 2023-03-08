@@ -7,6 +7,8 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# WTF is this bruh vvvvvvvv
+	await get_parent().ready
 	current_state.enter()
 
 

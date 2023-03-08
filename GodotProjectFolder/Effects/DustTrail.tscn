@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1eu4n46chxe7"]
+
+[ext_resource type="QuadMesh" uid="uid://n2b3t4fme2bi" path="res://Effects/DustMesh.tres" id="1_kpljy"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q347b"]
+gravity = Vector3(0, 4, 0)
+angle_min = -180.0
+angle_max = 180.0
+anim_speed_min = 2.0
+anim_speed_max = 3.0
+
+[node name="DustTrail" type="GPUParticles3D"]
+layers = 2
+cast_shadow = 0
+amount = 6
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_q347b")
+draw_pass_1 = ExtResource("1_kpljy")

@@ -56,6 +56,7 @@ var interacting := false
 @onready var anim = $Sprite3D/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 @onready var aim_icon = $PositionBreak/AimIcon as Node3D
+@onready var dust_trail = $DustTrail as GPUParticles3D
 
 var partner : Partner
 var partner_activation_position = Vector3.ZERO

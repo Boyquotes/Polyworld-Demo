@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://crnlfdu8xctcu"]
+[gd_scene load_steps=36 format=3 uid="uid://c5ufwfeqsvued"]
 
 [ext_resource type="Script" path="res://Entity/Player/Player.gd" id="1_qmea8"]
 [ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_dti1d"]
@@ -13,14 +13,15 @@
 [ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="12_lorah"]
 [ext_resource type="FontFile" uid="uid://cacnxhnb6wexr" path="res://UI/Fonts/ApplePoke2.ttf" id="13_nxc3v"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://UI/TextArrowIcon.png" id="13_xeyd0"]
+[ext_resource type="AudioStream" uid="uid://drio2vv2ueejn" path="res://Sounds/jump1.ogg" id="14_3wmou"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="14_iklt7"]
 [ext_resource type="Script" path="res://UI/Inventory.gd" id="14_msqyj"]
 [ext_resource type="Texture2D" uid="uid://dk8deutypac4v" path="res://Entity/Player/suitman sprites 2.png" id="14_n5wuy"]
 [ext_resource type="Script" path="res://SpriteOrientation.gd" id="15_1jijy"]
-[ext_resource type="AudioStream" uid="uid://cmkhnabtu7n2t" path="res://Sounds/footstep0.wav" id="15_i2ue0"]
+[ext_resource type="AudioStream" uid="uid://v0228yl4kttp" path="res://Sounds/footstep2.wav" id="15_5u0jv"]
 [ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="15_prtxv"]
-[ext_resource type="AudioStream" uid="uid://cxbos8pxe2jgq" path="res://Sounds/jumpsound2.wav" id="15_tjodk"]
 [ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="19_gbp5s"]
+[ext_resource type="PackedScene" uid="uid://b1eu4n46chxe7" path="res://Effects/DustTrail.tscn" id="22_taaxe"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yk3vu"]
 
@@ -92,7 +93,7 @@ tracks/1/keys = {
 "clips": [{
 "end_offset": 0.5788,
 "start_offset": 0.0088,
-"stream": ExtResource("15_tjodk")
+"stream": ExtResource("14_3wmou")
 }],
 "times": PackedFloat32Array(0)
 }
@@ -122,17 +123,17 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": [{
-"end_offset": 0.512,
-"start_offset": 0.037,
-"stream": ExtResource("15_i2ue0")
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("15_5u0jv")
 }, {
-"end_offset": 0.512,
-"start_offset": 0.037,
-"stream": ExtResource("15_i2ue0")
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("15_5u0jv")
 }],
-"times": PackedFloat32Array(0, 0.2)
+"times": PackedFloat32Array(0.1, 0.3)
 }
-tracks/1/use_blend = true
+tracks/1/use_blend = false
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ohsp6"]
 _data = {
@@ -327,6 +328,9 @@ text = "Secondary"
 horizontal_alignment = 2
 
 [node name="Shadow" parent="." instance=ExtResource("19_gbp5s")]
+
+[node name="DustTrail" parent="." instance=ExtResource("22_taaxe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.806744, -0.0458658)
 
 [connection signal="entity_died" from="." to="." method="_on_entity_died"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

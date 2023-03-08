@@ -28,6 +28,8 @@ func enter():
 	if not player.can_hold_jump:
 		set_coyote_time()
 	wall_slide_fuel = 1.0
+	
+	player.dust_trail.emitting = false
 
 
 func update(_delta):
@@ -111,8 +113,10 @@ func physics_update(_delta):
 			player.take_damage(last_speed * 0.2)
 	
 	if wall_sliding:
-		wall_slide_fuel -= 0.05
-		player.velocity.y *= 1.0 - wall_slide_fuel * 0.5
+		if player.velocity.y < 0:
+			player.dust_trail.emitting = true
+			wall_slide_fuel -= 0.05
+			player.velocity.y *= 1.0 - wall_slide_fuel * 0.5
 		var wall_angle = player.facing_dir_target.dot(wall_normal_2d)
 		if wall_angle >= 0.1:
 			wall_sliding = false
@@ -121,13 +125,15 @@ func physics_update(_delta):
 		var wall_angle = hor_velocity.dot(wall_normal_2d)
 		if wall_angle < -0.25:
 			wall_sliding = true
+	else:
+		player.dust_trail.emitting = false
 	
 	
 	# Handle landing
 	if player.is_on_floor():
 		player.s_player.stream = load("res://Sounds/landing.wav")
 		player.s_player.pitch_scale = randf_range(0.8, 1.2)
-		player.s_player.play()
+		#player.s_player.play()
 		
 		player.can_hold_jump = false
 		

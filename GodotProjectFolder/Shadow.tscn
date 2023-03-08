@@ -13,6 +13,7 @@ texture_albedo = ExtResource("1_w7r0u")
 normal_fade = 0.5
 upper_fade = 1e-05
 lower_fade = 0.1
+cull_mask = 1048573
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -40, 0)

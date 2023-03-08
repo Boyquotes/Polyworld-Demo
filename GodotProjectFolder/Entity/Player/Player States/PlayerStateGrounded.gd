@@ -11,7 +11,8 @@ func _ready():
 
 
 func enter():
-	pass
+	player.anim.play("run")
+	player.dust_trail.emitting = true
 
 
 func update(_delta):
@@ -43,7 +44,7 @@ func physics_update(_delta):
 	
 	# Running
 	if player.relative_input_dir:
-		player.anim.play("run")
+		#player.anim.play("run")
 		
 		if abs(hor_velocity.angle_to(player.relative_input_dir)) < PI/2:
 			hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.move_accel * _delta)
@@ -55,7 +56,7 @@ func physics_update(_delta):
 		
 	# Idle
 	else:
-		player.anim.play("idle")
+		#player.anim.play("idle")
 		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, player.move_decel * _delta)
 	
 	# Apply movement

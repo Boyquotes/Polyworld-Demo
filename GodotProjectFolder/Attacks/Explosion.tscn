@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Attacks/Explosion.gd" id="1_bm8pk"]
 [ext_resource type="PackedScene" uid="uid://cqta3h2r0tx1d" path="res://Hitboxes and Hurtboxes/Hitbox.tscn" id="2_c2nc6"]
 [ext_resource type="Texture2D" uid="uid://6ybntpvq1trl" path="res://Textures/cirlce_16.png" id="3_fd0l0"]
-[ext_resource type="AudioStream" uid="uid://b5dtxcwk1bosb" path="res://Sounds/slam1.wav" id="4_jsxxq"]
+[ext_resource type="AudioStream" uid="uid://c0r8a43woq1ey" path="res://Sounds/explosion1.ogg" id="4_aw6xb"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ks0ig"]
 radius = 1.0
@@ -100,7 +100,7 @@ process_material = SubResource("ParticleProcessMaterial_7piwh")
 draw_pass_1 = SubResource("QuadMesh_p3qoe")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("4_jsxxq")
+stream = ExtResource("4_aw6xb")
 attenuation_model = 3
 autoplay = true
 max_distance = 500.0

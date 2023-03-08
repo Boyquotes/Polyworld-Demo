@@ -1,13 +1,13 @@
 [gd_scene load_steps=27 format=3 uid="uid://dfflt4jb6dncg"]
 
-[ext_resource type="Texture2D" uid="uid://b0mvis1g3nl6w" path="res://Textures/background3.png" id="1_8t5jk"]
+[ext_resource type="Texture2D" uid="uid://d1a0s0wr54d1a" path="res://Textures/background2.png" id="1_ep5yb"]
 [ext_resource type="PackedScene" uid="uid://bfcs1jd6r1rvv" path="res://Models/MattsHouse.tscn" id="2_b0tiv"]
 [ext_resource type="Script" path="res://Areas/KillPlane.gd" id="4_jk3vi"]
 [ext_resource type="Shader" path="res://Shaders/Outline2.gdshader" id="8_cqfl8"]
 [ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="8_s747q"]
 [ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="9_4nqsr"]
 [ext_resource type="AudioStream" uid="uid://bwucyavifaxt" path="res://Sounds/Music/strange_world_01.wav" id="9_bdyle"]
-[ext_resource type="PackedScene" uid="uid://crnlfdu8xctcu" path="res://Entity/Player/Player.tscn" id="10_ovgir"]
+[ext_resource type="PackedScene" uid="uid://c5ufwfeqsvued" path="res://Entity/Player/Player.tscn" id="10_ovgir"]
 [ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="11_8ku8q"]
 [ext_resource type="PackedScene" path="res://Camera/CameraRegion.tscn" id="11_brvpj"]
 [ext_resource type="PackedScene" uid="uid://d2ve7qxs5325o" path="res://Entity/Enemy/PathfindingEnemy.tscn" id="11_mrd0e"]
@@ -17,10 +17,10 @@
 
 [sub_resource type="Environment" id="Environment_24hwn"]
 background_mode = 1
-background_color = Color(0.172549, 0.282353, 0.490196, 1)
+background_color = Color(0.45098, 0.45098, 0.45098, 1)
 background_canvas_max_layer = 1
 ambient_light_source = 2
-ambient_light_color = Color(0.462745, 0.462745, 0.462745, 1)
+ambient_light_color = Color(0.529412, 0.529412, 0.529412, 1)
 fog_light_color = Color(0.85098, 0.909804, 1, 1)
 fog_light_energy = 2.28
 fog_sun_scatter = 3.71
@@ -38,7 +38,7 @@ agent_radius = 1.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqdx7"]
 shading_mode = 2
 diffuse_mode = 1
-albedo_texture = ExtResource("1_8t5jk")
+albedo_texture = ExtResource("1_ep5yb")
 metallic_specular = 0.0
 uv1_scale = Vector3(0.125, 0.125, 0.125)
 uv1_offset = Vector3(0.125, 0.125, 0.125)
@@ -205,8 +205,8 @@ target = NodePath("../Player")
 near = 10.0
 
 [node name="PocketCamera" parent="CameraArm" index="1"]
-offset_right = 4.0
-offset_bottom = -379.0
+offset_right = 484.0
+offset_bottom = -109.0
 
 [node name="Player" parent="." instance=ExtResource("10_ovgir")]
 transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 43.7601, 1.87005, -4.24836)
@@ -225,7 +225,7 @@ skeleton = NodePath("../..")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("9_bdyle")
-autoplay = true
+volume_db = -4.0
 max_polyphony = 5
 
 [node name="CameraRegion" parent="." instance=ExtResource("11_brvpj")]

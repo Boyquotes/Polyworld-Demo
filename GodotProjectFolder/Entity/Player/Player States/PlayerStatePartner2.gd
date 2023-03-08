@@ -19,7 +19,11 @@ func enter():
 	fuel = 1
 	player.partner.velocity.y = 0
 	player.turn_speed = 5
-	pass
+	
+	player.s_player.stream = load("res://Sounds/flight1.ogg")
+	player.s_player.play()
+	
+	player.dust_trail.emitting = true
 
 
 func update(_delta):
@@ -74,6 +78,9 @@ func physics_update(_delta):
 
 
 func exit():
+	
+	player.dust_trail.emitting = false
+	player.s_player.stop()
 	# Activate partner's hitbox to hit enemies
 	player.partner.get_node("Hitbox").set_deferred("monitorable", false)
 	player.turn_speed = 14

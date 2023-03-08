@@ -1,0 +1,19 @@
+[gd_resource type="QuadMesh" load_steps=3 format=3 uid="uid://n2b3t4fme2bi"]
+
+[ext_resource type="Texture2D" uid="uid://bxwad4juw4ofp" path="res://Textures/dust particle spritesheet.png" id="1_u05ei"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uawd1"]
+transparency = 1
+shading_mode = 0
+specular_mode = 2
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_u05ei")
+texture_filter = 0
+billboard_mode = 3
+particles_anim_h_frames = 8
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[resource]
+material = SubResource("StandardMaterial3D_uawd1")
