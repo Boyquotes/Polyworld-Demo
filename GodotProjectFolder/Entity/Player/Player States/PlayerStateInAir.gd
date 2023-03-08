@@ -143,7 +143,7 @@ func physics_update(_delta):
 			return
 		
 		else:
-			state_machine.transition_to("Grounded")
+			state_machine.transition_to("Idle")
 			return
 	
 	# Handle attacking

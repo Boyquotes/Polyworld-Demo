@@ -60,7 +60,7 @@ func physics_update(_delta):
 	if !Input.is_action_pressed("special"):
 		# Return to standard state
 		if player.is_on_floor():
-			state_machine.transition_to("Grounded")
+			state_machine.transition_to("Idle")
 		else:
 			state_machine.transition_to("InAir")
 		return

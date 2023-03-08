@@ -29,7 +29,7 @@ func update(_delta):
 		# Attempt to use mana, and return if there isn't enough
 		if !player.decrease_mana(mana_cost):
 			if player.is_on_floor():
-				state_machine.transition_to("Grounded")
+				state_machine.transition_to("Idle")
 			else:
 				state_machine.transition_to("InAir")
 			return
@@ -56,7 +56,7 @@ func physics_update(_delta):
 		if !Input.is_action_pressed("primary"):
 			# Return to standard state
 			if player.is_on_floor():
-				state_machine.transition_to("Grounded")
+				state_machine.transition_to("Idle")
 			else:
 				state_machine.transition_to("InAir")
 			return
@@ -64,7 +64,7 @@ func physics_update(_delta):
 		if !Input.is_action_pressed("secondary"):
 			# Return to standard state
 			if player.is_on_floor():
-				state_machine.transition_to("Grounded")
+				state_machine.transition_to("Idle")
 			else:
 				state_machine.transition_to("InAir")
 			return

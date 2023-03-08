@@ -1,14 +1,15 @@
-[gd_scene load_steps=36 format=3 uid="uid://c5ufwfeqsvued"]
+[gd_scene load_steps=37 format=3 uid="uid://c5ufwfeqsvued"]
 
 [ext_resource type="Script" path="res://Entity/Player/Player.gd" id="1_qmea8"]
 [ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_dti1d"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateIdle.gd" id="3_uxd6j"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateRun.gd" id="4_deg5w"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateInAir.gd" id="5_ykyoh"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner2.gd" id="6_p1c2g"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateMissile.gd" id="7_bmusr"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrabber.gd" id="8_2we1h"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateBlock.gd" id="9_6y1mk"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateDodge.gd" id="10_3io3g"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrounded.gd" id="11_fhkm0"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateStunned.gd" id="12_f1m8k"]
 [ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="12_lorah"]
 [ext_resource type="FontFile" uid="uid://cacnxhnb6wexr" path="res://UI/Fonts/ApplePoke2.ttf" id="13_nxc3v"]
@@ -175,10 +176,13 @@ move_speed = 14.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("2_dti1d")
-current_state = NodePath("Grounded")
+current_state = NodePath("Idle")
 
-[node name="Grounded" type="Node" parent="StateMachine"]
-script = ExtResource("11_fhkm0")
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_uxd6j")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_deg5w")
 
 [node name="InAir" type="Node" parent="StateMachine"]
 script = ExtResource("5_ykyoh")
@@ -215,7 +219,6 @@ frame = 5
 script = ExtResource("15_1jijy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D"]
-speed_scale = 0.8
 libraries = {
 "": SubResource("AnimationLibrary_ohsp6")
 }

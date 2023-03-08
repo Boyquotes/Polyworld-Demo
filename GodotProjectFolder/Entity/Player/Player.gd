@@ -57,6 +57,7 @@ var interacting := false
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 @onready var aim_icon = $PositionBreak/AimIcon as Node3D
 @onready var dust_trail = $DustTrail as GPUParticles3D
+@onready var state_machine = $StateMachine as StateMachine
 
 var partner : Partner
 var partner_activation_position = Vector3.ZERO

@@ -68,6 +68,7 @@ func contact():
 	
 	$Hitbox.set_deferred("monitorable", false)
 	$GPUParticles3D.emitting = false
+	$Shadow.queue_free()
 	await get_tree().create_timer(2, false).timeout
 	queue_free()
 

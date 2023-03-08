@@ -3,7 +3,9 @@
 [ext_resource type="Script" path="res://Attacks/Fireball.gd" id="1_hlqfe"]
 [ext_resource type="PackedScene" uid="uid://cqta3h2r0tx1d" path="res://Hitboxes and Hurtboxes/Hitbox.tscn" id="1_hwuj7"]
 [ext_resource type="AudioStream" uid="uid://duygphefbyx8h" path="res://Sounds/singe0.wav" id="3_dsccw"]
+[ext_resource type="QuadMesh" uid="uid://tie6ggjv3i3f" path="res://Effects/CircleMesh.tres" id="3_qk6t8"]
 [ext_resource type="Texture2D" uid="uid://6ybntpvq1trl" path="res://Textures/cirlce_16.png" id="4_8s7lf"]
+[ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="6_l85nb"]
 
 [sub_resource type="Gradient" id="Gradient_2f5p1"]
 interpolation_mode = 1
@@ -34,26 +36,6 @@ scale_curve = SubResource("CurveTexture_i113c")
 color_ramp = SubResource("GradientTexture1D_77tyo")
 turbulence_noise_scale = 1.5
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36gyg"]
-transparency = 2
-alpha_scissor_threshold = 0.5
-alpha_antialiasing_mode = 0
-shading_mode = 0
-diffuse_mode = 1
-specular_mode = 2
-disable_ambient_light = true
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("4_8s7lf")
-texture_filter = 0
-disable_receive_shadows = true
-billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="QuadMesh" id="QuadMesh_eamj2"]
-material = SubResource("StandardMaterial3D_36gyg")
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_mriuh"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gjba8"]
@@ -79,7 +61,7 @@ speed_scale = 2.5
 fixed_fps = 60
 interpolate = false
 process_material = SubResource("ParticleProcessMaterial_052x7")
-draw_pass_1 = SubResource("QuadMesh_eamj2")
+draw_pass_1 = ExtResource("3_qk6t8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_mriuh")
@@ -103,6 +85,8 @@ volume_db = 6.0
 wait_time = 5.0
 one_shot = true
 autostart = true
+
+[node name="Shadow" parent="." instance=ExtResource("6_l85nb")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 

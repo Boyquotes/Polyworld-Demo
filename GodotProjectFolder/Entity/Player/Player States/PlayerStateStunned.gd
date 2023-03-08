@@ -21,7 +21,7 @@ func update(_delta):
 	stun_duration -= _delta
 	if stun_duration <= 0:
 		if player.is_on_floor():
-			state_machine.transition_to("Grounded")
+			state_machine.transition_to("Idle")
 		else:
 			state_machine.transition_to("InAir")
 
