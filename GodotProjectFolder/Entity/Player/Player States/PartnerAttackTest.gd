@@ -6,11 +6,6 @@ var player : Player
 var state_name = "PartnerAttackTest"
 
 
-# TODO probably relegate the mana cost information to the Attack resource associated with this
-var mana_cost := 3
-var stored_velocity : Vector3
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
@@ -18,9 +13,6 @@ func _ready():
 
 
 func enter():
-	
-	# Store initial velocity
-	stored_velocity = player.velocity
 	
 	# Rotate toward target
 	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
@@ -42,8 +34,8 @@ func update(_delta):
 	player.partner.calling_end_pos = player.global_position + player.aim_direction * 2
 	
 	if player.partner.call_arrived:
-		await get_tree().create_timer(1).timeout # this fucks up because it runs it many times
 		player.partner.is_being_called = false
+		player.partner.velocity = Vector3(0, 15, 0)
 	
 	# TODO : better system for checking if an attack has been completed
 	if !player.partner.is_being_called:

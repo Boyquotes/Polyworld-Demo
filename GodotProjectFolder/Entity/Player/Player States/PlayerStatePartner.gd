@@ -95,6 +95,7 @@ func physics_update(_delta):
 	if !Input.is_action_pressed("special"):
 		#player.partner.deactivate()
 		player.partner.is_being_called = false
+		player.partner.velocity = Vector3(0, 15, 0)
 		player.velocity.y = player.jump_force * 0.75
 		player.can_hold_jump = false
 		state_machine.transition_to("InAir")

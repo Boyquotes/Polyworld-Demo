@@ -131,6 +131,8 @@ func _process(_delta):
 		aim_icon_mover -= _delta * 5
 		cam.get_parent().other_target = self
 	
+#	if abs(relative_input_dir.angle_to(Vector2(aim_direction.x, aim_direction.z))) < PI*2/3:
+#		facing_dir_target = Vector2(aim_direction.x, aim_direction.z)
 	# Update facing direction
 	update_facing(_delta)
 	
