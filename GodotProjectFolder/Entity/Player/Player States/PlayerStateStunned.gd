@@ -13,8 +13,9 @@ func _ready():
 
 
 func enter():
-	player.velocity.y = 5
+	player.velocity.y = 10
 	
+	player.partner.is_being_called = false
 
 
 func update(_delta):

@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateAttacking.gd" id="7_3knj0"]
 [ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="8_4ksgh"]
 [ext_resource type="Script" path="res://UI/Inventory.gd" id="9_jwflf"]
-[ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="11_v8aqd"]
+[ext_resource type="PackedScene" uid="uid://b3yg08kbyt47u" path="res://Shadow.tscn" id="11_v8aqd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_v5sbh"]
 
@@ -78,26 +78,31 @@ script = ExtResource("6_dufk3")
 script = ExtResource("7_3knj0")
 
 [node name="Model" type="MeshInstance3D" parent="."]
+layers = 2
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_v5sbh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+layers = 2
 cast_shadow = 0
 mesh = SubResource("BoxMesh_kh7gn")
 
 [node name="Red" type="MeshInstance3D" parent="."]
 visible = false
+layers = 2
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_17rmk")
 
 [node name="Yellow" type="MeshInstance3D" parent="."]
 visible = false
+layers = 2
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_4qwv7")
 
 [node name="Gray" type="MeshInstance3D" parent="."]
 visible = false
+layers = 2
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_e4vpc")
 skeleton = NodePath("../Yellow")

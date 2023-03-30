@@ -16,8 +16,8 @@ var offset = Vector3.ZERO
 
 var is_pov = false
 
-var default_fov = 12
-var default_distance = 75
+var default_fov = 10
+var default_distance = 80
 var default_rotation = Vector3(-PI/8, 0, 0)
 var default_near = 30.0
 
@@ -27,6 +27,8 @@ var last_rotation = default_rotation
 var rotation_rate = 0.5
 var rotation_phase = 1
 var ease_curve = -2
+
+var shake_amt = 0
 
 @onready var cam = $Camera3d as Camera3D
 
@@ -41,7 +43,13 @@ func _ready():
 # Called every frame. '_delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
+	# Camera shake
+	cam.h_offset = snappedf(shake_amt * (randf() * 2 - 1), 0.01)
+	cam.v_offset = snappedf(shake_amt * (randf() * 2 - 1), 0.01)
+	shake_amt = clamp(shake_amt * 0.9, 0, 1)
+	
 	global_position = round(global_position * 200) / 200
+	#global_position = global_position.snapped(Vector3(0.02, 0.02, 0.02))
 	
 	if Input.is_key_pressed(KEY_UP):
 		cam.position.z -= 0.5
@@ -81,7 +89,7 @@ func _physics_process(_delta):
 	
 	# TODO : make framerate independent
 	# Set the position based on target values
-	hor_position = lerp(hor_position, (target_hor_position + other_target_hor_position)/2 + Vector2(offset.x, offset.z), 0.2)
+	hor_position = lerp(hor_position, (target_hor_position + other_target_hor_position)/2 + Vector2(offset.x, offset.z), 0.1)
 	global_position.x = hor_position.x
 	global_position.z = hor_position.y
 	global_position.y = lerp(global_position.y, (target_vert_position + other_target_vert_position)/2 + offset.y, 0.1) + 0.2

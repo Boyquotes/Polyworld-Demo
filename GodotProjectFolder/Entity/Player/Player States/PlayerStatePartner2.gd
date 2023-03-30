@@ -20,6 +20,8 @@ func enter():
 	player.partner.velocity.y = 0
 	player.turn_speed = 5
 	
+	player.anim.play("jump")
+	
 	player.s_player.stream = load("res://Sounds/flight1.ogg")
 	player.s_player.play()
 	

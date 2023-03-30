@@ -70,6 +70,8 @@ visible = false
 mesh = SubResource("SphereMesh_8khvq")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+layers = 2
+cast_shadow = 0
 extra_cull_margin = 1000.0
 emitting = false
 amount = 16

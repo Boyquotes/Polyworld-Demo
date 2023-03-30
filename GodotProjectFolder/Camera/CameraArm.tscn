@@ -16,5 +16,5 @@ near = 30.0
 far = 250.0
 
 [node name="PocketCamera" parent="." instance=ExtResource("2_salth")]
-offset_right = 488.0
-offset_bottom = 0.0
+offset_right = 484.0
+offset_bottom = -109.0

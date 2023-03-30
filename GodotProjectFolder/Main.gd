@@ -17,40 +17,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("menu"):
 		get_tree().paused = !get_tree().paused
 	
-	var player = get_child(1).get_node("Player")
-	if is_instance_valid(player):
-		$UILayer/Menu.position = round(get_viewport().get_camera_3d().unproject_position(player.global_position) + Vector2(64,-32))
-	
 	# Menu stuff
 	if get_tree().paused:
-		$UILayer/Menu.visible = true
-		if Input.is_action_just_pressed("move_right"):
-			if $UILayer/Menu/LeftPanel.visible:
-				$UILayer/Menu/LeftPanel.visible = false
-			else:
-				$UILayer/Menu/RightPanel.visible = true
-				$UILayer/Menu/RightPanel/ItemList.grab_focus()
-		if Input.is_action_just_pressed("move_left"):
-			if $UILayer/Menu/RightPanel.visible:
-				$UILayer/Menu/RightPanel.visible = false
-			else:
-				$UILayer/Menu/LeftPanel.visible = true
-				$UILayer/Menu/LeftPanel/ItemList.grab_focus()
-		
-		if Input.is_action_just_pressed("primary"):
-			var focus_owner = get_viewport().gui_get_focus_owner()
-			var currently_selected = focus_owner.get_item_text(focus_owner.get_selected_items()[0])
-			player.get_node("StateMachine/Primary").set_script(load("res://Entity/Player/Player States/PlayerState" + str(currently_selected) + ".gd"))
-			player.get_node("StateMachine/Primary")._ready()
-		if Input.is_action_just_pressed("secondary"):
-			var focus_owner = get_viewport().gui_get_focus_owner()
-			var currently_selected = focus_owner.get_item_text(focus_owner.get_selected_items()[0])
-			player.get_node("StateMachine/Secondary").set_script(load("res://Entity/Player/Player States/PlayerState" + str(currently_selected) + ".gd"))
-			player.get_node("StateMachine/Secondary")._ready()
-	else:
-		$UILayer/Menu.visible = false
-		$UILayer/Menu/LeftPanel.visible = false
-		$UILayer/Menu/RightPanel.visible = false
+		pass
 
 
 func change_scene(scene_name : String, exit_id = -1):

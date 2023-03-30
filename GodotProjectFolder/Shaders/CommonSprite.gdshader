@@ -17,6 +17,9 @@ global uniform vec4 outline_color;
 
 varying vec4 depth_pos;
 
+void light() {
+	DIFFUSE_LIGHT = vec3(1.) * ATTENUATION;
+}
 
 void vertex() {
 	
@@ -58,6 +61,7 @@ void fragment() {
 	vec4 albedo_tex = texture(texture_albedo,UV);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
 	NORMAL = -CAMERA_DIRECTION_WORLD;
+	//NORMAL = vec3(0.,0.,1.);
 	ALPHA = albedo.a * albedo_tex.a;
 	if (ALPHA != 1.) {
 		discard;

@@ -6,6 +6,8 @@ var player : Player
 var in_jump_buffer = false
 var in_coyote_time = false
 
+var can_turn = true
+
 var wall_sliding = false
 var wall_normal = Vector3.UP:
 	set(val):
@@ -35,20 +37,29 @@ func enter():
 func update(_delta):
 	
 	# Handle partner activation
+#	if Input.is_action_pressed("special"):
+#		player.partner.is_being_called = true
+#		if Input.is_action_just_pressed("special"):
+#			player.partner_activation_time = 0.0
+#			player.partner_activation_position = player.partner.global_position
+#		player.partner_activation_time += _delta * 2
+#		if player.partner_activation_time >= 0.5:
+#			player.partner_activation_time = 1.0
+#			state_machine.transition_to("Partner")
+#		player.partner.global_position = player.partner.global_position.lerp(player.global_position, player.partner_activation_time)
+#		player.partner.rotation.y = player.rotation.y
+#	else:
+#		player.partner.is_being_called = false
+#		player.partner_activation_time = 0.0 
+	
 	if Input.is_action_pressed("special"):
-		player.partner.is_being_called = true
 		if Input.is_action_just_pressed("special"):
-			player.partner_activation_time = 0.0
-			player.partner_activation_position = player.partner.global_position
-		player.partner_activation_time += _delta * 2
-		if player.partner_activation_time >= 0.5:
-			player.partner_activation_time = 1.0
+			player.partner.call_toward(player.global_position, 0.25)
+		player.partner.calling_end_pos = player.global_position
+		if player.partner.call_arrived:
 			state_machine.transition_to("Partner")
-		player.partner.global_position = player.partner.global_position.lerp(player.global_position, player.partner_activation_time)
-		player.partner.rotation.y = player.rotation.y
 	else:
 		player.partner.is_being_called = false
-		player.partner_activation_time = 0.0 
 
 
 func physics_update(_delta):
@@ -63,6 +74,7 @@ func physics_update(_delta):
 	elif Input.is_action_just_pressed("jump"):
 		# WALL JUMP STUFF
 		if wall_sliding:
+			can_turn = false
 			wall_sliding = false
 			hor_velocity = wall_normal_2d * 15 + hor_velocity
 			player.velocity.x = hor_velocity.x
@@ -103,37 +115,44 @@ func physics_update(_delta):
 		player.velocity.z = hor_velocity.y
 		
 		# Set direction to face
-		player.facing_dir_target = player.relative_input_dir
+		if can_turn:
+			player.facing_dir_target = player.relative_input_dir
 	
 	# Store velocity prior to moving
 	var last_speed = player.velocity.length()
 	if player.move_and_slide():
+		var vel_difference = last_speed - player.velocity.length()
+		player.cam.get_parent().shake_amt = clamp(vel_difference * 0.01, 0, 0.5)
 		# Handle fall damage
-		if  last_speed - player.velocity.length() > 40:
+		if  vel_difference > 40:
 			player.take_damage(last_speed * 0.2)
 	
-	if wall_sliding:
-		if player.velocity.y < 0:
-			player.dust_trail.emitting = true
-			wall_slide_fuel -= 0.05
-			player.velocity.y *= 1.0 - wall_slide_fuel * 0.5
-		var wall_angle = player.facing_dir_target.dot(wall_normal_2d)
-		if wall_angle >= 0.1:
-			wall_sliding = false
-	elif wall_slide_fuel > 0 && player.is_on_wall():
-		wall_normal = player.get_wall_normal()
-		var wall_angle = hor_velocity.dot(wall_normal_2d)
-		if wall_angle < -0.25:
-			wall_sliding = true
-	else:
-		player.dust_trail.emitting = false
+	# WALL SLIDING STUFF
+#	if wall_sliding:
+#		if player.velocity.y < 0:
+#			player.dust_trail.emitting = true
+#			wall_slide_fuel -= 0.05
+#			player.velocity.y *= 1.0 - wall_slide_fuel * 0.5
+#		var wall_angle = player.facing_dir_target.dot(wall_normal_2d)
+#		if wall_angle >= 0.1:
+#			wall_sliding = false
+#	elif wall_slide_fuel > 0 && player.is_on_wall():
+#		wall_normal = player.get_wall_normal()
+#		var wall_angle = hor_velocity.dot(wall_normal_2d)
+#		if wall_angle < -0.25:
+#			wall_sliding = true
+#	else:
+#		player.dust_trail.emitting = false
 	
 	
 	# Handle landing
 	if player.is_on_floor():
+		player.get_node("DustPoof").restart()
+		player.get_node("Sprite3D").position.y = -0.25
+		
 		player.s_player.stream = load("res://Sounds/landing.wav")
-		player.s_player.pitch_scale = randf_range(0.8, 1.2)
-		#player.s_player.play()
+		player.s_player.pitch_scale = randf_range(1.0, 1.2)
+		player.s_player.play()
 		
 		player.can_hold_jump = false
 		
@@ -157,13 +176,15 @@ func physics_update(_delta):
 
 func exit():
 	wall_sliding = false
+	can_turn = true
 
 
 func jump():
-	#player.s_player.stream = load("res://Sounds/jumpsound3.wav")
-	#player.s_player.pitch_scale = randf_range(0.8, 1.2)
-	#player.s_player.play()
+	player.s_player.stream = load("res://Sounds/jumpsound3.wav")
+	player.s_player.pitch_scale = randf_range(1.0, 1.2)
+	player.s_player.play()
 	
+	player.get_node("DustPoof").restart()
 	player.velocity.y = player.jump_force
 	player.can_hold_jump = true
 	state_machine.transition_to("InAir")

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6afag3ymbnus"]
+
+[ext_resource type="Script" path="res://Hitboxes and Hurtboxes/SoftCollider.gd" id="1_jks3m"]
+
+[node name="SoftCollider" type="Area3D"]
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("1_jks3m")

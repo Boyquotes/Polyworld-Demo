@@ -58,17 +58,17 @@ func _on_timer_timeout():
 
 # Response to making contact.
 func contact():
-	
-	contacted = true
-	
-	var explosion = load("res://Attacks/Explosion.tscn").instantiate()
-	explosion.global_position = global_position
-	explosion.caster = caster
-	get_tree().root.add_child(explosion)
-	
-	$Hitbox.set_deferred("monitorable", false)
-	$GPUParticles3D.emitting = false
-	$Shadow.queue_free()
-	await get_tree().create_timer(2, false).timeout
-	queue_free()
+	if !contacted:
+		contacted = true
+		
+		var explosion = load("res://Attacks/Explosion.tscn").instantiate()
+		explosion.global_position = global_position
+		explosion.caster = caster
+		get_tree().root.add_child(explosion)
+		
+		$Hitbox.set_deferred("monitorable", false)
+		$GPUParticles3D.emitting = false
+		$Shadow.queue_free()
+		await get_tree().create_timer(2, false).timeout
+		queue_free()
 

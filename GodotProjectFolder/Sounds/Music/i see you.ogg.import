@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://m0x58ovsne3"
+path="res://.godot/imported/i see you.ogg-0ec4ed6a6e74ce0a8a1100ada46175c1.oggvorbisstr"
+
+[deps]
+
+source_file="res://Sounds/Music/i see you.ogg"
+dest_files=["res://.godot/imported/i see you.ogg-0ec4ed6a6e74ce0a8a1100ada46175c1.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

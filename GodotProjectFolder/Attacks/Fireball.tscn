@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://duygphefbyx8h" path="res://Sounds/singe0.wav" id="3_dsccw"]
 [ext_resource type="QuadMesh" uid="uid://tie6ggjv3i3f" path="res://Effects/CircleMesh.tres" id="3_qk6t8"]
 [ext_resource type="Texture2D" uid="uid://6ybntpvq1trl" path="res://Textures/cirlce_16.png" id="4_8s7lf"]
-[ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="6_l85nb"]
+[ext_resource type="PackedScene" uid="uid://b3yg08kbyt47u" path="res://Shadow.tscn" id="6_l85nb"]
 
 [sub_resource type="Gradient" id="Gradient_2f5p1"]
 interpolation_mode = 1
@@ -54,6 +54,8 @@ texture_filter = 0
 texture = ExtResource("4_8s7lf")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+layers = 2
+cast_shadow = 0
 extra_cull_margin = 1000.0
 amount = 24
 lifetime = 0.5

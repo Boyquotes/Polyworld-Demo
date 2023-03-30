@@ -5,24 +5,23 @@
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateIdle.gd" id="3_uxd6j"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateRun.gd" id="4_deg5w"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateInAir.gd" id="5_ykyoh"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner2.gd" id="6_p1c2g"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateMissile.gd" id="7_bmusr"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateGrabber.gd" id="8_2we1h"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateBlock.gd" id="9_6y1mk"]
-[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateDodge.gd" id="10_3io3g"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStatePartner.gd" id="7_lhgh7"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PartnerAttackTest.gd" id="8_oqkub"]
+[ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateFireball.gd" id="9_shb2f"]
 [ext_resource type="Script" path="res://Entity/Player/Player States/PlayerStateStunned.gd" id="12_f1m8k"]
 [ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="12_lorah"]
+[ext_resource type="Texture2D" uid="uid://dw1wcvphyvxmk" path="res://Entity/Player/colored suitman sprites.png" id="13_mby5o"]
 [ext_resource type="FontFile" uid="uid://cacnxhnb6wexr" path="res://UI/Fonts/ApplePoke2.ttf" id="13_nxc3v"]
 [ext_resource type="Texture2D" uid="uid://hvp1i1a7eemo" path="res://UI/TextArrowIcon.png" id="13_xeyd0"]
-[ext_resource type="AudioStream" uid="uid://drio2vv2ueejn" path="res://Sounds/jump1.ogg" id="14_3wmou"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="14_iklt7"]
 [ext_resource type="Script" path="res://UI/Inventory.gd" id="14_msqyj"]
-[ext_resource type="Texture2D" uid="uid://dk8deutypac4v" path="res://Entity/Player/suitman sprites 2.png" id="14_n5wuy"]
 [ext_resource type="Script" path="res://SpriteOrientation.gd" id="15_1jijy"]
-[ext_resource type="AudioStream" uid="uid://v0228yl4kttp" path="res://Sounds/footstep2.wav" id="15_5u0jv"]
 [ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="15_prtxv"]
-[ext_resource type="PackedScene" uid="uid://05yr8b2uqsyb" path="res://Shadow.tscn" id="19_gbp5s"]
+[ext_resource type="AudioStream" uid="uid://cmkhnabtu7n2t" path="res://Sounds/footstep0.wav" id="16_r0smv"]
+[ext_resource type="PackedScene" uid="uid://b3yg08kbyt47u" path="res://Shadow.tscn" id="19_gbp5s"]
 [ext_resource type="PackedScene" uid="uid://b1eu4n46chxe7" path="res://Effects/DustTrail.tscn" id="22_taaxe"]
+[ext_resource type="PackedScene" uid="uid://deatjotcmba4e" path="res://Effects/DustPoof.tscn" id="22_x2l5n"]
+[ext_resource type="PackedScene" uid="uid://c6afag3ymbnus" path="res://Hitboxes and Hurtboxes/SoftCollider.tscn" id="24_gplfp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yk3vu"]
 
@@ -31,11 +30,11 @@ render_priority = 0
 shader = ExtResource("12_lorah")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/point_size = null
-shader_parameter/uv1_scale = null
-shader_parameter/uv1_offset = null
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = null
 shader_parameter/uv2_offset = null
-shader_parameter/texture_albedo = ExtResource("14_n5wuy")
+shader_parameter/texture_albedo = ExtResource("13_mby5o")
 
 [sub_resource type="Animation" id="Animation_wmpun"]
 length = 0.001
@@ -84,21 +83,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [5]
 }
-tracks/1/type = "audio"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../AudioStreamPlayer3D2")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"clips": [{
-"end_offset": 0.5788,
-"start_offset": 0.0088,
-"stream": ExtResource("14_3wmou")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/1/use_blend = true
 
 [sub_resource type="Animation" id="Animation_a5htk"]
 resource_name = "run"
@@ -124,15 +108,15 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("15_5u0jv")
+"end_offset": 0.5982,
+"start_offset": 0.0394,
+"stream": ExtResource("16_r0smv")
 }, {
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("15_5u0jv")
+"end_offset": 0.6014,
+"start_offset": 0.0399,
+"stream": ExtResource("16_r0smv")
 }],
-"times": PackedFloat32Array(0.1, 0.3)
+"times": PackedFloat32Array(0, 0.2)
 }
 tracks/1/use_blend = false
 
@@ -167,12 +151,13 @@ point_size = 16.0
 [sub_resource type="PointMesh" id="PointMesh_jujnn"]
 material = SubResource("StandardMaterial3D_g01dm")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lofq7"]
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
 floor_max_angle = 0.872665
-floor_snap_length = 0.15
+floor_snap_length = 0.2
 script = ExtResource("1_qmea8")
-move_speed = 14.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("2_dti1d")
@@ -191,43 +176,34 @@ script = ExtResource("5_ykyoh")
 script = ExtResource("12_f1m8k")
 
 [node name="Partner" type="Node" parent="StateMachine"]
-script = ExtResource("6_p1c2g")
+script = ExtResource("7_lhgh7")
 
 [node name="Primary" type="Node" parent="StateMachine"]
-script = ExtResource("7_bmusr")
+script = ExtResource("8_oqkub")
 
 [node name="Secondary" type="Node" parent="StateMachine"]
-script = ExtResource("8_2we1h")
-
-[node name="Block" type="Node" parent="StateMachine"]
-script = ExtResource("9_6y1mk")
-
-[node name="Dodge" type="Node" parent="StateMachine"]
-script = ExtResource("10_3io3g")
+script = ExtResource("9_shb2f")
 
 [node name="CollisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_yk3vu")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+layers = 2
 material_override = SubResource("ShaderMaterial_vfqkj")
 pixel_size = 0.05
-texture = ExtResource("14_n5wuy")
+texture = ExtResource("13_mby5o")
 hframes = 8
-vframes = 6
+vframes = 5
 frame = 5
 script = ExtResource("15_1jijy")
+angle_count = 8
+is_rotating_clockwise = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D"]
 libraries = {
 "": SubResource("AnimationLibrary_ohsp6")
 }
-
-[node name="Hurtbox" parent="." instance=ExtResource("14_iklt7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15227, 0)
-
-[node name="CollisionShape3d" parent="Hurtbox" index="0"]
-shape = SubResource("BoxShape3D_btql4")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.909923, 0)
@@ -241,6 +217,12 @@ attenuation_filter_cutoff_hz = 20500.0
 attenuation_model = 3
 max_polyphony = 4
 
+[node name="Hurtbox" parent="." instance=ExtResource("14_iklt7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15227, 0)
+
+[node name="CollisionShape3d" parent="Hurtbox" index="0"]
+shape = SubResource("BoxShape3D_btql4")
+
 [node name="InteractRegion" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.90256)
 collision_mask = 2
@@ -249,6 +231,7 @@ collision_mask = 2
 shape = SubResource("CylinderShape3D_46niy")
 
 [node name="HealthBar" parent="." instance=ExtResource("15_prtxv")]
+visible = false
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 168.0
@@ -257,6 +240,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_mv10o")
 is_static = true
 
 [node name="ManaBar" parent="." instance=ExtResource("15_prtxv")]
+visible = false
 offset_left = 8.0
 offset_top = 28.0
 offset_right = 168.0
@@ -265,6 +249,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_5vo5c")
 is_static = true
 
 [node name="GoldLabel" type="Label" parent="."]
+visible = false
 texture_filter = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -292,48 +277,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("PointMesh_jujnn")
 skeleton = NodePath("../../../..")
 
-[node name="PrimaryLabel" type="Label" parent="."]
-texture_filter = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -106.0
-offset_top = -49.0
-offset_right = -14.0
-offset_bottom = -26.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("13_nxc3v")
-text = "Primary"
-horizontal_alignment = 2
-
-[node name="SecondaryLabel" type="Label" parent="."]
-texture_filter = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -101.0
-offset_top = -28.0
-offset_right = -14.0
-offset_bottom = -5.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("13_nxc3v")
-text = "Secondary"
-horizontal_alignment = 2
-
 [node name="Shadow" parent="." instance=ExtResource("19_gbp5s")]
 
+[node name="DustPoof" parent="." instance=ExtResource("22_x2l5n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.95, 0)
+
 [node name="DustTrail" parent="." instance=ExtResource("22_taaxe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.806744, -0.0458658)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, -0.046)
+
+[node name="SoftCollider" parent="." instance=ExtResource("24_gplfp")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SoftCollider"]
+shape = SubResource("CapsuleShape3D_lofq7")
 
 [connection signal="entity_died" from="." to="." method="_on_entity_died"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://ysrdxtfjxmol"]
+
+[ext_resource type="Script" path="res://Entity/NPC/NPC.gd" id="1_0f1j4"]
+[ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="1_48w6r"]
+[ext_resource type="Texture2D" uid="uid://bn6i2io7n5wky" path="res://Entity/NPC/dotguy.png" id="2_hyhov"]
+[ext_resource type="PackedScene" path="res://Shadow.tscn" id="3_uyjcu"]
+[ext_resource type="PackedScene" uid="uid://c6afag3ymbnus" path="res://Hitboxes and Hurtboxes/SoftCollider.tscn" id="5_lsinh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fhdfk"]
+render_priority = 0
+shader = ExtResource("1_48w6r")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("2_hyhov")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wxldx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y4cqw"]
+
+[node name="Dot Guy" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_0f1j4")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.136413, 0)
+layers = 2
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("2_hyhov")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wxldx")
+
+[node name="SoftCollider" parent="." instance=ExtResource("5_lsinh")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SoftCollider"]
+shape = SubResource("CapsuleShape3D_y4cqw")
+
+[node name="Shadow" parent="." instance=ExtResource("3_uyjcu")]

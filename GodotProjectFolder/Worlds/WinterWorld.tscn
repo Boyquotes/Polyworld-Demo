@@ -1,0 +1,344 @@
+[gd_scene load_steps=32 format=3 uid="uid://cd5a8sm06qqdf"]
+
+[ext_resource type="Texture2D" uid="uid://bqv3lff1k13pm" path="res://Textures/background5.png" id="1_rtjsn"]
+[ext_resource type="PackedScene" uid="uid://bfcs1jd6r1rvv" path="res://Models/MattsHouse.tscn" id="2_xfxmr"]
+[ext_resource type="Script" path="res://Areas/KillPlane.gd" id="3_vaokj"]
+[ext_resource type="PackedScene" uid="uid://j0gmob3ayhaj" path="res://Areas/TransitionArea.tscn" id="4_xo2fy"]
+[ext_resource type="PackedScene" uid="uid://dbgov7qv5utb1" path="res://Camera/CameraArm.tscn" id="5_vxwwt"]
+[ext_resource type="PackedScene" uid="uid://dabevpjwoi51k" path="res://Effects/Snow.tscn" id="6_a2bui"]
+[ext_resource type="PackedScene" uid="uid://c5ufwfeqsvued" path="res://Entity/Player/Player.tscn" id="6_bdcnf"]
+[ext_resource type="PackedScene" uid="uid://d2ve7qxs5325o" path="res://Entity/Enemy/PathfindingEnemy.tscn" id="7_c2c5w"]
+[ext_resource type="Shader" path="res://Shaders/Outline2.gdshader" id="8_h01kv"]
+[ext_resource type="AudioStream" uid="uid://d3s3116e2yfxe" path="res://Sounds/Music/subwayy.ogg" id="9_n6gt7"]
+[ext_resource type="PackedScene" path="res://Camera/CameraRegion.tscn" id="10_2kro2"]
+[ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="11_niynl"]
+[ext_resource type="Texture2D" uid="uid://cj7inwy4d24g7" path="res://Entity/NPC/quilt guy.png" id="12_wj2mw"]
+[ext_resource type="PackedScene" path="res://Shadow.tscn" id="13_mal41"]
+[ext_resource type="Texture2D" uid="uid://bn6i2io7n5wky" path="res://Entity/NPC/dotguy.png" id="14_ehdwf"]
+[ext_resource type="Texture2D" uid="uid://b3oxgac3i2273" path="res://Entity/NPC/devildude1.png" id="15_c2b3x"]
+
+[sub_resource type="Environment" id="Environment_24hwn"]
+background_mode = 1
+background_color = Color(0.490196, 0.290196, 0.290196, 1)
+background_canvas_max_layer = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.529412, 0.529412, 0.529412, 1)
+fog_enabled = true
+fog_light_color = Color(1, 1, 1, 1)
+fog_light_energy = 0.72
+fog_density = 0.0034
+adjustment_enabled = true
+adjustment_saturation = 1.2
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_cq3md"]
+vertices = PackedVector3Array(-8.75, 16.2, -19, -15, 16.2, -19, -15, 16.2, -9, -8.75, 16.2, -9, 10.25, 16.2, -9, 10.25, 16.2, -19, 3.75, 16.2, -19, 3.75, 16.2, -9, -2.5, 16.2, -19, -8.75, 16.2, -19, -8.75, 16.2, -9, -2.5, 16.2, -9, -2.5, 16.2, -9, 3.75, 16.2, -9, 3.75, 16.2, -19, -2.5, 16.2, -19, 13, 16.2, -8.25, 13, 16.2, -6.25, 19, 16.2, -6.25, 19, 16.2, -8.25, 19.75, 16.2, -9, 21.75, 16.2, -9, 21.75, 16.2, -19, 12.25, 16.2, -9, 13, 16.2, -8.25, 19, 16.2, -8.25, 19.75, 16.2, -9, 21.75, 16.2, -19, 10.25, 16.2, -19, 10.25, 16.2, -19, 10.25, 16.2, -9, 12.25, 16.2, -9, 28.75, 16.2, -19, 21.75, 16.2, -19, 21.75, 16.2, -9, 28.75, 16.2, -9, 43, 16.2, -19, 36, 16.2, -19, 36, 16.2, -9, 43, 16.2, -9, 43, 16.2, -9, 50.25, 16.2, -9, 50.25, 16.2, -19, 43, 16.2, -19, 36, 16.2, -19, 28.75, 16.2, -19, 28.75, 16.2, -9, 36, 16.2, -9, 53, 16.2, -8.25, 53, 16.2, -6.25, 59, 16.2, -6.25, 52.25, 16.2, -9, 53, 16.2, -8.25, 59, 16.2, -6.25, 59, 16.2, -12.75, 50.25, 16.2, -9, 52.25, 16.2, -9, 59, 16.2, -12.75, 59, 16.2, -19, 50.25, 16.2, -19, -14.75, -1.8, -18.75, -14.75, -1.8, -9, -5.75, -1.8, -9, -5.75, -1.8, -18.75, 22, -1.8, -9, 31.25, -1.8, -9, 31.25, -1.8, -18.75, 22, -1.8, -18.75, 49.75, -1.8, -9, 59, -1.8, -9, 59, -1.8, -18.75, 49.75, -1.8, -18.75, 3.5, -1.8, -18.75, -5.75, -1.8, -18.75, -5.75, -1.8, -9, 3.5, -1.8, -9, 40.5, -1.8, -9, 49.75, -1.8, -9, 49.75, -1.8, -18.75, 40.5, -1.8, -18.75, 12.75, -1.8, -18.75, 3.5, -1.8, -18.75, 3.5, -1.8, -9, 12.75, -1.8, -9, 31.25, -1.8, -9, 40.5, -1.8, -9, 40.5, -1.8, -18.75, 31.25, -1.8, -18.75, 22, -1.8, -18.75, 12.75, -1.8, -18.75, 12.75, -1.8, -9, 22, -1.8, -9, -7.5, -1.8, -3, -0.25, -1.8, -6.5, -7.5, -1.8, -6.75, -15, -1.8, -6.75, -15, -1.8, 0.25, 11, -1.8, -6.75, 1.25, -1.8, -6.75, 2.75, -1.8, -4.5, 5.5, -1.8, 2, 11, -1.8, 2, 11, -1.8, -6.75, 2.75, -1.8, -4.5, 13.25, -1.8, 4, 13.25, -1.8, 14.75, 19, -1.8, 14.75, 19, -1.8, 4, 19, -1.8, 4, 19, -1.8, -6.75, 13.25, -1.8, -6.75, 13.25, -1.8, 4, 28.5, -1.8, -6.75, 21.25, -1.8, -6.75, 21.25, -1.8, 4, 51, -1.8, 4, 51, -1.8, -6.75, 43.5, -1.8, -6.75, 21.25, -1.8, 4, 21.25, -1.8, 15, 28.5, -1.8, 15, 43.5, -1.8, 15, 51, -1.8, 15, 51, -1.8, 4, 36, -1.8, -6.75, 28.5, -1.8, -6.75, 21.25, -1.8, 4, 21.25, -1.8, 4, 28.5, -1.8, 15, 36, -1.8, 15, 51, -1.8, 4, 43.5, -1.8, -6.75, 36, -1.8, -6.75, 21.25, -1.8, 4, 36, -1.8, 15, 43.5, -1.8, 15, 53.25, -1.8, 4, 53.25, -1.8, 14.75, 59, -1.8, 14.75, 59, -1.8, 4, 59, -1.8, 4, 59, -1.8, -6.75, 53.25, -1.8, -6.75, 53.25, -1.8, 4, 19, 16.2, -6.25, 13, 16.2, -6.25, 13, 16.2, 4.25, 19, 16.2, 4.25, 13, 16.2, 4.25, 13, 16.2, 15, 19, 16.2, 15, 19, 16.2, 4.25, 59, 16.2, -6.25, 53, 16.2, -6.25, 53, 16.2, 4.25, 59, 16.2, 4.25, 53, 16.2, 4.25, 53, 16.2, 15, 59, 16.2, 15, 59, 16.2, 4.25, -0.25, 6.7, -2.75, 2, 5.3, -2.75, 0.75, 5.2, -5.5, 4.25, 5.4, 2.25, 3.25, 5.2, -0.5, 1.5, 6.7, 1, -1, 7.4, -2, -0.25, 6.7, -2.75, 0.75, 5.2, -5.5, -4.75, 8.4, -3.5, -3.5, 8.5, -3, -3.375, 8.2, -4, -1.75, 7.7, 5.25, 0.25, 7.5, 1, -1, 7.8, -0.75, -1.3, 8.6, 1.65, -1.45, 8.5, 2.85, -1.25, 8.3, 4.1875, -0.75, 8.6, 3.125, 4.25, 5.4, 2.25, 1.5, 6.7, 1, 0.25, 7.5, 1, -1.75, 7.7, 5.25, -0.55, 8.5, 4.65, 0.65, 8.1, 4.05, -0.75, 8.6, 3.125, -1.25, 8.3, 4.1875, -1, 7.8, -0.75, -1, 7.4, -2, -4.75, 8.4, -3.5, -3.8125, 8.6, -2.8125, -2.875, 8.4, -2.125, -3.5, 8.5, -3, -1.75, 7.7, 5.25, -1, 7.8, -0.75, -4.75, 8.4, -3.5, -14.5, 5.1, 1.5, -11, 5, 9.25, -7.75, 6.5, 8.25, -5.35, 5.2, 7.05, -4.15, 5.7, 6.45, -1.45, 8.5, 2.85, -1.3, 8.6, 1.65, -2.875, 8.4, -2.125, -3.8125, 8.6, -2.8125, -8.40625, 5.4, -1.625, -9.625, 5.4, -1, -10.8438, 6.1, -0.375, -12.0625, 6.3, 0.25, -5.50461, 5.1, 5.47659, -8.48999, 5, -0.514013, -3.98495, 7.9, -0.48105, -2.49994, 8.6, -0.520065, -9.99982, 6.3, 2.48981, -10.0047, 6.5, 4.01672, -11.4848, 6.2, 2.47882, -11.5149, 6.5, 0.990923, -6.98471, 5.2, 3.98869, -6.97979, 5.1, 2.51178, -2.50486, 8.4, 1.00685, -8.51481, 5.6, 2.50079, -2, -1.8, 3.75, -0.5, -1.8, 4, 0.25, -1.8, 2.75, 0, -1.8, -4.25, -6.5, -1.8, -1, -13, -1.8, 2, -10.5, -1.8, 7.5, -9.75, -1.8, 7.75, -2, -1.8, 3.75, -6.5, -1.8, -1, 0.25, -1.8, 2.75, 2.75, -1.8, 1.75, 0, -1.8, -4.25, 1.5, -1.8, 5, 0, -1.8, 4.75, -0.75, -1.8, 6, 11, -1.8, 2, 5.5, -1.8, 2, 4.5, -1.8, 3.5, 11, -1.8, 8.5, -0.75, -1.8, 6, -10.25, -1.8, 10.5, -10.25, -1.8, 15, 0.25, -1.8, 15, 1.5, -1.8, 5, 11, -1.8, 8.5, 4.5, -1.8, 3.5, 1.5, -1.8, 5, 0.25, -1.8, 15, 11, -1.8, 15, -10.25, -1.8, 15, -10.25, -1.8, 10.5, -11.25, -1.8, 10.5, -10.25, -1.8, 15, -11.25, -1.8, 10.5, -12.25, -1.8, 9.5, -12.25, -1.8, 9.5, -15, -1.8, 3.75, -15, -1.8, 15, -10.25, -1.8, 15)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(15, 14, 12), PackedInt32Array(12, 14, 13), PackedInt32Array(19, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(22, 21, 20), PackedInt32Array(24, 23, 25), PackedInt32Array(25, 23, 26), PackedInt32Array(26, 23, 28), PackedInt32Array(26, 28, 27), PackedInt32Array(31, 30, 29), PackedInt32Array(35, 34, 32), PackedInt32Array(32, 34, 33), PackedInt32Array(39, 38, 36), PackedInt32Array(36, 38, 37), PackedInt32Array(43, 42, 40), PackedInt32Array(40, 42, 41), PackedInt32Array(47, 46, 44), PackedInt32Array(44, 46, 45), PackedInt32Array(50, 49, 48), PackedInt32Array(52, 51, 53), PackedInt32Array(53, 51, 54), PackedInt32Array(56, 55, 57), PackedInt32Array(57, 55, 58), PackedInt32Array(58, 55, 59), PackedInt32Array(63, 62, 60), PackedInt32Array(60, 62, 61), PackedInt32Array(67, 66, 64), PackedInt32Array(64, 66, 65), PackedInt32Array(71, 70, 68), PackedInt32Array(68, 70, 69), PackedInt32Array(75, 74, 72), PackedInt32Array(72, 74, 73), PackedInt32Array(79, 78, 76), PackedInt32Array(76, 78, 77), PackedInt32Array(83, 82, 80), PackedInt32Array(80, 82, 81), PackedInt32Array(87, 86, 84), PackedInt32Array(84, 86, 85), PackedInt32Array(91, 90, 88), PackedInt32Array(88, 90, 89), PackedInt32Array(93, 92, 94), PackedInt32Array(94, 92, 95), PackedInt32Array(95, 92, 96), PackedInt32Array(99, 98, 97), PackedInt32Array(100, 103, 101), PackedInt32Array(101, 103, 102), PackedInt32Array(107, 106, 104), PackedInt32Array(104, 106, 105), PackedInt32Array(111, 110, 108), PackedInt32Array(108, 110, 109), PackedInt32Array(114, 113, 112), PackedInt32Array(117, 116, 115), PackedInt32Array(120, 119, 118), PackedInt32Array(123, 122, 121), PackedInt32Array(126, 125, 124), PackedInt32Array(129, 128, 127), PackedInt32Array(131, 130, 132), PackedInt32Array(132, 130, 135), PackedInt32Array(132, 135, 134), PackedInt32Array(132, 134, 133), PackedInt32Array(139, 138, 136), PackedInt32Array(136, 138, 137), PackedInt32Array(143, 142, 140), PackedInt32Array(140, 142, 141), PackedInt32Array(147, 146, 144), PackedInt32Array(144, 146, 145), PackedInt32Array(151, 150, 148), PackedInt32Array(148, 150, 149), PackedInt32Array(155, 154, 152), PackedInt32Array(152, 154, 153), PackedInt32Array(159, 158, 156), PackedInt32Array(156, 158, 157), PackedInt32Array(162, 161, 160), PackedInt32Array(165, 164, 163), PackedInt32Array(169, 171, 170), PackedInt32Array(170, 171, 166), PackedInt32Array(166, 171, 167), PackedInt32Array(167, 171, 168), PackedInt32Array(172, 176, 177), PackedInt32Array(177, 176, 178), PackedInt32Array(178, 176, 175), PackedInt32Array(178, 175, 173), PackedInt32Array(173, 175, 174), PackedInt32Array(182, 186, 183), PackedInt32Array(183, 186, 185), PackedInt32Array(183, 185, 184), PackedInt32Array(184, 185, 181), PackedInt32Array(184, 181, 180), PackedInt32Array(184, 180, 179), PackedInt32Array(189, 192, 190), PackedInt32Array(190, 192, 191), PackedInt32Array(191, 192, 188), PackedInt32Array(191, 188, 187), PackedInt32Array(197, 214, 198), PackedInt32Array(198, 209, 199), PackedInt32Array(199, 209, 200), PackedInt32Array(200, 209, 193), PackedInt32Array(193, 209, 201), PackedInt32Array(201, 219, 202), PackedInt32Array(202, 219, 194), PackedInt32Array(194, 212, 203), PackedInt32Array(203, 211, 204), PackedInt32Array(204, 211, 195), PackedInt32Array(195, 211, 205), PackedInt32Array(205, 210, 206), PackedInt32Array(206, 210, 207), PackedInt32Array(207, 216, 208), PackedInt32Array(208, 216, 196), PackedInt32Array(196, 215, 197), PackedInt32Array(214, 217, 198), PackedInt32Array(197, 215, 214), PackedInt32Array(198, 217, 209), PackedInt32Array(209, 219, 201), PackedInt32Array(219, 212, 194), PackedInt32Array(212, 211, 203), PackedInt32Array(211, 210, 205), PackedInt32Array(210, 213, 207), PackedInt32Array(207, 213, 216), PackedInt32Array(216, 215, 196), PackedInt32Array(214, 220, 217), PackedInt32Array(215, 213, 214), PackedInt32Array(217, 218, 209), PackedInt32Array(209, 218, 219), PackedInt32Array(219, 211, 212), PackedInt32Array(211, 218, 210), PackedInt32Array(210, 220, 213), PackedInt32Array(213, 215, 216), PackedInt32Array(220, 218, 217), PackedInt32Array(214, 213, 220), PackedInt32Array(218, 211, 219), PackedInt32Array(218, 220, 210), PackedInt32Array(222, 221, 223), PackedInt32Array(223, 221, 225), PackedInt32Array(223, 225, 224), PackedInt32Array(227, 226, 228), PackedInt32Array(228, 226, 230), PackedInt32Array(228, 230, 229), PackedInt32Array(231, 233, 232), PackedInt32Array(236, 235, 234), PackedInt32Array(238, 237, 239), PackedInt32Array(239, 237, 240), PackedInt32Array(245, 244, 241), PackedInt32Array(241, 244, 242), PackedInt32Array(242, 244, 243), PackedInt32Array(247, 246, 248), PackedInt32Array(248, 246, 250), PackedInt32Array(248, 250, 249), PackedInt32Array(253, 252, 251), PackedInt32Array(256, 255, 254), PackedInt32Array(260, 259, 257), PackedInt32Array(257, 259, 258)]
+cell_height = 0.1
+agent_height = 2.0
+agent_radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nnchh"]
+shading_mode = 2
+diffuse_mode = 1
+specular_mode = 2
+metallic_specular = 0.0
+uv1_scale = Vector3(0.125, 0.125, 0.125)
+uv1_offset = Vector3(0.125, 0.125, 0.125)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 150.0
+uv1_world_triplanar = true
+texture_filter = 0
+distance_fade_mode = 2
+distance_fade_min_distance = 220.0
+distance_fade_max_distance = 150.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqdx7"]
+shading_mode = 2
+diffuse_mode = 1
+specular_mode = 2
+albedo_texture = ExtResource("1_rtjsn")
+metallic_specular = 0.0
+uv1_scale = Vector3(0.125, 0.125, 0.125)
+uv1_offset = Vector3(0.125, 0.125, 0.125)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 150.0
+uv1_world_triplanar = true
+texture_filter = 0
+distance_fade_mode = 2
+distance_fade_min_distance = 220.0
+distance_fade_max_distance = 150.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vk51c"]
+cull_mode = 2
+shading_mode = 2
+diffuse_mode = 1
+albedo_color = Color(0.309804, 0.321569, 0.639216, 1)
+metallic_specular = 0.0
+distance_fade_mode = 2
+distance_fade_min_distance = 220.0
+distance_fade_max_distance = 150.0
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qphd1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_14q1p"]
+size = Vector3(2, 3, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dwu0h"]
+size = Vector3(4, 4, 6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mv6we"]
+render_priority = -128
+shader = ExtResource("8_h01kv")
+shader_parameter/is_inverted = false
+shader_parameter/depth_multiplier = 6.0
+shader_parameter/depth_addend = 0.0
+shader_parameter/transparency = 5.0
+shader_parameter/outline_color = Vector4(0, 0, 0, 1)
+shader_parameter/depth_pow = 5.0
+shader_parameter/line_width = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_x0ohu"]
+material = SubResource("ShaderMaterial_mv6we")
+size = Vector2(2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sbgt7"]
+size = Vector3(30, 10, 8.92409)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n8wt8"]
+size = Vector3(67.012, 3.11018, 23.2861)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ul1o"]
+render_priority = 0
+shader = ExtResource("11_niynl")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("12_wj2mw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fhdfk"]
+render_priority = 0
+shader = ExtResource("11_niynl")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("14_ehdwf")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qb5sa"]
+render_priority = 0
+shader = ExtResource("11_niynl")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("15_c2b3x")
+
+[node name="WinterWorld" type="Node3D"]
+process_mode = 1
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.556296, -0.719653, 0.415492, 0, 0.5, 0.866026, -0.830984, -0.481767, 0.278148, 0, 0, 0)
+shadow_enabled = true
+shadow_bias = 0.05
+shadow_blur = 0.4
+directional_shadow_mode = 0
+directional_shadow_split_2 = 0.4
+directional_shadow_max_distance = 300.0
+directional_shadow_pancake_size = 0.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_24hwn")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment"]
+navigation_mesh = SubResource("NavigationMesh_cq3md")
+metadata/_edit_lock_ = true
+
+[node name="Ground" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, -3, -2)
+use_collision = true
+size = Vector3(76, 2, 36)
+material = SubResource("StandardMaterial3D_nnchh")
+
+[node name="Wall" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 7, -14)
+use_collision = true
+size = Vector3(76, 18, 12)
+material = SubResource("StandardMaterial3D_oqdx7")
+
+[node name="Wall2" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 7, 4)
+use_collision = true
+size = Vector3(8, 18, 24)
+material = SubResource("StandardMaterial3D_oqdx7")
+
+[node name="Wall3" type="CSGBox3D" parent="Environment/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 7, 4)
+use_collision = true
+size = Vector3(8, 18, 24)
+material = SubResource("StandardMaterial3D_oqdx7")
+
+[node name="MattsHouse" parent="Environment/NavigationRegion3D" instance=ExtResource("2_xfxmr")]
+transform = Transform3D(3.60935, 0, 1.72412, 0, 4, 0, -1.72412, 0, 3.60935, -1.68348, -2.76039, 1.53356)
+
+[node name="Cube001" parent="Environment/NavigationRegion3D/MattsHouse" index="0"]
+material_override = SubResource("StandardMaterial3D_vk51c")
+
+[node name="KillPlane" type="Area3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -37.5048, 8.23268)
+collision_mask = 3
+script = ExtResource("3_vaokj")
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="Environment/KillPlane"]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_qphd1")
+
+[node name="TransitionArea" parent="Environment" instance=ExtResource("4_xo2fy")]
+transform = Transform3D(0.902585, 0, 0.430511, 0, 1, 0, -0.430511, 0, 0.902585, -0.79002, -0.305073, 3.45427)
+file = "res://Worlds/BattleWorld.tscn"
+id = 1
+exit_id = 0
+
+[node name="CollisionShape3D" parent="Environment/TransitionArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0381479, -0.189438, -1.05525)
+shape = SubResource("BoxShape3D_14q1p")
+
+[node name="Arrow" parent="Environment/TransitionArea" index="1"]
+visible = true
+
+[node name="TransitionArea2" parent="Environment" instance=ExtResource("4_xo2fy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.9526, -0.305073, -9.83495)
+file = "res://Worlds/BattleWorld.tscn"
+
+[node name="CollisionShape3D" parent="Environment/TransitionArea2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.038147, -0.0797911, -1.19208)
+shape = SubResource("BoxShape3D_dwu0h")
+
+[node name="Arrow" parent="Environment/TransitionArea2" index="1"]
+visible = true
+
+[node name="CameraArm" parent="." node_paths=PackedStringArray("target") instance=ExtResource("5_vxwwt")]
+transform = Transform3D(1, 0, 0, 0, 0.939692, 0.34202, 0, -0.34202, 0.939692, 24.1388, 0, -3.83276)
+target = NodePath("../Player")
+
+[node name="Camera3d" parent="CameraArm" index="0"]
+near = 10.0
+
+[node name="Snow" parent="CameraArm" instance=ExtResource("6_a2bui")]
+
+[node name="Player" parent="." instance=ExtResource("6_bdcnf")]
+transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 43.7601, 1.87005, -4.24836)
+
+[node name="PathfindingEnemy" parent="." instance=ExtResource("7_c2c5w")]
+transform = Transform3D(0.97105, 0, -0.238873, 0, 1, 0, 0.238873, 0, 0.97105, 28.8143, -0.125824, 2.1009)
+can_jump = false
+
+[node name="Outline" type="MeshInstance3D" parent="."]
+visible = false
+cast_shadow = 0
+extra_cull_margin = 10000.0
+ignore_occlusion_culling = true
+mesh = SubResource("QuadMesh_x0ohu")
+skeleton = NodePath("../..")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("9_n6gt7")
+volume_db = -8.0
+autoplay = true
+max_polyphony = 5
+
+[node name="CameraRegion" parent="." instance=ExtResource("10_2kro2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.3448, 6.71216, -12.8967)
+x_rotation = -0.262
+
+[node name="CollisionShape3D" parent="CameraRegion" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.324741, 0.224666)
+shape = SubResource("BoxShape3D_sbgt7")
+
+[node name="CameraRegion2" parent="." instance=ExtResource("10_2kro2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.3448, 6.71216, 2.09993)
+
+[node name="CollisionShape3D" parent="CameraRegion2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.99209, -6.58355, 1.61418)
+shape = SubResource("BoxShape3D_n8wt8")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.4296, 4.72119, -15.0157)
+layers = 2
+material_override = SubResource("ShaderMaterial_6ul1o")
+pixel_size = 0.05
+texture = ExtResource("12_wj2mw")
+
+[node name="Shadow" parent="Sprite3D" instance=ExtResource("13_mal41")]
+
+[node name="Sprite3D6" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.20808, -1.13785, 12.8186)
+layers = 2
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_ehdwf")
+
+[node name="Shadow" parent="Sprite3D6" instance=ExtResource("13_mal41")]
+
+[node name="Sprite3D7" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.52196, -1.13785, 10.7376)
+layers = 2
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_ehdwf")
+
+[node name="Shadow" parent="Sprite3D7" instance=ExtResource("13_mal41")]
+
+[node name="Sprite3D8" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.39894, -1.13785, -5.10282)
+layers = 2
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_ehdwf")
+
+[node name="Shadow" parent="Sprite3D8" instance=ExtResource("13_mal41")]
+
+[node name="Sprite3D9" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.38394, -1.13785, -4.3313)
+layers = 2
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_ehdwf")
+
+[node name="Shadow" parent="Sprite3D9" instance=ExtResource("13_mal41")]
+
+[node name="Sprite3D10" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.69529, -1.13785, 9.99015)
+layers = 2
+material_override = SubResource("ShaderMaterial_fhdfk")
+pixel_size = 0.05
+texture = ExtResource("14_ehdwf")
+
+[node name="Shadow" parent="Sprite3D10" instance=ExtResource("13_mal41")]
+
+[node name="Sprite3D11" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36884, -0.419406, 8.93203)
+layers = 2
+material_override = SubResource("ShaderMaterial_qb5sa")
+pixel_size = 0.05
+texture = ExtResource("15_c2b3x")
+
+[node name="Shadow" parent="Sprite3D11" instance=ExtResource("13_mal41")]
+
+[connection signal="body_entered" from="Environment/KillPlane" to="Environment/KillPlane" method="_on_kill_plane_body_entered"]
+
+[editable path="Environment/NavigationRegion3D/MattsHouse"]
+[editable path="Environment/TransitionArea"]
+[editable path="Environment/TransitionArea2"]
+[editable path="CameraArm"]
+[editable path="CameraRegion"]
+[editable path="CameraRegion2"]

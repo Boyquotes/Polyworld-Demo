@@ -18,3 +18,4 @@ particles_anim_loop = false
 
 [resource]
 material = SubResource("StandardMaterial3D_uawd1")
+size = Vector2(0.8, 0.8)

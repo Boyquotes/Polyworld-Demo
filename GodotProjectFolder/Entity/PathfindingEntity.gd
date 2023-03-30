@@ -4,6 +4,8 @@ extends Entity
 
 @export var should_avoid = true
 
+var running = false # TODO : THIS IS TEMPORARY!! MAKE THIS USE A STATEMACHINE
+
 var jump_thresh = 0.2
 
 var agent : NavigationAgent3D
@@ -34,6 +36,7 @@ func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distanc
 	var direction = current_pos_2d.direction_to(destination_2d)
 	
 	if direct_distance_2d > min_range:
+		running = true
 		if is_on_floor():
 			
 			var next_location = agent.get_next_path_position()
@@ -71,7 +74,7 @@ func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distanc
 			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, move_decel * _delta)
 		else:
 			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, air_accel * _delta)
-		
+		running = false
 	
 	# Set agent avoidance and move with new velicocity
 	if is_on_floor() and should_avoid:
@@ -94,5 +97,5 @@ func get_path_distance(path:PackedVector3Array):
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	velocity = safe_velocity
-	facing_dir_target = Vector2(velocity.x, velocity.z)
+	facing_dir_target = Vector2(velocity.x, velocity.z).normalized()
 	move_and_slide()

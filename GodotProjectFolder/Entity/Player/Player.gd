@@ -51,13 +51,13 @@ var is_immune := false:
 
 var interacting := false
 
-
 @onready var cam = get_viewport().get_camera_3d() as Camera3D
 @onready var anim = $Sprite3D/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 @onready var aim_icon = $PositionBreak/AimIcon as Node3D
 @onready var dust_trail = $DustTrail as GPUParticles3D
 @onready var state_machine = $StateMachine as StateMachine
+@onready var soft_collider = $SoftCollider as SoftCollider
 
 var partner : Partner
 var partner_activation_position = Vector3.ZERO
@@ -73,10 +73,6 @@ func _ready():
 
 
 func _process(_delta):
-	# Handle UI labels
-	$GoldLabel.text = "$" + str($Inventory.gold)
-	$PrimaryLabel.text = $StateMachine/Primary.state_name
-	$SecondaryLabel.text = $StateMachine/Secondary.state_name
 	
 	# Get the input direction
 	if input_enabled:
@@ -141,6 +137,9 @@ func _process(_delta):
 	# TODO: make this cleaner
 	if $StateMachine.current_state != $StateMachine/Stunned:
 		Engine.time_scale = move_toward(Engine.time_scale, 1, 0.02)
+	
+	
+	get_node("Sprite3D").position.y = move_toward(get_node("Sprite3D").position.y, 0.12, 0.05)
 
 
 func _physics_process(_delta):
