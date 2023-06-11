@@ -10,6 +10,8 @@ var text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890
 	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
 
 var speaker : Node3D
+var voice : AudioStream
+var voice_pitch := 1.0
 var split_text = []
 var queue_typing = false
 var is_typing = false
@@ -28,6 +30,7 @@ signal finished
 @onready var textlabel = $Panel/RichTextLabel as RichTextLabel
 @onready var arrow = $Panel/ArrowPivot/ArrowIcon as TextureRect
 @onready var arrow_anim = $Panel/ArrowPivot/ArrowIcon/AnimationPlayer as AnimationPlayer
+@onready var stream_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 
 
 func _ready():
@@ -43,6 +46,9 @@ func _ready():
 	is_typing = false
 	queue_typing = true
 	
+	stream_player.stream = voice
+	
+	# I think this is to prevent from skipping text immediately
 	Input.action_release("interact")
 
 
@@ -66,6 +72,8 @@ func _process(_delta):
 	var speaker_unprojected = get_viewport().get_camera_3d().unproject_position(speaker.global_position)
 	position = speaker_unprojected
 	position.y += offset
+	
+	stream_player.global_position = speaker.global_position
 	
 	var res = get_viewport_rect().size
 	var marg = 8
@@ -96,6 +104,9 @@ func _process(_delta):
 		else:
 			if !pause_array.has(int(visible_chars)):
 				visible_chars += typing_rate * _delta
+				if randf() < 0.15:
+					stream_player.pitch_scale = randf_range(voice_pitch, voice_pitch + 0.5)
+					stream_player.play()
 			else:
 				var pause_amount = 6
 				visible_chars += typing_rate / (pause_amount * pause_array.count(int(visible_chars))) * _delta

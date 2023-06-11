@@ -5,15 +5,15 @@ extends PathfindingEntity
 @export var leader : Entity
 var rng = RandomNumberGenerator.new()
 
-var is_being_called := false
-var calling_start_pos : Vector3
-var calling_end_pos : Vector3
-var calling_interpolation_interval := 0.0
-var calling_interpolation := 0.0:
+var is_being_summoned := false
+var summon_start_pos : Vector3
+var summon_destination : Vector3
+var summon_interpolation_interval := 0.0
+var summon_interpolation := 0.0:
 	set(val):
-		calling_interpolation = clamp(val, 0, 1)
-		call_arrived = calling_interpolation == 1
-var call_arrived := false
+		summon_interpolation = clamp(val, 0, 1)
+		reached_summon_destination = summon_interpolation == 1
+var reached_summon_destination := false
 
 func _ready():
 	# TODO : is there a better way than using super() ?
@@ -24,22 +24,25 @@ func _process(_delta):
 	
 	# TODO : change this method ? I think pathfinding entities should use state machines honestly
 	if is_on_floor():
-		if running:
-			$Sprite3D2/AnimationPlayer.play("run")
-			$DustTrail.emitting = true
-		else:
+		if velocity.length() < 1:
 			$Sprite3D2/AnimationPlayer.play("idle")
 			$DustTrail.emitting = false
+		else:
+			if $Sprite3D2/AnimationPlayer.current_animation != "run":
+				$Sprite3D2/AnimationPlayer.play("run")
+			$DustTrail.emitting = true
+			$Sprite3D2/AnimationPlayer.speed_scale = clamp(velocity.length() / move_speed, 0, 1.2)
 	else:
-		$Sprite3D2/AnimationPlayer.play("jump")
+		if $Sprite3D2/AnimationPlayer.assigned_animation != "jump":
+			$Sprite3D2/AnimationPlayer.play("jump")
 		$DustTrail.emitting = false
 
 
 func _physics_process(_delta):
 	
-	if is_being_called:
-		calling_interpolation += calling_interpolation_interval * _delta
-		global_position = calling_start_pos.lerp(calling_end_pos, calling_interpolation)
+	if is_being_summoned:
+		summon_interpolation += summon_interpolation_interval * _delta
+		global_position = summon_start_pos.lerp(summon_destination, summon_interpolation)
 	else:
 		if is_instance_valid(leader):
 			ai_move(_delta, leader.global_position, 4.0, true)
@@ -55,12 +58,14 @@ func _physics_process(_delta):
 	
 
 func interact():
-	var player = get_parent().get_node("Player")
+	var player = leader
 	face_toward(player.global_position)
 	player.interacting = true
 	var tb = load("res://UI/Dialog.tscn").instantiate()
 	tb.speaker = self
 	tb.offset = -40
+	tb.voice = load("res://Sounds/voice1.wav")
+	tb.voice_pitch = 2
 	tb.text = "[wavy]hello...[/wavy]
 	Sorry,_ is there a problem?"
 	get_parent().add_child(tb)
@@ -75,11 +80,11 @@ func contact():
 	get_tree().root.add_child(explosion)
 	
 
-# THIS IS FLAWED, BECAUSE THE DESTINATION VEC IS LIKELY TO CHANGE WHILE BEING CALLED
-func call_toward(dest : Vector3, dur : float):
-	calling_interpolation = 0
-	calling_start_pos = global_position
-	calling_end_pos = dest
-	calling_interpolation_interval = 1 / dur
-	is_being_called = true
+# THIS IS FLAWED, BECAUSE THE DESTINATION VEC IS LIKELY TO CHANGE WHILE BEING summoned
+func summon(dur : float, dest : Vector3 = summon_destination):
+	summon_interpolation = 0
+	summon_start_pos = global_position
+	summon_destination = dest
+	summon_interpolation_interval = 1 / dur
+	is_being_summoned = true
 	

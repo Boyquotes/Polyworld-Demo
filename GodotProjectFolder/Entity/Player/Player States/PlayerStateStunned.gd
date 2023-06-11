@@ -3,7 +3,7 @@ extends State
 
 var player : Player
 
-var stun_duration = 0.5
+var stun_duration = 1
 
 
 # Called when the node enters the scene tree for the first time.
@@ -13,9 +13,9 @@ func _ready():
 
 
 func enter():
-	player.velocity.y = 10
+	player.vert_velocity = 10
 	
-	player.partner.is_being_called = false
+	player.partner.is_being_summoned = false
 
 
 func update(_delta):
@@ -32,14 +32,11 @@ func physics_update(_delta):
 	#player.anim.play("hurt")
 	
 	# Add the gravity
-	player.velocity.y -= player.GRAVITY * _delta
+	player.vert_velocity -= player.GRAVITY * _delta
 	
-	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-	hor_velocity = hor_velocity.move_toward(Vector2.ZERO, 20 * _delta)
-	player.velocity.x = hor_velocity.x
-	player.velocity.z = hor_velocity.y
+	player.hor_velocity = player.hor_velocity.move_toward(Vector2.ZERO, 20 * _delta)
 	
-	player.move_and_slide()
+	player.apply_velocities()
 	
 
 

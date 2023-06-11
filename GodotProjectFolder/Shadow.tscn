@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b3yg08kbyt47u"]
 
-[ext_resource type="Texture2D" uid="uid://f6fdyjkuus7r" path="res://Textures/Shadow3.png" id="1_w7r0u"]
+[ext_resource type="Texture2D" uid="uid://dbbulqq0mur8p" path="res://Textures/circular_shadow.png" id="2_fhg7c"]
 [ext_resource type="Script" path="res://Shadow.gd" id="2_i8sf7"]
 
 [node name="Shadow" type="Node3D"]
@@ -8,8 +8,10 @@ script = ExtResource("2_i8sf7")
 
 [node name="Decal" type="Decal" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
-size = Vector3(1.75, 10, 1.75)
-texture_albedo = ExtResource("1_w7r0u")
+size = Vector3(1.5, 10, 1.5)
+texture_albedo = ExtResource("2_fhg7c")
+albedo_mix = 0.75
+normal_fade = 0.5
 upper_fade = 1e-05
 lower_fade = 0.1
 cull_mask = 1048573

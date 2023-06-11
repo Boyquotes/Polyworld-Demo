@@ -20,7 +20,8 @@ var input_dir := Vector2.ZERO:
 			relative_input_dir = Vector2.ZERO
 		else:
 			input_dir = vec.normalized()
-			relative_input_dir = vec.rotated(-cam.global_rotation.y).normalized()
+			input_dir.y *= 1.00
+			relative_input_dir = input_dir.rotated(-cam.global_rotation.y)
 var relative_input_dir := Vector2.ZERO
 var input_enabled = true
 
@@ -37,9 +38,11 @@ var aim_icon_mover = 0:
 	set(amt):
 		amt = clamp(amt, 0, 1)
 		if amt == 0:
-			aim_icon.visible = false
+			pass
+			#aim_icon.visible = false
 		else:
-			aim_icon.visible = true
+			pass
+			#aim_icon.visible = true
 		aim_icon_mover = amt
 var old_aim_icon_pos = Vector3.ZERO
 
@@ -52,21 +55,22 @@ var is_immune := false:
 var interacting := false
 
 @onready var cam = get_viewport().get_camera_3d() as Camera3D
-@onready var anim = $Sprite3D/AnimationPlayer as AnimationPlayer
+@onready var cam_arm = cam.get_parent() as CameraArm
+@onready var anim = $ModelContainer/Sprite3D/AnimationPlayer as AnimationPlayer
 @onready var s_player = $AudioStreamPlayer3D as AudioStreamPlayer3D
 @onready var aim_icon = $PositionBreak/AimIcon as Node3D
 @onready var dust_trail = $DustTrail as GPUParticles3D
 @onready var state_machine = $StateMachine as StateMachine
 @onready var soft_collider = $SoftCollider as SoftCollider
+@onready var interact_region = $InteractRegion as Area3D
+@onready var inventory = $Inventory as Inventory
 
-var partner : Partner
+@onready var partner = $Partner as Partner
 var partner_activation_position = Vector3.ZERO
 var partner_activation_time = 0.0
 
 
 func _ready():
-	partner = load("res://Entity/Partner/Partner.tscn").instantiate()
-	get_parent().add_child.call_deferred(partner)
 	partner.global_position = global_position - basis.z * 2
 	partner.leader = self
 	partner.get_node("Hitbox").caster = self
@@ -77,27 +81,51 @@ func _process(_delta):
 	# Get the input direction
 	if input_enabled:
 		input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
+		#input_dir = round(input)
 	
 	# TODO : make interaction checks constant for popups overhead ? like an A button appearing above interactables ?
 	# Handle interaction
-	if Input.is_action_just_pressed("interact"):
-		if !interacting:
-			var interact_box = get_node("InteractRegion") as Area3D
-			var overlapping_bodies = interact_box.get_overlapping_bodies()
-			
-			var nearest = null
-			var dist = 100
-			for body in overlapping_bodies:
-				if body == self:
-					continue
-				var current_dist = body.global_position.distance_to(global_position)
-				if current_dist < dist:
-					dist = current_dist
-					nearest = body
-			if nearest:
-				if nearest.has_method("interact"):
+#	if Input.is_action_just_pressed("interact"):
+#		if !interacting:
+#			var overlapping_bodies = interact_region.get_overlapping_bodies()
+#			var nearest = null
+#			var dist = 100
+#			for body in overlapping_bodies:
+#				if body == self:
+#					continue
+#				var current_dist = body.global_position.distance_to(global_position)
+#				if current_dist < dist:
+#					dist = current_dist
+#					nearest = body
+#			if nearest:
+#				if nearest.has_method("interact"):
+#					nearest.interact()
+#					face_toward(nearest.global_position)
+	
+	########### ABOVE IS OLD ################
+	
+	if !interacting:
+		var overlapping_bodies = interact_region.get_overlapping_bodies()
+		var nearest = null
+		var dist = 100
+		for body in overlapping_bodies:
+			if body == self || !body.has_method("interact"):
+				continue
+			var current_dist = body.global_position.distance_to(global_position)
+			if current_dist < dist:
+				dist = current_dist
+				nearest = body
+		if nearest:
+			if nearest.has_method("interact"):
+				aim_icon.global_position = nearest.global_position
+				aim_icon.visible = true
+				if Input.is_action_just_pressed("interact"):
+					aim_icon.visible = false
 					nearest.interact()
 					face_toward(nearest.global_position)
+		else:
+			aim_icon.visible = false
+	
 	
 	# Update aim and aim icon, store results in aim_target and aim_direction
 	if Input.is_action_just_pressed("target_lock"):
@@ -127,7 +155,7 @@ func _process(_delta):
 		old_aim_icon_pos = aim_icon.global_position
 		cam.get_parent().other_target = aim_target
 	else:
-		aim_icon.global_position = lerp(global_position, old_aim_icon_pos, aim_icon_mover)
+		#aim_icon.global_position = lerp(global_position, old_aim_icon_pos, aim_icon_mover)
 		aim_icon_mover -= _delta * 5
 		cam.get_parent().other_target = self
 	
@@ -137,11 +165,10 @@ func _process(_delta):
 	update_facing(_delta)
 	
 	# TODO: make this cleaner
-	if $StateMachine.current_state != $StateMachine/Stunned:
-		Engine.time_scale = move_toward(Engine.time_scale, 1, 0.02)
+	#if $StateMachine.current_state != $StateMachine/Stunned:
+	#	Engine.time_scale = move_toward(Engine.time_scale, 1, 0.02)
 	
-	
-	get_node("Sprite3D").position.y = move_toward(get_node("Sprite3D").position.y, 0.12, 0.05)
+	model.position.y = move_toward(model.position.y, 0.12, 0.05)
 
 
 func _physics_process(_delta):
@@ -154,6 +181,21 @@ func _physics_process(_delta):
 	pass
 
 
+# Handle jumping
+func jump():
+	s_player.stream = load("res://Sounds/jumpsound3.wav")
+	s_player.pitch_scale = randf_range(1.0, 1.2)
+	s_player.play()
+	
+	$DustPoof.restart()
+	
+	# TODO : honestly please figure out how to pass parameters thru the state machine transitions. it would be so much cleaner
+	vert_velocity = jump_force
+	can_hold_jump = true
+	state_machine.transition_to("InAir")
+
+
+# Returns the best target
 func update_aim_target(view_range):
 	
 	# Get the direct space state for the current world
@@ -257,6 +299,7 @@ func damage_boost(dur = 2):
 		visible = true
 
 
+# TODO : this is wack and should really be slimmed down
 func _on_hurtbox_area_entered(hitbox : Hitbox):
 	if hitbox.caster != self && !is_immune:
 		if "contact" in hitbox.get_parent():
@@ -266,7 +309,7 @@ func _on_hurtbox_area_entered(hitbox : Hitbox):
 			return
 		
 		# TODO: Change the way this is done
-		Engine.time_scale= 0.2
+		#Engine.time_scale= 0.2
 		
 		take_damage(hitbox.damage)
 		

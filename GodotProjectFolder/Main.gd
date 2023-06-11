@@ -3,7 +3,7 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var scene = load("res://Worlds/BattleWorld.tscn").instantiate()
+	var scene = load("res://Worlds/TestWorld.tscn").instantiate()
 	add_child(scene)
 
 
@@ -16,10 +16,6 @@ func _process(_delta):
 	# MENU RELATED STUFF
 	if Input.is_action_just_pressed("menu"):
 		get_tree().paused = !get_tree().paused
-	
-	# Menu stuff
-	if get_tree().paused:
-		pass
 
 
 func change_scene(scene_name : String, exit_id = -1):

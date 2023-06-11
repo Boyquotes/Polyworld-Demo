@@ -1,12 +1,17 @@
-[gd_scene load_steps=18 format=3 uid="uid://db1kybbohaicv"]
+[gd_scene load_steps=24 format=3 uid="uid://db1kybbohaicv"]
 
 [ext_resource type="Script" path="res://Entity/Partner/Partner.gd" id="1_xfgan"]
+[ext_resource type="Script" path="res://Entity/StateMachine.gd" id="2_8j5sb"]
 [ext_resource type="PackedScene" uid="uid://b3yg08kbyt47u" path="res://Shadow.tscn" id="2_grkkk"]
+[ext_resource type="Script" path="res://Entity/State.gd" id="3_3wf41"]
 [ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="3_h25nm"]
 [ext_resource type="Texture2D" uid="uid://d3pl80nj02x7n" path="res://Entity/Partner/quadraped spritesheet.png" id="4_ky3l3"]
 [ext_resource type="Script" path="res://SpriteOrientation.gd" id="5_gni7h"]
+[ext_resource type="AudioStream" uid="uid://cilu6orw3xiub" path="res://Sounds/jumpsound3.wav" id="8_c2y6t"]
 [ext_resource type="PackedScene" uid="uid://cqta3h2r0tx1d" path="res://Hitboxes and Hurtboxes/Hitbox.tscn" id="8_e57vd"]
+[ext_resource type="AudioStream" uid="uid://cmkhnabtu7n2t" path="res://Sounds/footstep0.wav" id="8_ieb3t"]
 [ext_resource type="PackedScene" uid="uid://b1eu4n46chxe7" path="res://Effects/DustTrail.tscn" id="9_fy50p"]
+[ext_resource type="PackedScene" uid="uid://c6afag3ymbnus" path="res://Hitboxes and Hurtboxes/SoftCollider.tscn" id="10_bthhu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytivq"]
 shading_mode = 2
@@ -77,6 +82,21 @@ tracks/0/keys = {
 "update": 1,
 "values": [1]
 }
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AudioStreamPlayer3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.594,
+"start_offset": 0.0118,
+"stream": ExtResource("8_c2y6t")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
 
 [sub_resource type="Animation" id="Animation_a5htk"]
 resource_name = "run"
@@ -94,6 +114,25 @@ tracks/0/keys = {
 "update": 1,
 "values": [1, 2, 3, 4]
 }
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AudioStreamPlayer3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.589,
+"start_offset": 0.0374,
+"stream": ExtResource("8_ieb3t")
+}, {
+"end_offset": 0.5899,
+"start_offset": 0.0364,
+"stream": ExtResource("8_ieb3t")
+}],
+"times": PackedFloat32Array(0.0874944, 0.284743)
+}
+tracks/1/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ohsp6"]
 _data = {
@@ -106,12 +145,21 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_dfxx1"]
 radius = 1.2
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_56xlx"]
+
 [node name="Partner" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1_xfgan")
 should_avoid = false
 move_speed = 10.0
 jump_force = 25.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("2_8j5sb")
+current_state = NodePath("State")
+
+[node name="State" type="Node" parent="StateMachine"]
+script = ExtResource("3_3wf41")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
@@ -142,7 +190,6 @@ texture = ExtResource("4_ky3l3")
 hframes = 5
 vframes = 5
 script = ExtResource("5_gni7h")
-angle_count = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D2"]
 libraries = {
@@ -151,6 +198,7 @@ libraries = {
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 attenuation_model = 3
+volume_db = -4.0
 max_polyphony = 4
 
 [node name="Hitbox" parent="." instance=ExtResource("8_e57vd")]
@@ -164,5 +212,10 @@ shape = SubResource("SphereShape3D_dfxx1")
 
 [node name="DustTrail" parent="." instance=ExtResource("9_fy50p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, -1.025)
+
+[node name="SoftCollider" parent="." instance=ExtResource("10_bthhu")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SoftCollider"]
+shape = SubResource("CapsuleShape3D_56xlx")
 
 [editable path="Hitbox"]

@@ -15,12 +15,13 @@ func _ready():
 
 
 func enter():
+	print('surp')
 	enemy.move_speed = 7
-	enemy.get_node("Red").visible = false
-	enemy.get_node("Yellow").visible = false
+	enemy.get_node("ModelContainer/Red").visible = false
+	enemy.get_node("ModelContainer/Yellow").visible = false
 	enemy.get_node("HealthBar").visible = true
 	
-	enemy.velocity.y = enemy.jump_force / 2
+	enemy.vert_velocity = enemy.jump_force / 2
 	surprise_counter = surprise_duration
 
 

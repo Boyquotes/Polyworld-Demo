@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" path="res://Camera/CameraRegion.tscn" id="10_2kro2"]
 [ext_resource type="Shader" path="res://Shaders/CommonSprite.gdshader" id="11_niynl"]
 [ext_resource type="Texture2D" uid="uid://cj7inwy4d24g7" path="res://Entity/NPC/quilt guy.png" id="12_wj2mw"]
-[ext_resource type="PackedScene" path="res://Shadow.tscn" id="13_mal41"]
+[ext_resource type="PackedScene" uid="uid://b3yg08kbyt47u" path="res://Shadow.tscn" id="13_mal41"]
 [ext_resource type="Texture2D" uid="uid://bn6i2io7n5wky" path="res://Entity/NPC/dotguy.png" id="14_ehdwf"]
 [ext_resource type="Texture2D" uid="uid://b3oxgac3i2273" path="res://Entity/NPC/devildude1.png" id="15_c2b3x"]
 
@@ -231,6 +231,10 @@ target = NodePath("../Player")
 
 [node name="Camera3d" parent="CameraArm" index="0"]
 near = 10.0
+
+[node name="PocketCamera" parent="CameraArm" index="1"]
+offset_right = 4.0
+offset_bottom = -379.0
 
 [node name="Snow" parent="CameraArm" instance=ExtResource("6_a2bui")]
 

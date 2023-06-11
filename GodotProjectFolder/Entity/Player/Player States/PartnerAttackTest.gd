@@ -18,27 +18,23 @@ func enter():
 	player.facing_dir_target = Vector2(player.aim_direction.x, player.aim_direction.z)
 	player.partner.facing_dir_target = player.facing_dir_target
 	
-	player.partner.call_toward(player.global_position + player.aim_direction * 2, 0.15)
+	player.partner.summon(0.15, player.global_position + player.aim_direction * 2)
 	
-	var hor_velocity = Vector2(player.aim_direction.x, player.aim_direction.z).normalized() * player.move_speed
-	player.velocity.x = hor_velocity.x
-	player.velocity.z = hor_velocity.y
+	player.hor_velocity = Vector2(player.aim_direction.x, player.aim_direction.z).normalized() * player.move_speed
 
 
 func update(_delta):
 	
-	var hor_velocity = Vector2(player.aim_direction.x, player.aim_direction.z).normalized() * player.move_speed
-	player.velocity.x = hor_velocity.x
-	player.velocity.z = hor_velocity.y
+	player.hor_velocity = Vector2(player.aim_direction.x, player.aim_direction.z).normalized() * player.move_speed
 	
-	player.partner.calling_end_pos = player.global_position + player.aim_direction * 2
+	player.partner.summon_destination = player.global_position + player.aim_direction * 2
 	
-	if player.partner.call_arrived:
-		player.partner.is_being_called = false
+	if player.partner.reached_summon_destination:
+		player.partner.is_being_summoned = false
 		player.partner.velocity = Vector3(0, 15, 0)
 	
 	# TODO : better system for checking if an attack has been completed
-	if !player.partner.is_being_called:
+	if !player.partner.is_being_summoned:
 		# Return to standard state
 		if player.is_on_floor():
 			state_machine.transition_to("Run")
@@ -49,21 +45,21 @@ func update(_delta):
 func physics_update(_delta):
 
 	# Ascending
-	if !player.is_on_floor() && player.velocity.y >= 0:
+	if !player.is_on_floor() && player.vert_velocity >= 0:
 		# Add gravity to velocity based on if holding jump
 		if player.can_hold_jump:
-			player.velocity.y -= player.GRAVITY/2 * _delta
+			player.vert_velocity -= player.GRAVITY/2 * _delta
 		else:
-			player.velocity.y -= player.GRAVITY * _delta
+			player.vert_velocity -= player.GRAVITY * _delta
 	
 	# Descending
 	else:
 		player.can_hold_jump = false
 		
 		# Add gravity to velocity
-		player.velocity.y -= player.GRAVITY * _delta
+		player.vert_velocity -= player.GRAVITY * _delta
 	
-	player.move_and_slide()
+	player.apply_velocities()
 
 
 func exit():

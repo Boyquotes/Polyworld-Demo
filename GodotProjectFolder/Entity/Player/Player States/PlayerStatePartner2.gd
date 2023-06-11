@@ -34,9 +34,6 @@ func update(_delta):
 
 func physics_update(_delta):
 	
-	var vert_velocity = player.velocity.y
-	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-	
 	var partner_speed = player.move_speed * 1.2
 	var partner_accel = player.move_accel * 0.6
 	
@@ -47,7 +44,7 @@ func physics_update(_delta):
 	else:
 		player.facing_dir_target = player.facing_dir
 	
-	hor_velocity = hor_velocity.move_toward(
+	player.hor_velocity = player.hor_velocity.move_toward(
 		player.facing_dir.normalized() * partner_speed, partner_accel * _delta)
 	
 	if player.is_on_floor():
@@ -55,24 +52,23 @@ func physics_update(_delta):
 		
 	if fuel > 0:
 		fuel -= 0.5 * _delta
-		vert_velocity = abs((abs(fuel - 0.5) * 2) - 1) * 6
+		player.vert_velocity = abs((abs(fuel - 0.5) * 2) - 1) * 6
 	if fuel <= 0:
 		fuel = 0
 		# Add the gravity
-		vert_velocity = -2.5
-	
-	# Set new velocity
-	player.velocity = Vector3(hor_velocity.x, vert_velocity, hor_velocity.y)
+		player.vert_velocity = -2.5
 	
 	# Move the player
-	player.move_and_slide()
+	player.apply_velocities()
 	
-	player.partner.global_position = player.global_position
+	# Position partner on player
+	player.partner.summon_destination = player.global_position
 		
 	# If partner is deactivated, hop off
 	if !Input.is_action_pressed("special"):
-		#player.partner.deactivate()
-		player.velocity.y = player.jump_force * 0.75
+		player.partner.is_being_summoned = false
+		player.partner.velocity = Vector3(0, 15, 0)
+		player.vert_velocity = player.jump_force * 0.75
 		player.can_hold_jump = false
 		state_machine.transition_to("InAir")
 		return

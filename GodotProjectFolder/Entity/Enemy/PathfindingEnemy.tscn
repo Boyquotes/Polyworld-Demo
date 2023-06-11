@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d2ve7qxs5325o"]
+[gd_scene load_steps=25 format=3 uid="uid://d2ve7qxs5325o"]
 
 [ext_resource type="Script" path="res://Entity/Enemy/PathfindingEnemy.gd" id="1_7i3iw"]
 [ext_resource type="PackedScene" uid="uid://w2pd2ty8eu86" path="res://Hitboxes and Hurtboxes/Hurtbox.tscn" id="2_bwnuo"]
@@ -9,8 +9,10 @@
 [ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateAlerted.gd" id="6_dufk3"]
 [ext_resource type="Script" path="res://Entity/Enemy/EnemyStates/EnemyStateAttacking.gd" id="7_3knj0"]
 [ext_resource type="PackedScene" uid="uid://b8yyu5oeqqxad" path="res://UI/HealthBar.tscn" id="8_4ksgh"]
+[ext_resource type="Script" path="res://Entity/ModelContainer.gd" id="8_7nrtk"]
 [ext_resource type="Script" path="res://UI/Inventory.gd" id="9_jwflf"]
 [ext_resource type="PackedScene" uid="uid://b3yg08kbyt47u" path="res://Shadow.tscn" id="11_v8aqd"]
+[ext_resource type="PackedScene" uid="uid://c6afag3ymbnus" path="res://Hitboxes and Hurtboxes/SoftCollider.tscn" id="13_mui5o"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_v5sbh"]
 
@@ -49,7 +51,9 @@ margin = 0.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulo86"]
 
-[node name="PathfindingEnemy" type="CharacterBody3D" groups=["enemies"]]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rl0kj"]
+
+[node name="PathfindingEnemy" type="CharacterBody3D" node_paths=PackedStringArray("model") groups=["enemies"]]
 collision_layer = 2
 script = ExtResource("1_7i3iw")
 can_jump = true
@@ -57,6 +61,7 @@ move_speed = 7.0
 move_accel = 40.0
 move_decel = 30.0
 jump_force = 20.0
+model = NodePath("ModelContainer")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("2_ip005")
@@ -77,30 +82,36 @@ script = ExtResource("6_dufk3")
 [node name="Attacking" type="Node" parent="StateMachine"]
 script = ExtResource("7_3knj0")
 
-[node name="Model" type="MeshInstance3D" parent="."]
+[node name="ModelContainer" type="Node3D" parent="."]
+script = ExtResource("8_7nrtk")
+
+[node name="Model" type="MeshInstance3D" parent="ModelContainer"]
 layers = 2
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_v5sbh")
+skeleton = NodePath("../..")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ModelContainer/Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 layers = 2
 cast_shadow = 0
 mesh = SubResource("BoxMesh_kh7gn")
 
-[node name="Red" type="MeshInstance3D" parent="."]
+[node name="Red" type="MeshInstance3D" parent="ModelContainer"]
 visible = false
 layers = 2
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_17rmk")
+skeleton = NodePath("../..")
 
-[node name="Yellow" type="MeshInstance3D" parent="."]
+[node name="Yellow" type="MeshInstance3D" parent="ModelContainer"]
 visible = false
 layers = 2
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_4qwv7")
+skeleton = NodePath("../..")
 
-[node name="Gray" type="MeshInstance3D" parent="."]
+[node name="Gray" type="MeshInstance3D" parent="ModelContainer"]
 visible = false
 layers = 2
 cast_shadow = 0
@@ -141,6 +152,11 @@ one_shot = true
 script = ExtResource("9_jwflf")
 
 [node name="Shadow" parent="." instance=ExtResource("11_v8aqd")]
+
+[node name="SoftCollider" parent="." instance=ExtResource("13_mui5o")]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SoftCollider"]
+shape = SubResource("CapsuleShape3D_rl0kj")
 
 [connection signal="entity_died" from="." to="." method="_on_entity_died"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

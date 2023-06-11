@@ -18,10 +18,6 @@ func _ready():
 
 func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distance:=false, can_hop=true, always_hop:=false, shortcut_bias:=2.0):
 	
-	# Store horizontal and vertical velocities
-	var hor_velocity = Vector2(velocity.x, velocity.z)
-	var vert_velocity = velocity.y
-	
 	# Subtract gravity from vertical velocity
 	vert_velocity -= GRAVITY * _delta
 	
@@ -68,6 +64,9 @@ func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distanc
 				hor_velocity = hor_velocity.move_toward(direction * move_speed, move_accel * _delta)
 			else:
 				hor_velocity = hor_velocity.move_toward(direction * move_speed, air_accel * _delta)
+		
+		facing_dir_target = hor_velocity.normalized()
+		
 	else:
 		# Decelerate towards zero
 		if is_on_floor():
@@ -75,6 +74,11 @@ func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distanc
 		else:
 			hor_velocity = hor_velocity.move_toward(Vector2.ZERO, air_accel * _delta)
 		running = false
+	
+	# Handle soft collisions
+	var soft_collider = get_node("SoftCollider")
+	if soft_collider:
+		hor_velocity += soft_collider.get_push_vector()
 	
 	# Set agent avoidance and move with new velicocity
 	if is_on_floor() and should_avoid:
@@ -84,8 +88,7 @@ func ai_move(_delta:float, destination:Vector3, min_range:=2.0, accel_by_distanc
 	else:
 		agent.avoidance_enabled = false
 		velocity = Vector3(hor_velocity.x, vert_velocity, hor_velocity.y)
-		facing_dir_target = hor_velocity
-		move_and_slide()
+		apply_velocities()
 
 
 func get_path_distance(path:PackedVector3Array):
@@ -96,6 +99,6 @@ func get_path_distance(path:PackedVector3Array):
 
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
-	velocity = safe_velocity
-	facing_dir_target = Vector2(velocity.x, velocity.z).normalized()
-	move_and_slide()
+	hor_velocity = Vector2(safe_velocity.x, safe_velocity.z)
+	vert_velocity = safe_velocity.y
+	apply_velocities()

@@ -10,6 +10,10 @@ uniform vec3 uv1_offset;
 uniform vec3 uv2_scale;
 uniform vec3 uv2_offset;
 
+void light() {
+	DIFFUSE_LIGHT += (dot(NORMAL, LIGHT) + 1.5) * ATTENUATION;
+}
+
 
 void vertex() {
 	POINT_SIZE=point_size;

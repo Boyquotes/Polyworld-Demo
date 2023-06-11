@@ -17,22 +17,32 @@ func enter():
 	stun_counter = stun_duration
 	entity.get_node("HealthBar").visible = true
 	
-	entity.get_node("Red").visible = false
-	entity.get_node("Yellow").visible = true
+	entity.get_node("ModelContainer/Red").visible = false
+	entity.get_node("ModelContainer/Yellow").visible = true
 	entity.get_node("HealthBar").visible = true
+	
+	entity.model.shake(0.5, 0.96)
+	
+	# TODO : change this system
+	entity.disable(entity)
+	entity.disable(entity.player)
+	await get_tree().create_timer(0.25).timeout
+	entity.enable(entity)
+	entity.enable(entity.player)
+	
 
 
-func update(_delta):
-	stun_counter -= _delta
+func update(delta):
+	stun_counter -= delta
 	if stun_counter <= 0:
 		state_machine.transition_to("Detected")
 
 
-func physics_update(_delta):
-	entity.velocity.y -= entity.GRAVITY * _delta
+func physics_update(delta):
+	entity.velocity.y -= entity.GRAVITY * delta
 	var hor_velocity = Vector2(entity.velocity.x, entity.velocity.z)
 	if entity.is_on_floor():
-		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, 20 * _delta)
+		hor_velocity = hor_velocity.move_toward(Vector2.ZERO, 20 * delta)
 	entity.velocity.x = hor_velocity.x
 	entity.velocity.z = hor_velocity.y
 	entity.move_and_slide()

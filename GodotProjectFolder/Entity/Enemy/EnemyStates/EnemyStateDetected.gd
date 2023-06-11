@@ -19,8 +19,8 @@ func _ready():
 
 func enter():
 	enemy.move_speed = 9
-	enemy.get_node("Red").visible = true
-	enemy.get_node("Yellow").visible = false
+	enemy.get_node("ModelContainer/Red").visible = true
+	enemy.get_node("ModelContainer/Yellow").visible = false
 	enemy.get_node("HealthBar").visible = true
 	
 	attack_counter = attack_interval + randf_range(-0.5, 3)
@@ -49,7 +49,6 @@ func physics_update(_delta):
 		
 		if enemy.global_position.distance_to(enemy.player.global_position) < 12.0:
 			enemy.move_speed = 5
-			enemy.face_toward(enemy.player.global_position)
 			circling_phase += _delta * 0.2
 			var forward_dir = enemy.player.global_position.direction_to(enemy.global_position)
 			forward_dir.y = 0
@@ -59,13 +58,10 @@ func physics_update(_delta):
 			enemy.ai_move(_delta, target_location + circling_offset, 0.0, false, false)
 		else:
 			enemy.move_speed = 7
-			enemy.face_toward(enemy.player.global_position)
 			enemy.ai_move(_delta, enemy.player.global_position, 12.0, false, enemy.can_jump)
 			circling_phase = 0
 			
-		# Look at player if stopped
-		if enemy.velocity == Vector3.ZERO:
-			enemy.face_toward(enemy.player.global_position)
+		enemy.face_toward(enemy.player.global_position)
 		
 	
 	enemy.update_facing(_delta)

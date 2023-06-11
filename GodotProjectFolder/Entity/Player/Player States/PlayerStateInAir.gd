@@ -6,18 +6,6 @@ var player : Player
 var in_jump_buffer = false
 var in_coyote_time = false
 
-var can_turn = true
-
-var wall_sliding = false
-var wall_normal = Vector3.UP:
-	set(val):
-		wall_normal_2d = Vector2(val.x, val.z).normalized()
-		wall_normal = val
-var wall_normal_2d = Vector2.UP
-var wall_slide_fuel = 1.0:
-	set(val):
-		wall_slide_fuel = clamp(val, 0, 1)
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,143 +15,83 @@ func _ready():
 
 func enter():
 	player.anim.play("jump")
-	if not player.can_hold_jump:
+	if !player.can_hold_jump:
 		set_coyote_time()
-	wall_slide_fuel = 1.0
 	
 	player.dust_trail.emitting = false
 
 
 func update(_delta):
 	
-	# Handle partner activation
-#	if Input.is_action_pressed("special"):
-#		player.partner.is_being_called = true
-#		if Input.is_action_just_pressed("special"):
-#			player.partner_activation_time = 0.0
-#			player.partner_activation_position = player.partner.global_position
-#		player.partner_activation_time += _delta * 2
-#		if player.partner_activation_time >= 0.5:
-#			player.partner_activation_time = 1.0
-#			state_machine.transition_to("Partner")
-#		player.partner.global_position = player.partner.global_position.lerp(player.global_position, player.partner_activation_time)
-#		player.partner.rotation.y = player.rotation.y
-#	else:
-#		player.partner.is_being_called = false
-#		player.partner_activation_time = 0.0 
-	
+	# Handle partner special ability activation
 	if Input.is_action_pressed("special"):
-		if Input.is_action_just_pressed("special"):
-			player.partner.call_toward(player.global_position, 0.25)
-		player.partner.calling_end_pos = player.global_position
-		if player.partner.call_arrived:
+		if !player.partner.is_being_summoned:
+			player.partner.summon(0.25, player.global_position)
+		player.partner.summon_destination = player.global_position
+		if player.partner.reached_summon_destination:
 			state_machine.transition_to("Partner")
 	else:
-		player.partner.is_being_called = false
+		player.partner.is_being_summoned = false
 
 
 func physics_update(_delta):
 	
-	# Initialize horizontal velocity
-	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-	
-	if not Input.is_action_pressed("jump"):
+	# Disable jump holding when button is released
+	if !Input.is_action_pressed("jump"):
 		player.can_hold_jump = false
 	
 	# TODO : fix this to better detect if jumping or not, such as passing it thru as a parameter into the state
 	elif Input.is_action_just_pressed("jump"):
-		# WALL JUMP STUFF
-		if wall_sliding:
-			can_turn = false
-			wall_sliding = false
-			hor_velocity = wall_normal_2d * 15 + hor_velocity
-			player.velocity.x = hor_velocity.x
-			player.velocity.z = hor_velocity.y
-			player.velocity.y = player.jump_force * 1.2
-			player.facing_dir_target = hor_velocity.normalized()
-			player.anim.play("jump", 0)
-			
-		##
-		else:
-			set_jump_buffer()
-			if in_coyote_time and player.velocity.y <= 1:
-				jump()
-				return
+		set_jump_buffer()
+		if in_coyote_time and player.vert_velocity <= 1:
+			player.jump()
+			return
 	
-	# Ascending
-	if player.velocity.y >= 0:
-		#player.anim.play("inair_up")
-		
-		# Add gravity to velocity based on if holding jump
-		if player.can_hold_jump:
-			player.velocity.y -= player.GRAVITY/2 * _delta
-		else:
-			player.velocity.y -= player.GRAVITY * _delta
-	
-	# Descending
+	# Add gravity to velocity, scaled based on if holding jump
+	if player.vert_velocity >= 0 && player.can_hold_jump:
+		player.vert_velocity -= player.GRAVITY/2 * _delta
 	else:
-		#player.anim.play("inair_down")
 		player.can_hold_jump = false
-		
-		# Add gravity to velocity
-		player.velocity.y -= player.GRAVITY * _delta
+		player.vert_velocity -= player.GRAVITY * _delta
 	
-	# Adjust velocity if there is movement input
+	# Check if there is input
 	if player.relative_input_dir:
-		hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.air_accel * _delta)
-		player.velocity.x = hor_velocity.x
-		player.velocity.z = hor_velocity.y
+		
+		# Set horizontal velocity
+		var desired_vel = player.relative_input_dir * player.move_speed
+		var desired_accel = player.air_accel * _delta
+		player.hor_velocity = player.hor_velocity.move_toward(desired_vel, desired_accel)
 		
 		# Set direction to face
-		if can_turn:
-			player.facing_dir_target = player.relative_input_dir
+		player.facing_dir_target = player.relative_input_dir
 	
-	# Store velocity prior to moving
+	# Handle impact damage and camera shake
 	var last_speed = player.velocity.length()
-	if player.move_and_slide():
+	if player.apply_velocities():
 		var vel_difference = last_speed - player.velocity.length()
-		player.cam.get_parent().shake_amt = clamp(vel_difference * 0.01, 0, 0.5)
-		# Handle fall damage
-		if  vel_difference > 40:
-			player.take_damage(last_speed * 0.2)
-	
-	# WALL SLIDING STUFF
-#	if wall_sliding:
-#		if player.velocity.y < 0:
-#			player.dust_trail.emitting = true
-#			wall_slide_fuel -= 0.05
-#			player.velocity.y *= 1.0 - wall_slide_fuel * 0.5
-#		var wall_angle = player.facing_dir_target.dot(wall_normal_2d)
-#		if wall_angle >= 0.1:
-#			wall_sliding = false
-#	elif wall_slide_fuel > 0 && player.is_on_wall():
-#		wall_normal = player.get_wall_normal()
-#		var wall_angle = hor_velocity.dot(wall_normal_2d)
-#		if wall_angle < -0.25:
-#			wall_sliding = true
-#	else:
-#		player.dust_trail.emitting = false
-	
+		if vel_difference > 5:
+			player.cam_arm.shake_amt = clamp(vel_difference * 0.01, 0, 0.5)
+			Input.start_joy_vibration(0, 0.5, 0.5, 0.1)
+			if vel_difference > 40:
+				player.take_damage(last_speed * 0.2)
 	
 	# Handle landing
 	if player.is_on_floor():
-		player.get_node("DustPoof").restart()
-		player.get_node("Sprite3D").position.y = -0.25
-		
 		player.s_player.stream = load("res://Sounds/landing.wav")
 		player.s_player.pitch_scale = randf_range(1.0, 1.2)
 		player.s_player.play()
+		
+		player.get_node("DustPoof").restart()
+		player.model.position.y = -0.25
 		
 		player.can_hold_jump = false
 		
 		# Handle jumping if in buffer
 		if in_jump_buffer:
-			jump()
+			player.jump()
 			return
-		
-		else:
-			state_machine.transition_to("Idle")
-			return
+		state_machine.transition_to("Idle")
+		return
 	
 	# Handle attacking
 	if Input.is_action_just_pressed("primary"):
@@ -175,19 +103,7 @@ func physics_update(_delta):
 
 
 func exit():
-	wall_sliding = false
-	can_turn = true
-
-
-func jump():
-	player.s_player.stream = load("res://Sounds/jumpsound3.wav")
-	player.s_player.pitch_scale = randf_range(1.0, 1.2)
-	player.s_player.play()
-	
-	player.get_node("DustPoof").restart()
-	player.velocity.y = player.jump_force
-	player.can_hold_jump = true
-	state_machine.transition_to("InAir")
+	pass
 
 
 func set_jump_buffer():

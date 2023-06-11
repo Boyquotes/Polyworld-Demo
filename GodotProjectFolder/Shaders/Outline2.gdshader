@@ -48,29 +48,30 @@ void fragment() {
 	float xdiff = clamp(diff_neighbor1 + diff_neighbor2, 0., 1.);
 	float ydiff = clamp(diff_neighbor3 + diff_neighbor4, 0., 1.);
 	
-//	if (xdiff > 0.) {
-//		float depth_neighbor_extra = texture(DEPTH_TEXTURE, SCREEN_UV + pixel_width * 2.).r;
-//		float linear_depth_neighbor_extra = get_linear_depth(SCREEN_UV + pixel_width * 2., INV_PROJECTION_MATRIX, depth_neighbor_extra);
-//		float diff_neighbor_extra = linear_depth_neighbor1 - linear_depth_neighbor_extra;
-//		float xdiff_extra = linear_depth_neighbor1 - linear_depth + diff_neighbor_extra;
-//		if (xdiff_extra > 0. && diff_neighbor_extra >= 0.) {
-//			xdiff = 0.;
-//		}
-//	} 
-//	if (ydiff > 0.) {
-//		float depth_neighbor_extra = texture(DEPTH_TEXTURE, SCREEN_UV + pixel_height * 2.).r;
-//		float linear_depth_neighbor_extra = get_linear_depth(SCREEN_UV + pixel_height * 2., INV_PROJECTION_MATRIX, depth_neighbor_extra);
-//		float diff_neighbor_extra = linear_depth_neighbor3 - linear_depth_neighbor_extra;
-//		float ydiff_extra = linear_depth_neighbor3 - linear_depth + diff_neighbor_extra;
-//		if (ydiff_extra > 0. && diff_neighbor_extra >= 0.) {
-//			ydiff = 0.;
-//		}
-//	}
-	
 	float diff = max(xdiff, ydiff);
 	
-	float cascades = 3.;
+	float cascades = 1.;
 	float line_strength = floor(clamp(diff * depth_multiplier, 0., 1.) * cascades) / cascades * transparency;
+	
+	if (line_strength > 0.) {
+		if (diff == xdiff) {
+			float depth_neighbor_extra = texture(DEPTH_TEXTURE, SCREEN_UV + pixel_width * 2.).r;
+			float linear_depth_neighbor_extra = get_linear_depth(SCREEN_UV + pixel_width * 2., INV_PROJECTION_MATRIX, depth_neighbor_extra);
+			float diff_neighbor_extra = linear_depth_neighbor1 - linear_depth_neighbor_extra;
+			float xdiff_extra = linear_depth_neighbor1 - linear_depth + diff_neighbor_extra;
+			if (floor(clamp(xdiff_extra * depth_multiplier, 0., 1.) * cascades) / cascades == 1.) {
+				line_strength = 0.;
+			}
+		} else {
+			float depth_neighbor_extra = texture(DEPTH_TEXTURE, SCREEN_UV + pixel_height * 2.).r;
+			float linear_depth_neighbor_extra = get_linear_depth(SCREEN_UV + pixel_height * 2., INV_PROJECTION_MATRIX, depth_neighbor_extra);
+			float diff_neighbor_extra = linear_depth_neighbor3 - linear_depth_neighbor_extra;
+			float ydiff_extra = linear_depth_neighbor3 - linear_depth + diff_neighbor_extra;
+			if (floor(clamp(ydiff_extra * depth_multiplier, 0., 1.) * cascades) / cascades == 1.) {
+				line_strength = 0.;
+			}
+		}
+	}
 	
 	vec3 base_albedo = round(texture(SCREEN_TEXTURE, SCREEN_UV).rgb * 50.) / 50.;
 	
@@ -79,28 +80,6 @@ void fragment() {
 	
 	//Use if blend mode is mul
 	ALBEDO = mix(vec3(1.), vec3(0.), line_strength * outline_color.a);
-	
-//	if (xdiff > 0.0) {
-//		ALBEDO = vec3(0.,0.,1.);
-//	}
-	
-//	if (diff_neighbor3 > 0.0 && diff_neighbor4 > 0.0) {
-//		ALBEDO = vec3(1.,0.,1.);
-//	}
-	
-//		if (((diff_neighbor1 > 0.0 && diff_neighbor2 < 0.0) ||
-//			(diff_neighbor1 < 0.0 && diff_neighbor2 > 0.0)) &&
-//			(!(diff_neighbor3 > 0.0 && diff_neighbor4 < 0.0) ||
-//			!(diff_neighbor3 < 0.0 && diff_neighbor4 > 0.0))){
-//			ALBEDO = vec3(1.,1.,1.);
-//		}
-//
-//		if (!((diff_neighbor1 > 0.0 && diff_neighbor2 < 0.0) ||
-//			!(diff_neighbor1 < 0.0 && diff_neighbor2 > 0.0)) &&
-//			((diff_neighbor3 > 0.0 && diff_neighbor4 < 0.0) ||
-//			(diff_neighbor3 < 0.0 && diff_neighbor4 > 0.0))){
-//			ALBEDO = vec3(1.,1.,1.);
-//		}
 
 
 }

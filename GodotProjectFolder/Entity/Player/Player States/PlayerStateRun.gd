@@ -11,82 +11,64 @@ func _ready():
 
 
 func enter():
+	# Play appropriate animation
 	player.anim.play("run")
 	player.dust_trail.emitting = true
 
 
 func update(_delta):
 	
-	# Handle partner activation
-#	if Input.is_action_pressed("special"):
-#		player.partner.is_being_called = true
-#		if Input.is_action_just_pressed("special"):
-#			player.partner_activation_time = 0.0
-#			player.partner_activation_position = player.partner.global_position
-#		player.partner_activation_time += _delta * 2
-#		if player.partner_activation_time >= 0.5:
-#			player.partner_activation_time = 1.0
-#			state_machine.transition_to("Partner")
-#		player.partner.global_position = player.partner.global_position.lerp(player.global_position, player.partner_activation_time)
-#		player.partner.facing_dir_target = player.facing_dir_target
-#	else:
-#		player.partner.is_being_called = false
-#		player.partner_activation_time = 0.0 
-	
+	# Handle partner special ability activation
 	if Input.is_action_pressed("special"):
-		if Input.is_action_just_pressed("special"):
-			player.partner.call_toward(player.global_position, 0.25)
-		player.partner.calling_end_pos = player.global_position
-		if player.partner.call_arrived:
+		if !player.partner.is_being_summoned:
+			player.partner.summon(0.25, player.global_position)
+		player.partner.summon_destination = player.global_position
+		if player.partner.reached_summon_destination:
 			state_machine.transition_to("Partner")
 	else:
-		player.partner.is_being_called = false
+		player.partner.is_being_summoned = false
 
 
-func physics_update(_delta):
+func physics_update(delta):
 	
 	# Add gravity to velocity
-	player.velocity.y -= player.GRAVITY * _delta
+	player.vert_velocity -= player.GRAVITY * delta
 	
-	# Initialize horizontal velocity
-	var hor_velocity = Vector2(player.velocity.x, player.velocity.z)
-	
-	# Running
+	# Check if there is input
 	if player.relative_input_dir:
 		
-		if abs(hor_velocity.angle_to(player.relative_input_dir)) < PI/2:
-			hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.move_accel * _delta)
-		else:
-			hor_velocity = hor_velocity.move_toward(player.relative_input_dir * player.move_speed, player.move_accel * 3 * _delta)
+		# Increase acceleration when making sharp turns
+		var accel_multiplier = 1
+		if abs(player.hor_velocity.angle_to(player.relative_input_dir)) > PI/2:
+			accel_multiplier = 3
+		
+		# Set horizontal velocity
+		var desired_vel = player.relative_input_dir * player.move_speed
+		var desired_accel = player.move_accel * accel_multiplier * delta
+		player.hor_velocity = player.hor_velocity.move_toward(desired_vel, desired_accel)
 		
 		# Set direction to face
 		player.facing_dir_target = player.relative_input_dir
 		
-		# Apply movement
-		player.velocity.x = hor_velocity.x
-		player.velocity.z = hor_velocity.y
-		
-		var push_vector = player.soft_collider.get_push_vector()
-		player.velocity.x += push_vector.x
-		player.velocity.z += push_vector.y
-		
-		player.move_and_slide()
+	# Handle soft collisions
+	player.hor_velocity += player.soft_collider.get_push_vector()
 	
-	# Check if still grounded, and transition states if not
+	# Apply the velocity
+	player.apply_velocities()
+	
+	# Transition states accordingly
 	if player.is_on_floor():
-		
-		# Handle jumping
 		if Input.is_action_just_pressed("jump"):
-			jump()
+			player.jump()
 			return
 		elif player.relative_input_dir == Vector2.ZERO:
 			state_machine.transition_to("Idle")
 			return
-			
 	else:
 		state_machine.transition_to("InAir")
 		return
 	
+	# TODO : modify this for the new state-based combat system
 	# Handle attacking
 	if Input.is_action_just_pressed("primary"):
 		state_machine.transition_to("Primary")
@@ -99,15 +81,3 @@ func physics_update(_delta):
 func exit():
 	player.dust_trail.emitting = false
 
-
-func jump():
-	player.s_player.stream = load("res://Sounds/jumpsound3.wav")
-	player.s_player.pitch_scale = randf_range(1.0, 1.2)
-	player.s_player.play()
-	
-	player.get_node("DustPoof").restart()
-	#player.cam.get_parent().shake_amt = 0.5
-	
-	player.velocity.y = player.jump_force
-	player.can_hold_jump = true
-	state_machine.transition_to("InAir")

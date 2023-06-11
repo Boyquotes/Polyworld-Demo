@@ -3,7 +3,7 @@ extends Node3D
 
 
 @export var target : Node3D
-var other_target : Node3D = target
+var other_target : Node3D
 
 var following = true
 
@@ -16,8 +16,8 @@ var offset = Vector3.ZERO
 
 var is_pov = false
 
-var default_fov = 10
-var default_distance = 80
+var default_fov = 11
+var default_distance = 70
 var default_rotation = Vector3(-PI/8, 0, 0)
 var default_near = 30.0
 
@@ -51,12 +51,21 @@ func _process(_delta):
 	global_position = round(global_position * 200) / 200
 	#global_position = global_position.snapped(Vector3(0.02, 0.02, 0.02))
 	
-	if Input.is_key_pressed(KEY_UP):
-		cam.position.z -= 0.5
-	elif Input.is_key_pressed(KEY_DOWN):
-		cam.position.z += 0.5
-	elif !is_pov:
-		cam.position.z = lerp(cam.position.z, float(default_distance), 0.1)
+#	if Input.is_key_pressed(KEY_UP):
+#		cam.position.z -= 0.5
+#	elif Input.is_key_pressed(KEY_DOWN):
+#		cam.position.z += 0.5
+#	elif !is_pov:
+#		cam.position.z = lerp(cam.position.z, float(default_distance), 0.1)
+		
+	
+	var look_right = Input.get_action_strength("look_right")
+	var look_left = Input.get_action_strength("look_left")
+	var look_up = Input.get_action_strength("look_up")
+	var look_down = Input.get_action_strength("look_down")
+	
+	rotation_target -= Vector3(look_down - look_up, look_right - look_left, 0) * 0.01
+	rotation_target.x = clamp(rotation_target.x, -PI/5, -PI/20)
 
 
 func _physics_process(_delta):
@@ -78,6 +87,7 @@ func _physics_process(_delta):
 				target_vert_position = target.global_position.y
 		else:
 			target_vert_position = target.global_position.y
+			
 		if other_target is CharacterBody3D:
 			if other_target.is_on_floor():
 				other_target_vert_position = other_target.global_position.y

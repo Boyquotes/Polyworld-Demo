@@ -22,8 +22,8 @@ func _ready():
 func enter():
 	target_seen = false
 	enemy.move_speed = 4
-	enemy.get_node("Red").visible = false
-	enemy.get_node("Yellow").visible = false
+	enemy.get_node("ModelContainer/Red").visible = false
+	enemy.get_node("ModelContainer/Yellow").visible = false
 	enemy.get_node("HealthBar").visible = false
 
 
